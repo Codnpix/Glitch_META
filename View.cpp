@@ -15,6 +15,7 @@ void View::draw(float charX, float charY, Space* space) {
   //gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex][0]);
   //decorPart2
   //gb.display.drawImage(this->cameraPosX + DECOR_TILE_W, this->cameraPosY, decorMaps[this->spaceIndex][1]);
+  gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
 //TEMPORAIRE draw logictiles
   for (uint8_t row = 0; row < LOGIC_ROWS; row ++) {

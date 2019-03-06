@@ -22,8 +22,8 @@ static const uint8_t LOGIC_TILE_W = SPACE_W / LOGIC_COLS;
 static const uint8_t GRAVITY = 3;*/
 
 static const uint8_t NB_OF_SPACES = 1;
-static const uint8_t DECOR_TILE_W = 120;
-static const uint8_t DECOR_TILE_H = 128;
+//static const uint8_t DECOR_TILE_W = 120;
+//static const uint8_t DECOR_TILE_H = 128;
 static const uint8_t SCREEN_W = 80;
 static const uint8_t SCREEN_H = 64;
 //static const uint8_t BACKGROUND_TILE_W = 32;

@@ -10,8 +10,11 @@ Character* character;
 Space* space;
 View* view;
 
+
+
 void setup() {
   gb.begin();
+  
   character = new Character();
   space = new Space();
   view = new View();
@@ -27,7 +30,7 @@ void loop() {
   gameController->draw();
   gameController->updateGame();
   gb.display.println(gb.getCpuLoad());
-  //gb.display.println(gb.getFreeRam());
+  gb.display.println(gb.getFreeRam());
   
   /*
    * generate pattern hyperbole : 
