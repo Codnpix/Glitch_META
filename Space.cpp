@@ -20,8 +20,8 @@ char Space::getLogic(uint8_t row, uint8_t col) {
   return this->logicMap[row][col];
 }
 
-uint16_t Space::getSpawnX() {
-  uint16_t x;
+uint8_t Space::getSpawnX() {
+  uint8_t x;
   for (uint8_t row = 0; row < LOGIC_ROWS; row++) {
     for (uint8_t col = 0; col < LOGIC_COLS; col++) {
       char tile = this->getLogic(row, col);
@@ -33,7 +33,7 @@ uint16_t Space::getSpawnX() {
   return x;
 }
 
-uint16_t Space::getSpawnY() {
+uint8_t Space::getSpawnY() {
   for (uint8_t row = 0; row < LOGIC_ROWS; row++) {
     for (uint8_t col = 0; col < LOGIC_COLS; col++) {
       if (this->getLogic(row, col) == 'c') {

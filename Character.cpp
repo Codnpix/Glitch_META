@@ -1,9 +1,8 @@
 #include "Character.h"
 
-void Character::init(uint16_t spawnX, uint16_t spawnY) {
+void Character::init(uint8_t spawnX, uint8_t spawnY) {
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
-  //this->setPosition(50.0,50.0);
   this->isJumping = false;
 }
 

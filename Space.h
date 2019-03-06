@@ -16,7 +16,7 @@ class Space {
     void setIndex(uint8_t index);
     char getLogic(uint8_t row, uint8_t col);
     void setLogic();
-    uint16_t getSpawnX();
-    uint16_t getSpawnY();
+    uint8_t getSpawnX();
+    uint8_t getSpawnY();
 };
 #endif
