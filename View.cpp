@@ -9,12 +9,12 @@ void View::draw(float charX, float charY, Space* space) {
   gb.display.clear();
   //background
   for (uint8_t tile = 0; tile < 8; tile++) {
-    gb.display.drawImage(this->cameraPosX + tile * BACKGROUND_TILE_W, 0 / 1.5, backgrounds[this->spaceIndex]);
+    //gb.display.drawImage(this->cameraPosX + tile * BACKGROUND_TILE_W, 0 / 1.5, backgrounds[this->spaceIndex]);
   }
   //decorPart1
-  gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex][0]);
+  //gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex][0]);
   //decorPart2
-  gb.display.drawImage(this->cameraPosX + DECOR_TILE_W, this->cameraPosY, decorMaps[this->spaceIndex][1]);
+  //gb.display.drawImage(this->cameraPosX + DECOR_TILE_W, this->cameraPosY, decorMaps[this->spaceIndex][1]);
 
 //TEMPORAIRE draw logictiles
   for (uint8_t row = 0; row < LOGIC_ROWS; row ++) {
@@ -25,14 +25,11 @@ void View::draw(float charX, float charY, Space* space) {
       if (tile == 's') {
         
         int16_t tileX, tileY;
-        uint8_t tileW, tileH;
-        tileX = cameraPosX + (SPACE_W / LOGIC_COLS) * col;
-        tileY = cameraPosY + (SPACE_H / LOGIC_ROWS) * row;
-        tileH = SPACE_H / LOGIC_ROWS;
-        tileW = SPACE_W / LOGIC_COLS;
+        tileX = cameraPosX + LOGIC_TILE_W * col;
+        tileY = cameraPosY + LOGIC_TILE_H * row;
         
         gb.display.setColor(GREEN);//tmp
-        gb.display.fillRect(tileX, tileY, tileW, tileH);//tmp
+        gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//tmp
         
       }
     }
@@ -50,7 +47,7 @@ void View::followCharacter(float charX, float charY) {
   else if (charX + CHARACTER_W / 2 >= SPACE_W - SCREEN_W / 2) this->setCameraPosX(-SPACE_W + SCREEN_W);
   else this->setCameraPosX(SCREEN_W / 2 - charX - CHARACTER_W / 2);
 
-  if (charY + CHARACTER_H / 2 >= DECOR_TILE_H - SCREEN_H / 2) this->setCameraPosY(-(DECOR_TILE_H - SCREEN_H));
+  if (charY + CHARACTER_H / 2 >= SPACE_H - SCREEN_H / 2) this->setCameraPosY(-(SPACE_H - SCREEN_H));
   else if (charY + CHARACTER_H / 2 <= SCREEN_H / 2) this->setCameraPosY(0);
   else this->setCameraPosY(SCREEN_H / 2 - charY - CHARACTER_H / 2);
 }

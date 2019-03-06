@@ -9,14 +9,14 @@ class Space {
   private:
     uint8_t index;
     
-    char logicMap[10][30];
+    char logicMap[16][30];
     
   public:
     uint8_t getIndex();
     void setIndex(uint8_t index);
     char getLogic(uint8_t row, uint8_t col);
     void setLogic();
-    uint8_t getSpawnX();
-    uint8_t getSpawnY();
+    uint16_t getSpawnX();
+    uint16_t getSpawnY();
 };
 #endif

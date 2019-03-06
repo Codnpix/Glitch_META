@@ -6,14 +6,6 @@
 #include "mvtPatterns.h"
 #include "Space.h";
 
-typedef struct Tile {
-    uint8_t left;
-    uint8_t top;
-    uint8_t right;
-    uint8_t bottom;
-    char type;
-  };
-
 class Character {
   private:
     float x;
@@ -57,7 +49,7 @@ class Character {
     float getVy();
     void setPosition(float x, float y);
 
-    void init(uint8_t spawnX, uint8_t spawnY);
+    void init(uint16_t spawnX, uint16_t spawnY);
     
 };
 #endif

@@ -26,7 +26,7 @@ void loop() {
   
   gameController->draw();
   gameController->updateGame();
-  //gb.display.println(gb.getCpuLoad());
+  gb.display.println(gb.getCpuLoad());
   //gb.display.println(gb.getFreeRam());
   
   /*

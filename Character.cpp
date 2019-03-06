@@ -1,8 +1,9 @@
 #include "Character.h"
 
-void Character::init(uint8_t spawnX, uint8_t spawnY) {
+void Character::init(uint16_t spawnX, uint16_t spawnY) {
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
+  //this->setPosition(50.0,50.0);
   this->isJumping = false;
 }
 
@@ -119,8 +120,8 @@ void Character::checkCollisions(Space* space) {
     }
   }
   //ground collision test
-  if ((this->collides(nTiles[4]) && nTiles[4].type == 's') 
-  || (this->collides(nTiles[5]) && nTiles[5].type == 's')) {
+  if ((this->collides(nTiles[4]) && nTiles[4].type == 's' && (this->x <= nTiles[4].right - 3)) 
+  || (this->collides(nTiles[5]) && nTiles[5].type == 's' && (this->x+CHARACTER_W >= nTiles[5].left + 3))) {//you have to bite the ground on 3px min to be onGround
     this->isOnGround = true;
     this->yGround = nTiles[4].top;
   } else if ((this->collides(nTiles[4]) && nTiles[4].type == ' ') 
