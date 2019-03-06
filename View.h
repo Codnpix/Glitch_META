@@ -16,7 +16,7 @@ class View {
 
   public:
     void test();
-    void draw(float charX, float charY, Space* space);
+    void draw(float charX, float charY, Space* space, char characterDirection);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);
     void setSpaceIndex(uint8_t index);

@@ -62,5 +62,5 @@ void GameController::draw() {
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   
-  this->view->draw(charX, charY, this->space);
+  this->view->draw(charX, charY, this->space, this->character->getDirection());
 }

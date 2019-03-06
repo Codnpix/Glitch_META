@@ -18,12 +18,14 @@ class Character {
     
     bool collidesRight;
     bool collidesLeft;
-    bool isJumping;
-    float G_resistance;
+    bool collidesTop;
     bool isOnGround;
+    bool isJumping;
+    char direction;
     uint8_t jumpFrame;
     bool nextFrame;
     uint8_t yGround;//y coordinate of the current ground
+    float G_resistance;
 
     void trigJump();
     void playPatternJump(uint8_t frame);
@@ -47,6 +49,7 @@ class Character {
     float getY();
     float getVx();
     float getVy();
+    char getDirection();
     void setPosition(float x, float y);
 
     void init(uint8_t spawnX, uint8_t spawnY);

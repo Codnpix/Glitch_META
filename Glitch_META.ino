@@ -29,6 +29,7 @@ void loop() {
   
   gameController->draw();
   gameController->updateGame();
+  gb.display.setColor(RED);
   gb.display.println(gb.getCpuLoad());
   gb.display.println(gb.getFreeRam());
   

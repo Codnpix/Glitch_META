@@ -3,7 +3,7 @@
 #include "graphicAssets.h"
 #include "constants.h"
 
-void View::draw(float charX, float charY, Space* space) {
+void View::draw(float charX, float charY, Space* space, char characterDirection) {
   this->followCharacter(charX, charY);
 
   gb.display.clear();
@@ -29,8 +29,8 @@ void View::draw(float charX, float charY, Space* space) {
         tileX = cameraPosX + LOGIC_TILE_W * col;
         tileY = cameraPosY + LOGIC_TILE_H * row;
         
-        gb.display.setColor(GREEN);//tmp
-        gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//tmp
+        //gb.display.setColor(GREEN);//tmp
+        //gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//tmp
         
       }
     }
@@ -38,7 +38,9 @@ void View::draw(float charX, float charY, Space* space) {
 
   
   //character
-  gb.display.drawImage(this->cameraPosX + charX, this->cameraPosY + charY, charSprite, CHARACTER_W, CHARACTER_H);
+  int8_t charWdir;
+  charWdir = (characterDirection == 'r') ? CHARACTER_W : -CHARACTER_W;
+  gb.display.drawImage(this->cameraPosX + charX, this->cameraPosY + charY, charSprite, charWdir, CHARACTER_H);
 
   
 }

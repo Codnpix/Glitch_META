@@ -4,14 +4,17 @@ void Character::init(uint8_t spawnX, uint8_t spawnY) {
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
   this->isJumping = false;
+  this->direction = 'r';
 }
 
 void Character::reqWalkRight() {
   this->reqXMarker = 'r';
+  this->direction = 'r';
 }
 
 void Character::reqWalkLeft() {
   this->reqXMarker = 'l';
+  this->direction = 'l';
 }
 
 void Character::reqStand() {
@@ -73,6 +76,10 @@ void Character::update(Space* space) {
     this->G_resistance = 0;
   }
 
+  if (this->collidesTop && this->isJumping) {
+    this->isJumping = false;
+  }
+
   if (this->isOnGround) {
     this->y = yGround - CHARACTER_H;
   }
@@ -131,10 +138,25 @@ void Character::checkCollisions(Space* space) {
   if ((this->collides(nTiles[1]) && nTiles[1].type == 's')
   || (this->collides(nTiles[3]) && nTiles[3].type == 's')) {
     this->collidesRight = true;
+  } else if ((this->collides(nTiles[1]) && nTiles[1].type == ' ')
+  && (this->collides(nTiles[3]) && nTiles[3].type == ' ')) {
+    this->collidesRight = false;
   }
+  
   if ((this->collides(nTiles[0]) && nTiles[0].type == 's')
   || (this->collides(nTiles[2]) && nTiles[2].type == 's')) {
     this->collidesLeft = true;
+  } else if ((this->collides(nTiles[0]) && nTiles[0].type == ' ')
+  && (this->collides(nTiles[2]) && nTiles[2].type == ' ')) {
+    this->collidesLeft = false;
+  }
+  //top collision test
+  if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
+  || (this->collides(nTiles[1]) && nTiles[1].type == 's' && this->y + CHARACTER_H > nTiles[1].bottom)) {
+    this->collidesTop = true;
+  } else if ((this->collides(nTiles[0]) && nTiles[0].type == ' ')
+  || (this->collides(nTiles[1]) && nTiles[1].type == ' ')) {
+    this->collidesTop = false;
   }
 }
 
@@ -197,4 +219,8 @@ float Character::getVx() {
 
 float Character::getVy() {
   return this->vy;
+}
+
+char Character::getDirection() {
+  return this->direction;
 }
