@@ -80,7 +80,7 @@ void Character::update(Space* space) {
     this->isJumping = false;
   }*/
 
-  //correction, set the character right on the floor, if he stops one pixel too low it resets him at the right y value.
+  //correction, set the character right on the floor e.g. if he stops one pixel too low
   if (this->isOnGround) {
     this->y = yGround - CHARACTER_H;
   }
