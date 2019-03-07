@@ -24,6 +24,7 @@ class Character {
     bool isClimbing;
     bool canGrabLeft;
     bool canGrabRight;
+    //bool wasClimbing;
     uint8_t yToClimb;
     char direction;
     uint8_t jumpFrame;

@@ -4,6 +4,7 @@ void Character::init(uint8_t spawnX, uint8_t spawnY) {
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
   this->isJumping = false;
+  this->isClimbing = false;
   this->direction = 'r';
 }
 
@@ -69,7 +70,7 @@ void Character::update(Space* space) {
     this->G_resistance = - GRAVITY;
   }
   
-  if (this->reqYMarker == 'j') {
+  if (this->reqYMarker == 'j' && !this->isClimbing) {
     this->isJumping = true;
     this->trigJump();
   } else if(this->reqYMarker == 'n' && !this->isOnGround) {
@@ -81,18 +82,24 @@ void Character::update(Space* space) {
   }*/
 
   //climbing test
-  if(this->canGrabLeft && this->reqXMarker == 'l') {
+  if((this->canGrabLeft && this->reqXMarker == 'l')
+  || (this->canGrabRight && this->reqXMarker == 'r')){
 
-    this->isClimbing == true;
-    //this->isJumping == false;
-    //this->climb();
-    /*
+    
+    
+    
     if (this->y + CHARACTER_H > this->yToClimb) {
-      this->G_resistance = 4 - GRAVITY; //TMP , set a constant instead of 4, or a pattern array
+      this->isClimbing == true;
+      this->isJumping == false;
+      //set a playClimbPattern method that run only if isClimbing is true instead of this :
+      this->G_resistance = - GRAVITY - 1.2; //TMP , set a constant instead of 1.2, or a pattern array
     }
     if (this->y + CHARACTER_H <= this->yToClimb) {
-      this->isClimbing = false;
-    }*/
+      //this->isClimbing = false;
+      //this->wasClimbing = true;
+      this->reqXMarker = 'n';
+      this->reqYMarker = 'n';
+    }
   }
 
   //correction, set the character right on the floor e.g. if he stops one pixel too low
@@ -105,8 +112,9 @@ void Character::update(Space* space) {
   this->applyMove();
   
   gb.display.setColor(RED);
-  if (this->canGrabGroundLeft) gb.display.println("GRAB LEFT");
-  if (this->canGrabGroundRight) gb.display.println("GRAB RIGHT");
+  if (this->canGrabLeft) gb.display.println("GRAB LEFT");
+  if (this->canGrabRight) gb.display.println("GRAB RIGHT");
+  gb.display.println(this->yGround);
   
 }
 
@@ -173,14 +181,14 @@ void Character::checkCollisions(Space* space) {
 
   //tests if character can grab ground above him
   if (this->collidesLeft && nTiles[0].type == ' ' && this->direction == 'l') {
-    this->canGrabGroundLeft = true;
-    this->yToClimb = nTiles[0].y;
-  } else this->canGrabGroundLeft = false;
+    this->canGrabLeft = true;
+    this->yToClimb = nTiles[2].top;
+  } else this->canGrabLeft = false;
   
   if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') {
-    this->canGrabGroundRight = true;
-    this->yToClimb = nTiles[1].y;
-  } else this->canGrabGroundRight = false;
+    this->canGrabRight = true;
+    this->yToClimb = nTiles[3].top;
+  } else this->canGrabRight = false;
 
   //top collision test
   /*if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
