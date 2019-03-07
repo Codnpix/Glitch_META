@@ -22,8 +22,9 @@ class Character {
     bool isOnGround;
     bool isJumping;
     bool isClimbing;
-    bool canGrabGroundLeft;
-    bool canGrabGroundRight;
+    bool canGrabLeft;
+    bool canGrabRight;
+    uint8_t yToClimb;
     char direction;
     uint8_t jumpFrame;
     bool nextFrame;
@@ -32,6 +33,8 @@ class Character {
 
     void trigJump();
     void playPatternJump(uint8_t frame);
+
+    void climb();
     
     void applyMove();
     

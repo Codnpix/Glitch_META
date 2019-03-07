@@ -80,6 +80,21 @@ void Character::update(Space* space) {
     this->isJumping = false;
   }*/
 
+  //climbing test
+  if(this->canGrabLeft && this->reqXMarker == 'l') {
+
+    this->isClimbing == true;
+    //this->isJumping == false;
+    //this->climb();
+    /*
+    if (this->y + CHARACTER_H > this->yToClimb) {
+      this->G_resistance = 4 - GRAVITY; //TMP , set a constant instead of 4, or a pattern array
+    }
+    if (this->y + CHARACTER_H <= this->yToClimb) {
+      this->isClimbing = false;
+    }*/
+  }
+
   //correction, set the character right on the floor e.g. if he stops one pixel too low
   if (this->isOnGround) {
     this->y = yGround - CHARACTER_H;
@@ -159,12 +174,14 @@ void Character::checkCollisions(Space* space) {
   //tests if character can grab ground above him
   if (this->collidesLeft && nTiles[0].type == ' ' && this->direction == 'l') {
     this->canGrabGroundLeft = true;
+    this->yToClimb = nTiles[0].y;
   } else this->canGrabGroundLeft = false;
   
-  if (this->collidesRight && nTiles[0].type == ' ' && this->direction == 'r') {
+  if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') {
     this->canGrabGroundRight = true;
+    this->yToClimb = nTiles[1].y;
   } else this->canGrabGroundRight = false;
-  
+
   //top collision test
   /*if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
   || (this->collides(nTiles[1]) && nTiles[1].type == 's' && this->y + CHARACTER_H > nTiles[1].bottom)) {
@@ -213,6 +230,12 @@ void Character::playPatternJump(uint8_t frame) {
   if (frame < 9) {
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
   }
+}
+
+void Character::climb() {
+  /*if (this->y + CHARACTER_H > yToClimb) {
+    this->G_resistance = 4 - GRAVITY; //TMP , set a constant for 4, or a pattern array
+  }*/
 }
 
 float Character::getX() {
