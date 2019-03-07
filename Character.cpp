@@ -195,8 +195,8 @@ void Character::trigJump() {
 }
 
 void Character::playPatternJump(uint8_t frame) {
-  if (frame < 10) {
-    this->G_resistance = JUMP_VY_PATTERN[frame] / 3 - GRAVITY;
+  if (frame < 9) {
+    this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
   }
 }
 

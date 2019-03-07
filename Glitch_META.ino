@@ -29,19 +29,21 @@ void loop() {
   
   gameController->draw();
   gameController->updateGame();
-  gb.display.setColor(RED);
-  gb.display.println(gb.getCpuLoad());
-  gb.display.println(gb.getFreeRam());
+  //gb.display.setColor(RED);
+  //gb.display.println(gb.getCpuLoad());
+  //gb.display.println(gb.getFreeRam());
   
   /*
    * generate pattern hyperbole : 
    * 
+   
    if(gb.buttons.pressed(BUTTON_B)) {
-      for(int8_t x=-11; x<12;x++) {
-      int8_t y = -(x*x);
+      for(int8_t x=-10; x<10;x++) {
+      float y = -(x * x) / 4.0;
       SerialUSB.println(y);
     }
-  }
+    
+  }*/
   
-  */
+  
 }
