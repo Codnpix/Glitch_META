@@ -76,10 +76,11 @@ void Character::update(Space* space) {
     this->G_resistance = 0;
   }
 
-  if (this->collidesTop && this->isJumping) {
+  /*if (this->collidesTop && this->isJumping) {
     this->isJumping = false;
-  }
+  }*/
 
+  //correction, set the character right on the floor, if he stops one pixel too low it resets him at the right y value.
   if (this->isOnGround) {
     this->y = yGround - CHARACTER_H;
   }
@@ -88,17 +89,21 @@ void Character::update(Space* space) {
 
   this->applyMove();
   
+  gb.display.setColor(RED);
+  if (this->canGrabGroundLeft) gb.display.println("GRAB LEFT");
+  if (this->canGrabGroundRight) gb.display.println("GRAB RIGHT");
+  
 }
 
 void Character::checkCollisions(Space* space) {
   //parse logic map, check collisions :
 
-  uint8_t colNum = floor((this->x) / (SPACE_W / LOGIC_COLS));
-  uint8_t rowNum = floor((this->y) / (SPACE_H / LOGIC_ROWS));
+  uint8_t colNum = floor((this->x) / LOGIC_TILE_W);
+  uint8_t rowNum = floor((this->y) / LOGIC_TILE_H);
   int16_t tileX, tileY;
   uint8_t tileW, tileH;
-  tileH = SPACE_H / LOGIC_ROWS;
-  tileW = SPACE_W / LOGIC_COLS;
+  tileH = LOGIC_TILE_H;
+  tileW = LOGIC_TILE_W;
   
   Tile nTiles[2 * 3];//the 6 tiles around the character
   
@@ -108,8 +113,8 @@ void Character::checkCollisions(Space* space) {
   for (uint8_t row = rowNum; row < rowNum + 3; row++) {
     for (uint8_t col = colNum; col < colNum + 2; col ++) {
       
-      tileX = (SPACE_W / LOGIC_COLS) * col;
-      tileY = (SPACE_H / LOGIC_ROWS) * row;
+      tileX = LOGIC_TILE_W * col;
+      tileY = LOGIC_TILE_H * row;
       
       char tileType = space->getLogic(row, col);
       
@@ -150,14 +155,24 @@ void Character::checkCollisions(Space* space) {
   && (this->collides(nTiles[2]) && nTiles[2].type == ' ')) {
     this->collidesLeft = false;
   }
+
+  //tests if character can grab ground above him
+  if (this->collidesLeft && nTiles[0].type == ' ' && this->direction == 'l') {
+    this->canGrabGroundLeft = true;
+  } else this->canGrabGroundLeft = false;
+  
+  if (this->collidesRight && nTiles[0].type == ' ' && this->direction == 'r') {
+    this->canGrabGroundRight = true;
+  } else this->canGrabGroundRight = false;
+  
   //top collision test
-  if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
+  /*if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
   || (this->collides(nTiles[1]) && nTiles[1].type == 's' && this->y + CHARACTER_H > nTiles[1].bottom)) {
     this->collidesTop = true;
   } else if ((this->collides(nTiles[0]) && nTiles[0].type == ' ')
   || (this->collides(nTiles[1]) && nTiles[1].type == ' ')) {
     this->collidesTop = false;
-  }
+  }*/
 }
 
 //TESTING

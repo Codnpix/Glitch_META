@@ -62,7 +62,7 @@ void GameController::draw() {
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   
-  this->view->draw(charX, charY, this->space, this->character->getDirection());
+  this->view->draw(this->space, this->character);
   // faire plutôt: this->view->draw(this->space, this->character);
   // et dans view : View::draw(Space* space, Character* character);
 }

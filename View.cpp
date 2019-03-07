@@ -3,7 +3,9 @@
 #include "graphicAssets.h"
 #include "constants.h"
 
-void View::draw(float charX, float charY, Space* space, char characterDirection) {
+void View::draw(Space* space, Character* character) {
+  float charX = character->getX();
+  float charY = character->getY();
   this->followCharacter(charX, charY);
 
   gb.display.clear();
@@ -11,10 +13,8 @@ void View::draw(float charX, float charY, Space* space, char characterDirection)
   for (uint8_t tile = 0; tile < 8; tile++) {
     //gb.display.drawImage(this->cameraPosX + tile * BACKGROUND_TILE_W, 0 / 1.5, backgrounds[this->spaceIndex]);
   }
-  //decorPart1
-  //gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex][0]);
-  //decorPart2
-  //gb.display.drawImage(this->cameraPosX + DECOR_TILE_W, this->cameraPosY, decorMaps[this->spaceIndex][1]);
+  
+  //decor
   gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
 //TEMPORAIRE draw logictiles
@@ -39,7 +39,7 @@ void View::draw(float charX, float charY, Space* space, char characterDirection)
   
   //character
   int8_t charWdir;
-  charWdir = (characterDirection == 'r') ? CHARACTER_W : -CHARACTER_W;
+  charWdir = (character->getDirection() == 'r') ? CHARACTER_W : -CHARACTER_W;
   gb.display.drawImage(this->cameraPosX + charX, this->cameraPosY + charY, charSprite, charWdir, CHARACTER_H);
 
   

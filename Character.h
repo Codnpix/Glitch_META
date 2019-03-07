@@ -18,9 +18,12 @@ class Character {
     
     bool collidesRight;
     bool collidesLeft;
-    bool collidesTop;
+    //bool collidesTop; //no need
     bool isOnGround;
     bool isJumping;
+    bool isClimbing;
+    bool canGrabGroundLeft;
+    bool canGrabGroundRight;
     char direction;
     uint8_t jumpFrame;
     bool nextFrame;

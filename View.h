@@ -2,7 +2,8 @@
 #define GLITCH_VIEW_H_
 
 #include <Gamebuino-Meta.h>
-#include "Space.h"//tmp
+#include "Space.h"
+#include "Character.h"
 
 class View {
 
@@ -15,8 +16,7 @@ class View {
     void followCharacter(float charX, float charY);
 
   public:
-    void test();
-    void draw(float charX, float charY, Space* space, char characterDirection);
+    void draw(Space* space, Character* character);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);
     void setSpaceIndex(uint8_t index);
