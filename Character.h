@@ -34,6 +34,7 @@ class Character {
 
     void trigJump();
     void playPatternJump(uint8_t frame);
+    void trigClimb();
 
     void climb();
     

@@ -81,26 +81,31 @@ void Character::update(Space* space) {
     this->isJumping = false;
   }*/
 
+
   //climbing test
-  if((this->canGrabLeft && this->reqXMarker == 'l')
+  if (this->reqYMarker == 'c') {
+    this->isJumping == false;
+    this->isClimbing == true;
+    this->trigClimb();
+  }
+  /*if((this->canGrabLeft && this->reqXMarker == 'l')
   || (this->canGrabRight && this->reqXMarker == 'r')){
 
-    
-    
-    
     if (this->y + CHARACTER_H > this->yToClimb) {
       this->isClimbing == true;
       this->isJumping == false;
+      this->trigClimb();
       //set a playClimbPattern method that run only if isClimbing is true instead of this :
-      this->G_resistance = - GRAVITY - 1.2; //TMP , set a constant instead of 1.2, or a pattern array
+      //this->G_resistance = - GRAVITY - 1.2; //TMP , set a constant instead of 1.2, or a pattern array
     }
     if (this->y + CHARACTER_H <= this->yToClimb) {
-      //this->isClimbing = false;
+      this->isClimbing = false;
       //this->wasClimbing = true;
       this->reqXMarker = 'n';
       this->reqYMarker = 'n';
     }
-  }
+  }*/
+
 
   //correction, set the character right on the floor e.g. if he stops one pixel too low
   if (this->isOnGround) {
@@ -112,10 +117,11 @@ void Character::update(Space* space) {
   this->applyMove();
   
   gb.display.setColor(RED);
-  if (this->canGrabLeft) gb.display.println("GRAB LEFT");
-  if (this->canGrabRight) gb.display.println("GRAB RIGHT");
+  if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
+  if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
+  if (this->isClimbing) gb.display.println("CLIMBING");
   gb.display.println(this->yGround);
-  
+  gb.display.println(this->reqYMarker);
 }
 
 void Character::checkCollisions(Space* space) {
@@ -182,15 +188,22 @@ void Character::checkCollisions(Space* space) {
   //tests if character can grab ground above him
   if (this->collidesLeft && nTiles[0].type == ' ' && this->direction == 'l') {
     this->canGrabLeft = true;
-    this->yToClimb = nTiles[2].top;
-  } else this->canGrabLeft = false;
+    if (this->reqXMarker == 'l') {
+      this->reqYMarker = 'c';
+      this->yToClimb = nTiles[2].top;
+    }
+  } else if (!this->collidesLeft) this->canGrabLeft = false;
+  /*else {
+    this->canGrabLeft = false;
+    this->reqYMarker = 'n';
+  }*/
   
   if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') {
     this->canGrabRight = true;
     this->yToClimb = nTiles[3].top;
   } else this->canGrabRight = false;
 
-  //top collision test
+  //top collision test (no need ?)
   /*if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
   || (this->collides(nTiles[1]) && nTiles[1].type == 's' && this->y + CHARACTER_H > nTiles[1].bottom)) {
     this->collidesTop = true;
@@ -240,10 +253,18 @@ void Character::playPatternJump(uint8_t frame) {
   }
 }
 
-void Character::climb() {
-  /*if (this->y + CHARACTER_H > yToClimb) {
-    this->G_resistance = 4 - GRAVITY; //TMP , set a constant for 4, or a pattern array
-  }*/
+void Character::trigClimb() {
+  if(this->isClimbing) {
+    this->G_resistance = - GRAVITY - 1.2;
+    gb.display.setColor(BLUE);
+    gb.display.println("CLIMBS !! ! !");//TMP , set a constant instead of 1.2, or a pattern array
+  }
+  if (this->y + CHARACTER_H < this->yToClimb) {
+    this->isClimbing = false;
+    this->reqYMarker = 'n';
+    gb.display.setColor(BLUE);
+    gb.display.println("STOP CLIMB ! ");
+  }
 }
 
 float Character::getX() {
