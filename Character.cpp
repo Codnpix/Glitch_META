@@ -273,6 +273,7 @@ void Character::playPatternJump(uint8_t frame) {
 void Character::trigClimb() {
   
   if(this->reqXMarker == 'n') {
+    
     this->G_resistance = 0;
     this->reqYMarker = 'n';
     this->climbInitialized = false;
@@ -282,6 +283,7 @@ void Character::trigClimb() {
   }
   
   if (!this->climbTrigged) {
+    
     this->frame = 0;
     this->climbTrigged = true;
   }
@@ -291,6 +293,7 @@ void Character::trigClimb() {
   this->playPatternClimb(this->frame);
 
   if (!this->nextFrame) {
+    
     this->frame ++;
     this->nextFrame = true;
   }
@@ -308,6 +311,8 @@ void Character::playPatternClimb(uint8_t frame) {
   if (this->climbInitialized) {
     
     if(this->y + CHARACTER_H >= this->yToClimb) {
+      
+      if (frame>=9) frame = 8;//prevent pattern array out of bound iteration
       
       this->G_resistance = CLIMB_VY_PATTERN[frame] - GRAVITY;
       

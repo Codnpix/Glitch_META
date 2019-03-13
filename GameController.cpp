@@ -41,8 +41,6 @@ void GameController::getInputs() {
   if(gb.buttons.released(BUTTON_LEFT) || gb.buttons.released(BUTTON_RIGHT)) {
     this->character->reqStand();
   }
-
-  
 }
 
 void GameController::updateGame() {
