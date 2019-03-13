@@ -20,14 +20,18 @@ class Character {
     bool collidesLeft;
     //bool collidesTop; //no need
     bool isOnGround;
-    bool isJumping;
-    bool isClimbing;
+    
     bool canGrabLeft;
     bool canGrabRight;
+    
     //bool wasClimbing;
     uint8_t yToClimb;
+    bool climbTrigged;
+    bool climbInitialized;
+    
     char direction;
     uint8_t jumpFrame;
+    uint8_t frame;
     bool nextFrame;
     uint8_t yGround;//y coordinate of the current ground
     float G_resistance;
@@ -35,8 +39,7 @@ class Character {
     void trigJump();
     void playPatternJump(uint8_t frame);
     void trigClimb();
-
-    void climb();
+    void playPatternClimb(uint8_t frame);
     
     void applyMove();
     
@@ -44,6 +47,9 @@ class Character {
     bool collides(Tile aTile);
 
   public:
+    bool isClimbing;
+    bool isJumping;
+  
     char typeOfCollision;
     void reqWalkRight();
     void reqWalkLeft();

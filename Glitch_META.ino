@@ -1,5 +1,4 @@
 #include <Gamebuino-Meta.h>
-
 #include "GameController.h"
 #include "Character.h"
 #include "Space.h"
@@ -10,9 +9,8 @@ Character* character;
 Space* space;
 View* view;
 
-
-
 void setup() {
+  
   gb.begin();
   
   character = new Character();
@@ -25,6 +23,7 @@ void setup() {
 }
 
 void loop() {
+  
   while(!gb.update());
   
   gameController->draw();

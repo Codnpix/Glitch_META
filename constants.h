@@ -6,8 +6,8 @@ static const uint8_t SCREEN_W = 80;
 static const uint8_t SCREEN_H = 64;
 //static const uint8_t BACKGROUND_TILE_W = 32;
 
-static const uint8_t CHARACTER_W = 8;
-static const uint8_t CHARACTER_H = 16;
+static const uint8_t CHARACTER_W = 6;
+static const uint8_t CHARACTER_H = 14;
 
 static const uint8_t SPACE_W = 240;
 static const uint8_t SPACE_H = 128;
