@@ -28,6 +28,10 @@ class Character {
     uint8_t yToClimb;
     bool climbTrigged;
     bool climbInitialized;
+
+    bool isOnLadder;
+    bool canLadderUp;
+    bool canLadderDown;
     
     char direction;
     uint8_t jumpFrame;
@@ -45,6 +49,12 @@ class Character {
     
     void checkCollisions(Space* space);
     bool collides(Tile aTile);
+    bool isVerticalAlignedWith(Tile aTile);
+
+    void handleXReqs();
+    void handleGround();
+    void handleYReqs(char req);
+    void handleLadderYReqs(char req);
 
   public:
     bool isClimbing;
@@ -54,8 +64,11 @@ class Character {
     void reqWalkRight();
     void reqWalkLeft();
     void reqJump();
-    void reqFall();
+    //void reqFall();
+    void reqUp();
+    void reqDown();
     void reqStand();
+    void reqStopY();
     
     void update(Space* space);
      

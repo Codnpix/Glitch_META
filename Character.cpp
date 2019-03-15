@@ -22,34 +22,71 @@ void Character::reqStand() {
   this->reqXMarker = 'n';
 }
 
+void Character::reqStopY() {
+  if(this->reqYMarker == 'u' || this->reqYMarker == 'd') this->reqYMarker = 's';
+}
+
 void Character::reqJump() {
   this->reqYMarker = 'j';
 }
 
-void Character::reqFall() {
-  this->reqYMarker = 'f';
+void Character::reqUp() {
+  if (this->isOnLadder) this->reqYMarker = 'u';
+}
+
+void Character::reqDown() {
+  if (this->isOnLadder && !this->isOnGround) this->reqYMarker = 'd';
 }
 
 void Character::applyMove() {
+  
   this->x += this->vx;
   this->y += this->vy;
+  
+  if (this->isOnGround) {
+    this->y = yGround - CHARACTER_H;//correction, set the character right on the floor e.g. if he stops one pixel too low
+  }
 }
 
 void Character::update(Space* space) {
 
   this->checkCollisions(space);
-  
-  //unlock collisions for not getting stuck if character wants to get away from collision
-  if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;
-  if (this->collidesRight && this->vx < 0) this->collidesRight = false;
 
-  //X moves
+  this->handleXReqs();
+
+  //update the ground constraint for Y moves :
+  this->handleGround();
+
+  //handle Y moves requests if character is on a ladder
+  if (this->isOnLadder) this->handleLadderYReqs(this->reqYMarker);
+  //handle Y moves requests in normal conditions
+  this->handleYReqs(this->reqYMarker);
+  
+  this->vy = GRAVITY + this->G_resistance;
+
+  this->applyMove();
+
+  //debugging
+  gb.display.setColor(RED);
+  if (this->isOnGround) gb.display.println("GROUND");
+  //if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
+  
+  //if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
+  //if (this->isClimbing) gb.display.println("CLIMBING");
+  //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
+  //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
+  gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
+  //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
+  gb.display.printf("ON LADDER : %d \n", this->isOnLadder);
+  gb.display.printf("CAN LADDER UP : %d \n", this->canLadderUp);
+}
+
+void Character::handleXReqs() {
   if (this->reqXMarker == 'r') {
     
     if (!this->collidesRight) this->vx = 1;
     else {
       this->vx = 0;
-      //this->x = this->xColliderLeft - CHARACTER_W;
     }
     
   } else if (this->reqXMarker == 'l') {
@@ -57,63 +94,75 @@ void Character::update(Space* space) {
     if (!this->collidesLeft) this->vx = -1;
     else {
       this->vx = 0;
-      //this->x = this->xColliderRight;
     }
     
   } else if (this->reqXMarker == 'n') this->vx = 0;
+}
 
-
-  //update the ground constraint for Y moves
+void Character::handleGround() {
   
   if(this->isOnGround && this->reqYMarker == 'n') {
     this->G_resistance = - GRAVITY;
   }
   
   if(this->isOnGround && this->vy > 0) {
+    
     this->isJumping = false;
     this->reqYMarker = 'n';
     this->jumpFrame = 0;
     this->G_resistance = - GRAVITY;
   }
-  
-  if (this->reqYMarker == 'j') {
+}
+
+void Character::handleYReqs(char req) {
+  //jumping
+  if (req == 'j') {
+    
     this->isJumping = true;
     this->trigJump();
-  } else if(this->reqYMarker == 'n' && !this->isOnGround) {
+    
+  } else if(req == 'n' && !this->isOnGround) {
+    
     this->G_resistance = 0;
   }
 
-  //no need
-  /*if (this->collidesTop && this->isJumping) {
-    this->isJumping = false;
-  }*/
-
-  //climbing test
-  if (this->reqYMarker == 'c') {
+  //climbing
+  if (req == 'c') {
+    
     this->isJumping == false;
     this->isClimbing == true;
     this->trigClimb();
   }
+}
 
-  //correction, set the character right on the floor e.g. if he stops one pixel too low
-  if (this->isOnGround) {
-    this->y = yGround - CHARACTER_H;
+void Character::handleLadderYReqs(char req) {
+  
+  //nullify the normal condition requests
+  /*if (req == 'j') {
+    this->reqYMarker = 'n';
+  } else if (req == 'c') {
+    this->reqYMarker = 'n';//maybe no need
+  }*/
+  
+  if (req == 'u') {//ladder up
+    
+    if (this->canLadderUp) {
+      
+      this->isOnGround = false;
+      this->G_resistance = - 1 - GRAVITY;//TMP ! don't put a hardcoded value
+      
+    } else this->reqYMarker = 's';
+     
+  } else if (req == 'd') {//ladder down
+    
+    this->G_resistance = - GRAVITY + 1;//TMP !
+    
+  } else if (req == 's' || req == 'n') {//ladder stop
+    
+    this->G_resistance = -GRAVITY;
+    
   }
-  
-  this->vy = GRAVITY + this->G_resistance;
 
-  this->applyMove();
-  
-  gb.display.setColor(RED);
-  //if (this->isOnGround) gb.display.println("GROUND");
-  if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
-  
-  if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
-  if (this->isClimbing) gb.display.println("CLIMBING");
-  //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
-  gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
-  gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
-  gb.display.printf("X MARKER : %c \n",this->reqXMarker);
 }
 
 void Character::checkCollisions(Space* space) {
@@ -158,8 +207,8 @@ void Character::checkCollisions(Space* space) {
     this->isOnGround = true;
     this->yGround = nTiles[4].top;
     
-  } else if ((this->collides(nTiles[4]) && nTiles[4].type == ' ') 
-  || (this->collides(nTiles[5]) && nTiles[5].type == ' ')) {
+  } else if ((this->collides(nTiles[4]) && nTiles[4].type != 's') 
+  || (this->collides(nTiles[5]) && nTiles[5].type != 's')) {
     
     this->isOnGround = false;
     
@@ -171,8 +220,8 @@ void Character::checkCollisions(Space* space) {
     
     this->collidesRight = true;
     
-  } else if ((this->collides(nTiles[1]) && nTiles[1].type == ' ')
-  && (this->collides(nTiles[3]) && nTiles[3].type == ' ')) {
+  } else if ((this->collides(nTiles[1]) && nTiles[1].type != 's')
+  && (this->collides(nTiles[3]) && nTiles[3].type != 's')) {
     
     this->collidesRight = false;
     
@@ -183,8 +232,8 @@ void Character::checkCollisions(Space* space) {
     
     this->collidesLeft = true;
     
-  } else if ((this->collides(nTiles[0]) && nTiles[0].type == ' ')
-  && (this->collides(nTiles[2]) && nTiles[2].type == ' ')) {
+  } else if ((this->collides(nTiles[0]) && nTiles[0].type != 's')
+  && (this->collides(nTiles[2]) && nTiles[2].type != 's')) {
     
     this->collidesLeft = false;
     
@@ -217,25 +266,63 @@ void Character::checkCollisions(Space* space) {
     
   } else this->canGrabRight = false;
 
-  //top collision test (no need ?)
-  /*if ((this->collides(nTiles[0]) && nTiles[0].type == 's' && this->y + CHARACTER_H > nTiles[0].bottom)
-  || (this->collides(nTiles[1]) && nTiles[1].type == 's' && this->y + CHARACTER_H > nTiles[1].bottom)) {
-    this->collidesTop = true;
-  } else if ((this->collides(nTiles[0]) && nTiles[0].type == ' ')
-  || (this->collides(nTiles[1]) && nTiles[1].type == ' ')) {
-    this->collidesTop = false;
-  }*/
+  //test for ladders
+  if ((this->collides(nTiles[0]) 
+    && nTiles[0].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[0]))
+  || (this->collides(nTiles[1]) 
+    && nTiles[1].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[1]))
+  || (this->collides(nTiles[2]) 
+    && nTiles[2].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[2]))
+  || (this->collides(nTiles[3]) 
+    && nTiles[3].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[3]))
+  || (this->collides(nTiles[4]) 
+    && nTiles[4].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[4]))
+  || (this->collides(nTiles[5]) 
+    && nTiles[5].type == 'e' 
+    && this->isVerticalAlignedWith(nTiles[5]))) {
+      
+      this->isOnLadder = true;
+
+      if (nTiles[0].type != 'e' 
+      && nTiles[1].type != 'e' 
+      && nTiles[2].type != 'e' 
+      && nTiles[3].type != 'e') {
+        
+        this->canLadderUp = false;
+        
+      } else this->canLadderUp = true;
+      
+      this->canLadderDown = true;
+      
+    } else {
+      this->canLadderUp = false;
+      this->canLadderDown = false;
+      this->isOnLadder = false;
+      if(!this->isOnGround && ! this->isJumping && !this->isClimbing) this->reqYMarker = 'n';
+    }
+    
+
+  //unlock collisions for not getting stuck if character wants to get away from collision
+  if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;
+  if (this->collidesRight && this->vx < 0) this->collidesRight = false;
+
 }
 
-//TESTING
 bool Character::collides(Tile aTile) {
+  
   uint8_t charLeft, charRight, charTop, charBottom;
+  
   charLeft = (uint8_t)this->x;
   charRight = (uint8_t)(this->x + CHARACTER_W);
   charTop = (uint8_t)this->y;
   charBottom = (uint8_t)this->y + CHARACTER_H;
 
-  if (charLeft <= aTile.right + 1
+  if (charLeft <= aTile.right
       && charRight >= aTile.left
       && charTop <= aTile.bottom
       && charBottom >= aTile.top) {
@@ -244,6 +331,21 @@ bool Character::collides(Tile aTile) {
         
       } else return false;
       
+}
+
+bool Character::isVerticalAlignedWith(Tile aTile) {
+  
+  uint8_t charLeft, charRight;
+  
+  charLeft = (uint8_t)this->x;
+  charRight = (uint8_t)(this->x + CHARACTER_W);
+
+  if (charRight <= aTile.right 
+  && charLeft >= aTile.left) {
+    
+    return true;
+    
+  } else return false;
 }
 
 void Character::trigJump() {

@@ -22,9 +22,8 @@ void GameController::initSpace()  {
 }
 
 void GameController::getInputs() {
+  
 //to come : conditions gameon, dashboard, menu, glitch, etc..
-
-  //this->character->reqFall();
 
   if(gb.buttons.repeat(BUTTON_RIGHT, 1)){
     this->character->reqWalkRight();
@@ -35,9 +34,19 @@ void GameController::getInputs() {
   if(gb.buttons.pressed(BUTTON_A)) {
     this->character->reqJump();
   }
-  /*if(gb.buttons.repeat(BUTTON_DOWN, 1)) {
-    this->character->reqFall();
-  } à voir plus tard... peut-être pas utiliser reqFall() mais un truc plus adapté genre reqGetDown() pour descendre une échelle par ex.. pas forcément lié à la gravité*/
+  
+  if(gb.buttons.repeat(BUTTON_UP, 1)) {
+    this->character->reqUp();
+  }
+
+  if(gb.buttons.repeat(BUTTON_DOWN, 1)) {
+    this->character->reqDown();
+  }
+
+  if(gb.buttons.released(BUTTON_UP) || gb.buttons.released(BUTTON_DOWN)) {
+    this->character->reqStopY();
+  }
+  
   if(gb.buttons.released(BUTTON_LEFT) || gb.buttons.released(BUTTON_RIGHT)) {
     this->character->reqStand();
   }
