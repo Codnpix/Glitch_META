@@ -68,17 +68,17 @@ void Character::update(Space* space) {
 
   //debugging
   gb.display.setColor(RED);
-  if (this->isOnGround) gb.display.println("GROUND");
+  //if (this->isOnGround) gb.display.println("GROUND");
   //if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
   
   //if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
   //if (this->isClimbing) gb.display.println("CLIMBING");
   //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
   //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
-  gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
+  //gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
   //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
-  gb.display.printf("ON LADDER : %d \n", this->isOnLadder);
-  gb.display.printf("CAN LADDER UP : %d \n", this->canLadderUp);
+  //gb.display.printf("ON LADDER : %d \n", this->isOnLadder);
+  //gb.display.printf("CAN LADDER UP : %d \n", this->canLadderUp);
 }
 
 void Character::handleXReqs() {
