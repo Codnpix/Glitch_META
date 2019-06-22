@@ -30,14 +30,6 @@ void Character::reqJump() {
   this->reqYMarker = 'j';
 }
 
-void Character::reqUp() {
-  if (this->isOnLadder) this->reqYMarker = 'u';
-}
-
-void Character::reqDown() {
-  if (this->isOnLadder && !this->isOnGround) this->reqYMarker = 'd';
-}
-
 void Character::applyMove() {
   
   this->x += this->vx;
@@ -58,7 +50,8 @@ void Character::update(Space* space) {
   this->handleGround();
 
   //handle Y moves requests if character is on a ladder
-  if (this->isOnLadder) this->handleLadderYReqs(this->reqYMarker);
+  //if (this->isOnLadder) this->handleLadderYReqs(this->reqYMarker);
+  
   //handle Y moves requests in normal conditions
   this->handleYReqs(this->reqYMarker);
   
@@ -133,36 +126,6 @@ void Character::handleYReqs(char req) {
     this->isClimbing == true;
     this->trigClimb();
   }
-}
-
-void Character::handleLadderYReqs(char req) {
-  
-  //nullify the normal condition requests
-  /*if (req == 'j') {
-    this->reqYMarker = 'n';
-  } else if (req == 'c') {
-    this->reqYMarker = 'n';//maybe no need
-  }*/
-  
-  if (req == 'u') {//ladder up
-    
-    if (this->canLadderUp) {
-      
-      this->isOnGround = false;
-      this->G_resistance = - 1 - GRAVITY;//TMP ! don't put a hardcoded value
-      
-    } else this->reqYMarker = 's';
-     
-  } else if (req == 'd') {//ladder down
-    
-    this->G_resistance = - GRAVITY + 1;//TMP !
-    
-  } else if (req == 's' || req == 'n') {//ladder stop
-    
-    this->G_resistance = -GRAVITY;
-    
-  }
-
 }
 
 void Character::checkCollisions(Space* space) {
@@ -265,47 +228,6 @@ void Character::checkCollisions(Space* space) {
     }
     
   } else this->canGrabRight = false;
-
-  //test for ladders
-  if ((this->collides(nTiles[0]) 
-    && nTiles[0].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[0]))
-  || (this->collides(nTiles[1]) 
-    && nTiles[1].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[1]))
-  || (this->collides(nTiles[2]) 
-    && nTiles[2].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[2]))
-  || (this->collides(nTiles[3]) 
-    && nTiles[3].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[3]))
-  || (this->collides(nTiles[4]) 
-    && nTiles[4].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[4]))
-  || (this->collides(nTiles[5]) 
-    && nTiles[5].type == 'e' 
-    && this->isVerticalAlignedWith(nTiles[5]))) {
-      
-      this->isOnLadder = true;
-
-      if (nTiles[0].type != 'e' 
-      && nTiles[1].type != 'e' 
-      && nTiles[2].type != 'e' 
-      && nTiles[3].type != 'e') {
-        
-        this->canLadderUp = false;
-        
-      } else this->canLadderUp = true;
-      
-      this->canLadderDown = true;
-      
-    } else {
-      this->canLadderUp = false;
-      this->canLadderDown = false;
-      this->isOnLadder = false;
-      if(!this->isOnGround && ! this->isJumping && !this->isClimbing) this->reqYMarker = 'n';
-    }
-    
 
   //unlock collisions for not getting stuck if character wants to get away from collision
   if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;

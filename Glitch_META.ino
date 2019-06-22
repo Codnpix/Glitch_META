@@ -33,7 +33,7 @@ void loop() {
   //gb.display.println(gb.getFreeRam());
   
   /*
-   * generate pattern hyperbole : 
+   * generate pattern curve : 
    * 
    
    if(gb.buttons.pressed(BUTTON_B)) {

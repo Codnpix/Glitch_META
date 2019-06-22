@@ -15,6 +15,7 @@ void View::draw(Space* space, Character* character) {
   }
   
   //decor
+  gb.display.setPalette(DECOR_PALETTE);
   gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
 //TEMPORAIRE draw logictiles

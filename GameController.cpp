@@ -36,11 +36,11 @@ void GameController::getInputs() {
   }
   
   if(gb.buttons.repeat(BUTTON_UP, 1)) {
-    this->character->reqUp();
+    //this->character->reqUp();
   }
 
   if(gb.buttons.repeat(BUTTON_DOWN, 1)) {
-    this->character->reqDown();
+    //this->character->reqDown();
   }
 
   if(gb.buttons.released(BUTTON_UP) || gb.buttons.released(BUTTON_DOWN)) {
