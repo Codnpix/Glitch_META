@@ -14,12 +14,12 @@ class View {
     uint8_t spaceIndex;
 
     void followCharacter(float charX, float charY);
+    void drawCharacter(float charX, float charY, char* state, int8_t charW, uint8_t charH);
 
   public:
     void draw(Space* space, Character* character);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);
     void setSpaceIndex(uint8_t index);
-  
 };
 #endif

@@ -6,20 +6,24 @@ void Character::init(uint8_t spawnX, uint8_t spawnY) {
   this->isJumping = false;
   this->isClimbing = false;
   this->direction = 'r';
+  this->animationState = "STAND";
 }
 
 void Character::reqWalkRight() {
   this->reqXMarker = 'r';
   this->direction = 'r';
+  this->animationState = "WALK";
 }
 
 void Character::reqWalkLeft() {
   this->reqXMarker = 'l';
   this->direction = 'l';
+  this->animationState = "WALK";
 }
 
 void Character::reqStand() {
   this->reqXMarker = 'n';
+  this->animationState = "STAND";
 }
 
 void Character::reqStopY() {

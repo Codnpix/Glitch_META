@@ -9,10 +9,6 @@ void View::draw(Space* space, Character* character) {
   this->followCharacter(charX, charY);
 
   gb.display.clear();
-  //background
-  for (uint8_t tile = 0; tile < 8; tile++) {
-    //gb.display.drawImage(this->cameraPosX + tile * BACKGROUND_TILE_W, 0 / 1.5, backgrounds[this->spaceIndex]);
-  }
   
   //decor
   gb.display.setPalette(DECOR_PALETTE);
@@ -40,10 +36,8 @@ void View::draw(Space* space, Character* character) {
   
   //character
   int8_t charWdir;
-  charWdir = (character->getDirection() == 'r') ? CHARACTER_W : -CHARACTER_W;
-  gb.display.drawImage(this->cameraPosX + charX, this->cameraPosY + charY, charSprite, charWdir, CHARACTER_H);
-
-  
+  charWdir = (character->getDirection() == 'r') ? -CHARACTER_W : CHARACTER_W;
+  this->drawCharacter(this->cameraPosX + charX, this->cameraPosY + charY, character->animationState, charWdir, CHARACTER_H);
 }
 
 void View::followCharacter(float charX, float charY) {
@@ -66,4 +60,13 @@ void View::setCameraPosX(int16_t x) {
 
 void View::setCameraPosY(int16_t y) {
   this->cameraPosY = y;
+}
+
+void View::drawCharacter(float X, float Y, char* state, int8_t charW, uint8_t charH) {
+  gb.display.setPalette(CHAR_SPRITE_PALETTE);
+  if (state == "STAND") {
+    gb.display.drawImage(X, Y, charSpriteStand, charW, charH);
+  } else if (state == "WALK") {
+    gb.display.drawImage(X, Y, charSpriteWalk, charW, charH);
+  }
 }

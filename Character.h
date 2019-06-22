@@ -4,7 +4,7 @@
 #include <Gamebuino-Meta.h>
 #include "constants.h"
 #include "mvtPatterns.h"
-#include "Space.h";
+#include "Space.h"
 
 class Character {
   private:
@@ -54,6 +54,7 @@ class Character {
   public:
     bool isClimbing;
     bool isJumping;
+    char* animationState;
   
     char typeOfCollision;
     void reqWalkRight();
