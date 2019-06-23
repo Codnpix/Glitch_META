@@ -12,18 +12,15 @@ void Character::init(uint8_t spawnX, uint8_t spawnY) {
 void Character::reqWalkRight() {
   this->reqXMarker = 'r';
   this->direction = 'r';
-  this->animationState = "WALK";
 }
 
 void Character::reqWalkLeft() {
   this->reqXMarker = 'l';
   this->direction = 'l';
-  this->animationState = "WALK";
 }
 
 void Character::reqStand() {
   this->reqXMarker = 'n';
-  this->animationState = "STAND";
 }
 
 void Character::reqStopY() {
@@ -35,33 +32,33 @@ void Character::reqJump() {
 }
 
 void Character::applyMove() {
-  
   this->x += this->vx;
   this->y += this->vy;
-  
   if (this->isOnGround) {
     this->y = yGround - CHARACTER_H;//correction, set the character right on the floor e.g. if he stops one pixel too low
   }
 }
 
+void Character::updateAnimationState() {
+  if (this->vx != 0 && this->isOnGround){
+    this->animationState = "WALK";
+  } else if (this->vx == 0 && this->isOnGround){
+    this->animationState = "STAND";
+  } else if (this->isJumping){
+    this->animationState = "JUMP";
+  } else if (this->isClimbing) {
+    this->animationState = "CLIMB";
+  }
+}
+
 void Character::update(Space* space) {
-
   this->checkCollisions(space);
-
   this->handleXReqs();
-
-  //update the ground constraint for Y moves :
-  this->handleGround();
-
-  //handle Y moves requests if character is on a ladder
-  //if (this->isOnLadder) this->handleLadderYReqs(this->reqYMarker);
-  
-  //handle Y moves requests in normal conditions
+  this->handleGround();//update the ground constraint for Y moves
   this->handleYReqs(this->reqYMarker);
-  
   this->vy = GRAVITY + this->G_resistance;
-
   this->applyMove();
+  this->updateAnimationState();
 
   //debugging
   gb.display.setColor(RED);
@@ -74,36 +71,28 @@ void Character::update(Space* space) {
   //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
   //gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
   //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
-  //gb.display.printf("ON LADDER : %d \n", this->isOnLadder);
-  //gb.display.printf("CAN LADDER UP : %d \n", this->canLadderUp);
+  //gb.display.printf("STATE : %s",this->animationState);
 }
 
 void Character::handleXReqs() {
   if (this->reqXMarker == 'r') {
-    
     if (!this->collidesRight) this->vx = 1;
     else {
       this->vx = 0;
     }
-    
   } else if (this->reqXMarker == 'l') {
-    
     if (!this->collidesLeft) this->vx = -1;
     else {
       this->vx = 0;
     }
-    
   } else if (this->reqXMarker == 'n') this->vx = 0;
 }
 
 void Character::handleGround() {
-  
   if(this->isOnGround && this->reqYMarker == 'n') {
     this->G_resistance = - GRAVITY;
   }
-  
   if(this->isOnGround && this->vy > 0) {
-    
     this->isJumping = false;
     this->reqYMarker = 'n';
     this->jumpFrame = 0;
@@ -114,20 +103,15 @@ void Character::handleGround() {
 void Character::handleYReqs(char req) {
   //jumping
   if (req == 'j') {
-    
     this->isJumping = true;
     this->trigJump();
-    
   } else if(req == 'n' && !this->isOnGround) {
-    
     this->G_resistance = 0;
   }
-
   //climbing
   if (req == 'c') {
-    
-    this->isJumping == false;
-    this->isClimbing == true;
+    this->isJumping = false;
+    this->isClimbing = true;
     this->trigClimb();
   }
 }
@@ -191,7 +175,6 @@ void Character::checkCollisions(Space* space) {
   && (this->collides(nTiles[3]) && nTiles[3].type != 's')) {
     
     this->collidesRight = false;
-    
   }
   
   if ((this->collides(nTiles[0]) && nTiles[0].type == 's')
@@ -221,16 +204,11 @@ void Character::checkCollisions(Space* space) {
   } else this->canGrabLeft = false;
   
   if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') {
-    
     this->canGrabRight = true;//no need ?
-    
     if (this->reqXMarker == 'r') {
-      
       this->reqYMarker = 'c';
       this->yToClimb = nTiles[3].top;
-      
     }
-    
   } else this->canGrabRight = false;
 
   //unlock collisions for not getting stuck if character wants to get away from collision
@@ -252,44 +230,21 @@ bool Character::collides(Tile aTile) {
       && charRight >= aTile.left
       && charTop <= aTile.bottom
       && charBottom >= aTile.top) {
-        
         return true;
-        
       } else return false;
-      
-}
-
-bool Character::isVerticalAlignedWith(Tile aTile) {
-  
-  uint8_t charLeft, charRight;
-  
-  charLeft = (uint8_t)this->x;
-  charRight = (uint8_t)(this->x + CHARACTER_W);
-
-  if (charRight <= aTile.right 
-  && charLeft >= aTile.left) {
-    
-    return true;
-    
-  } else return false;
 }
 
 void Character::trigJump() {
-  
   if (isOnGround) {
     this->jumpFrame = 0;
     this->isOnGround = false;
   }
-  
   this->nextFrame = false;
-  
   this->playPatternJump(this->jumpFrame);
-  
   if(!this->nextFrame) {
     this->jumpFrame++;
     this->nextFrame = true;
   }
-  
 }
 
 void Character::playPatternJump(uint8_t frame) {
@@ -299,9 +254,7 @@ void Character::playPatternJump(uint8_t frame) {
 }
 
 void Character::trigClimb() {
-  
   if(this->reqXMarker == 'n') {
-    
     this->G_resistance = 0;
     this->reqYMarker = 'n';
     this->climbInitialized = false;
@@ -309,43 +262,28 @@ void Character::trigClimb() {
     this->isClimbing = false;
     return;
   }
-  
   if (!this->climbTrigged) {
-    
-    this->frame = 0;
+    this->climbFrame = 0;
     this->climbTrigged = true;
   }
-
   this->nextFrame = false;
-
-  this->playPatternClimb(this->frame);
-
+  this->playPatternClimb(this->climbFrame);
   if (!this->nextFrame) {
-    
-    this->frame ++;
+    this->climbFrame++;
     this->nextFrame = true;
   }
-  //climb need to stop trigging when reqXmarker == 'n';
 }
 
 void Character::playPatternClimb(uint8_t frame) {
-  
   if (!this->climbInitialized) {
-    
-    this->y = this->yToClimb - 4;//? ajuster...
+    this->y = this->yToClimb - 4;//? ajust...
     this->climbInitialized = true;
   }
-
   if (this->climbInitialized) {
-    
     if(this->y + CHARACTER_H >= this->yToClimb) {
-      
-      if (frame>=9) frame = 8;//prevent pattern array out of bound iteration
-      
+      if (frame>=8) frame = 8;//prevent pattern array out of bound iteration
       this->G_resistance = CLIMB_VY_PATTERN[frame] - GRAVITY;
-      
-    } else {
-      
+    } else { 
       this->G_resistance = 0;
       this->reqYMarker = 'n';
       this->climbInitialized = false;

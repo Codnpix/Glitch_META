@@ -53,23 +53,16 @@ void GameController::getInputs() {
 }
 
 void GameController::updateGame() {
-
   this->getInputs();
   this->character->update(this->space);
-  
 }
 
 
 void GameController::draw() {
   uint8_t spaceIndex;
-
   float charX = this->character->getX();
   float charY = this->character->getY();
-  
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
-  
   this->view->draw(this->space, this->character);
-  // faire plutôt: this->view->draw(this->space, this->character);
-  // et dans view : View::draw(Space* space, Character* character);
 }

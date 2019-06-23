@@ -12,11 +12,16 @@ class View {
     int16_t cameraPosX;
     int16_t cameraPosY;
     uint8_t spaceIndex;
+    uint8_t charWalkClock;
+    uint8_t charAnimFrame;
 
     void followCharacter(float charX, float charY);
-    void drawCharacter(float charX, float charY, char* state, int8_t charW, uint8_t charH);
+    void handleCharacterAnimation(Character* character);
+    void drawCharacter(float charX, float charY,Character* character, int8_t charW, uint8_t charH);
+    void setSpriteSheet(Character* character);
 
   public:
+    Image spriteSheet;
     void draw(Space* space, Character* character);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);

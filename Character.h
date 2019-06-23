@@ -31,7 +31,7 @@ class Character {
     
     char direction;
     uint8_t jumpFrame;
-    uint8_t frame;
+    uint8_t climbFrame;
     bool nextFrame;
     uint8_t yGround;//y coordinate of the current ground
     float G_resistance;
@@ -42,21 +42,24 @@ class Character {
     void playPatternClimb(uint8_t frame);
     
     void applyMove();
+    void updateAnimationState();
     
     void checkCollisions(Space* space);
     bool collides(Tile aTile);
-    bool isVerticalAlignedWith(Tile aTile);
+    //bool isVerticalAlignedWith(Tile aTile);
 
     void handleXReqs();
     void handleGround();
     void handleYReqs(char req);
 
   public:
-    bool isClimbing;
-    bool isJumping;
-    char* animationState;
+    bool isClimbing;//replace by private prop + public getter
+    bool isJumping;//replace by private prop + public getter
+    
+    char* animationState;//replace by private prop + public getter
+    //uint8_t animationFrame;//replace by private prop + public getter
   
-    char typeOfCollision;
+    //char typeOfCollision;
     void reqWalkRight();
     void reqWalkLeft();
     void reqJump();

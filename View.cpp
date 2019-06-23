@@ -1,5 +1,4 @@
 #include "View.h"
-
 #include "graphicAssets.h"
 #include "constants.h"
 
@@ -37,7 +36,9 @@ void View::draw(Space* space, Character* character) {
   //character
   int8_t charWdir;
   charWdir = (character->getDirection() == 'r') ? -CHARACTER_W : CHARACTER_W;
-  this->drawCharacter(this->cameraPosX + charX, this->cameraPosY + charY, character->animationState, charWdir, CHARACTER_H);
+  this->setSpriteSheet(character);
+  this->handleCharacterAnimation(character);
+  this->drawCharacter(this->cameraPosX + charX, this->cameraPosY + charY, character, charWdir, CHARACTER_H);
 }
 
 void View::followCharacter(float charX, float charY) {
@@ -62,11 +63,41 @@ void View::setCameraPosY(int16_t y) {
   this->cameraPosY = y;
 }
 
-void View::drawCharacter(float X, float Y, char* state, int8_t charW, uint8_t charH) {
-  gb.display.setPalette(CHAR_SPRITE_PALETTE);
-  if (state == "STAND") {
-    gb.display.drawImage(X, Y, charSpriteStand, charW, charH);
-  } else if (state == "WALK") {
-    gb.display.drawImage(X, Y, charSpriteWalk, charW, charH);
+void View::setSpriteSheet(Character* character) {
+  if (character->animationState == "WALK" 
+  || character->animationState == "STAND") {
+    this->spriteSheet = charSpriteWalk;
+  } else if (character->animationState == "JUMP") {
+    this->spriteSheet = charSpriteJump;
   }
+}
+
+void View::handleCharacterAnimation(Character* character) {
+  if(character->animationState == "WALK") {
+    this->charWalkClock = this->charWalkClock ?: 0;
+    this->charWalkClock++;
+    if (this->charWalkClock == CHARACTER_WALK_SPEED) {
+      this->charAnimFrame = ++this->charAnimFrame % CHARACTER_WALK_FRAMES_NB;
+      this->charWalkClock = 0;
+    }
+  }
+  else if(character->animationState == "STAND") {
+    this->charAnimFrame = 0;
+  }
+  else if (character->animationState == "JUMP") {
+    if (this->charAnimFrame < CHARACTER_JUMP_FRAMES_NB){
+      this->charAnimFrame = ++this->charAnimFrame;
+    } else {
+      this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
+    }
+  }
+  /*else if (character->animationState == "CLIMB") {
+    
+  }*/
+}
+
+void View::drawCharacter(float X, float Y, Character* character, int8_t charW, uint8_t charH) {
+  gb.display.setPalette(CHAR_SPRITE_PALETTE);
+  this->spriteSheet.setFrame(this->charAnimFrame);
+  gb.display.drawImage(X, Y, this->spriteSheet, charW, charH);
 }
