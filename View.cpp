@@ -32,13 +32,14 @@ void View::draw(Space* space, Character* character) {
     }
   }
 
-  
   //character
   int8_t charWdir;
-  charWdir = (character->getDirection() == 'r') ? -CHARACTER_W : CHARACTER_W;
+  uint8_t wDif = (CHARACTER_GRAPHIC_WIDTH - CHARACTER_W) / 2 ;
+  //charWdir = (character->getDirection() == 'r') ? -CHARACTER_W : CHARACTER_W;
+  charWdir = (character->getDirection() == 'r') ? -CHARACTER_GRAPHIC_WIDTH : CHARACTER_GRAPHIC_WIDTH;
   this->setSpriteSheet(character);
   this->handleCharacterAnimation(character);
-  this->drawCharacter(this->cameraPosX + charX, this->cameraPosY + charY, character, charWdir, CHARACTER_H);
+  this->drawCharacter(this->cameraPosX + charX - wDif, this->cameraPosY + charY, character, charWdir, CHARACTER_H);
 }
 
 void View::followCharacter(float charX, float charY) {
@@ -69,6 +70,8 @@ void View::setSpriteSheet(Character* character) {
     this->spriteSheet = charSpriteWalk;
   } else if (character->animationState == "JUMP") {
     this->spriteSheet = charSpriteJump;
+  } else if (character->animationState == "CLIMB") {
+    this->spriteSheet = charSpriteClimb;
   }
 }
 
@@ -91,9 +94,13 @@ void View::handleCharacterAnimation(Character* character) {
       this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
     }
   }
-  /*else if (character->animationState == "CLIMB") {
-    
-  }*/
+  else if (character->animationState == "CLIMB") {
+    if (this->charAnimFrame < CHARACTER_CLIMB_FRAMES_NB){
+      this->charAnimFrame = ++this->charAnimFrame;
+    } else {
+      this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
+    }
+  }
 }
 
 void View::drawCharacter(float X, float Y, Character* character, int8_t charW, uint8_t charH) {
