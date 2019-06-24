@@ -68,7 +68,7 @@ void View::setSpriteSheet(Character* character) {
   if (character->animationState == "WALK" 
   || character->animationState == "STAND") {
     this->spriteSheet = charSpriteWalk;
-  } else if (character->animationState == "JUMP") {
+  } else if (character->animationState == "JUMP" || character->animationState == "FALL") {
     this->spriteSheet = charSpriteJump;
   } else if (character->animationState == "CLIMB") {
     this->spriteSheet = charSpriteClimb;
@@ -100,6 +100,9 @@ void View::handleCharacterAnimation(Character* character) {
     } else {
       this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
     }
+  }
+  else if (character->animationState == "FALL") {
+    this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
   }
 }
 

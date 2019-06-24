@@ -48,6 +48,8 @@ void Character::updateAnimationState() {
     this->animationState = "JUMP";
   } else if (this->isClimbing) {
     this->animationState = "CLIMB";
+  } else if (!this->isJumping && this->vy > 0) {
+    this->animationState = "FALL";
   }
 }
 

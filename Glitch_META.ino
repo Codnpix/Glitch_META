@@ -29,8 +29,8 @@ void loop() {
   gameController->draw();
   gameController->updateGame();
   //gb.display.setColor(RED);
-  //gb.display.println(gb.getCpuLoad());
-  //gb.display.println(gb.getFreeRam());
+  //gb.display.printf("CPU : %d \n", gb.getCpuLoad());
+  //gb.display.printf("RAM : %d \n", gb.getFreeRam());
   
   /*
    * generate pattern curve : 
