@@ -26,7 +26,7 @@ void View::draw(Space* space, Character* character) {
         tileY = cameraPosY + LOGIC_TILE_H * row;
         
         //gb.display.setColor(GREEN);//tmp
-        //gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//tmp
+        //gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//debugging
         
       }
     }
@@ -65,13 +65,14 @@ void View::setCameraPosY(int16_t y) {
 }
 
 void View::setSpriteSheet(Character* character) {
-  if (character->animationState == "WALK" 
-  || character->animationState == "STAND") {
+  if (character->animationState == "WALK" ) {
     this->spriteSheet = charSpriteWalk;
   } else if (character->animationState == "JUMP" || character->animationState == "FALL") {
     this->spriteSheet = charSpriteJump;
   } else if (character->animationState == "CLIMB") {
     this->spriteSheet = charSpriteClimb;
+  } else if (character->animationState == "STAND") {
+    this->spriteSheet = charSpriteBase;
   }
 }
 

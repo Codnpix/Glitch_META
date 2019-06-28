@@ -219,7 +219,7 @@ void Character::checkCollisions(Space* space) {
 
 }
 
-bool Character::collides(Tile aTile) {
+bool Character::collides(Tile tile) {
   
   uint8_t charLeft, charRight, charTop, charBottom;
   
@@ -228,10 +228,10 @@ bool Character::collides(Tile aTile) {
   charTop = (uint8_t)this->y;
   charBottom = (uint8_t)this->y + CHARACTER_H;
 
-  if (charLeft <= aTile.right
-      && charRight >= aTile.left
-      && charTop <= aTile.bottom
-      && charBottom >= aTile.top) {
+  if (charLeft <= tile.right
+      && charRight >= tile.left
+      && charTop <= tile.bottom
+      && charBottom >= tile.top) {
         return true;
       } else return false;
 }
@@ -250,7 +250,7 @@ void Character::trigJump() {
 }
 
 void Character::playPatternJump(uint8_t frame) {
-  if (frame < 9) {
+  if (frame < JUMP_PATTERN_LENGTH) {
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
   }
 }
