@@ -6,7 +6,8 @@
 #include "mvtPatterns.h"
 #include "Space.h"
 
-class Character {
+class Character 
+{
   private:
     float x;
     float y;

@@ -5,10 +5,9 @@
 #include "Space.h"
 #include "Character.h"
 
-class View {
-
+class View 
+{
   private:
-
     int16_t cameraPosX;
     int16_t cameraPosY;
     uint8_t spaceIndex;

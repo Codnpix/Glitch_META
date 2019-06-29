@@ -66,7 +66,6 @@ void Character::update(Space* space) {
   gb.display.setColor(RED);
   //if (this->isOnGround) gb.display.println("GROUND");
   //if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
-  
   //if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
   //if (this->isClimbing) gb.display.println("CLIMBING");
   //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
@@ -192,22 +191,25 @@ void Character::checkCollisions(Space* space) {
   }
 
   //tests if character can grab ground above him
-  if (this->collidesLeft && nTiles[0].type == ' ' && this->direction == 'l') {
-    
+  if (this->collidesLeft 
+  && nTiles[0].type == ' ' 
+  && this->direction == 'l') 
+  {
     this->canGrabLeft = true;//no need ?
     
-    if (this->reqXMarker == 'l') {
+    if (this->reqXMarker == 'l')
+    {
       
       this->reqYMarker = 'c';
       this->yToClimb = nTiles[2].top;
-      
     }
-    
   } else this->canGrabLeft = false;
   
-  if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') {
+  if (this->collidesRight && nTiles[1].type == ' ' && this->direction == 'r') 
+  {
     this->canGrabRight = true;//no need ?
-    if (this->reqXMarker == 'r') {
+    if (this->reqXMarker == 'r') 
+    {
       this->reqYMarker = 'c';
       this->yToClimb = nTiles[3].top;
     }
@@ -216,13 +218,11 @@ void Character::checkCollisions(Space* space) {
   //unlock collisions for not getting stuck if character wants to get away from collision
   if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;
   if (this->collidesRight && this->vx < 0) this->collidesRight = false;
-
 }
 
-bool Character::collides(Tile tile) {
-  
+bool Character::collides(Tile tile) 
+{  
   uint8_t charLeft, charRight, charTop, charBottom;
-  
   charLeft = (uint8_t)this->x;
   charRight = (uint8_t)(this->x + CHARACTER_W);
   charTop = (uint8_t)this->y;
@@ -231,32 +231,40 @@ bool Character::collides(Tile tile) {
   if (charLeft <= tile.right
       && charRight >= tile.left
       && charTop <= tile.bottom
-      && charBottom >= tile.top) {
+      && charBottom >= tile.top) 
+      {
         return true;
       } else return false;
 }
 
-void Character::trigJump() {
-  if (isOnGround) {
+void Character::trigJump() 
+{
+  if (isOnGround) 
+  {
     this->jumpFrame = 0;
     this->isOnGround = false;
   }
   this->nextFrame = false;
   this->playPatternJump(this->jumpFrame);
-  if(!this->nextFrame) {
+  if(!this->nextFrame) 
+  {
     this->jumpFrame++;
     this->nextFrame = true;
   }
 }
 
-void Character::playPatternJump(uint8_t frame) {
-  if (frame < JUMP_PATTERN_LENGTH) {
+void Character::playPatternJump(uint8_t frame) 
+{
+  if (frame < JUMP_PATTERN_LENGTH) 
+  {
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
   }
 }
 
-void Character::trigClimb() {
-  if(this->reqXMarker == 'n') {
+void Character::trigClimb() 
+{
+  if(this->reqXMarker == 'n') 
+  {
     this->G_resistance = 0;
     this->reqYMarker = 'n';
     this->climbInitialized = false;
@@ -264,28 +272,35 @@ void Character::trigClimb() {
     this->isClimbing = false;
     return;
   }
-  if (!this->climbTrigged) {
+  if (!this->climbTrigged) 
+  {
     this->climbFrame = 0;
     this->climbTrigged = true;
   }
   this->nextFrame = false;
   this->playPatternClimb(this->climbFrame);
-  if (!this->nextFrame) {
+  if (!this->nextFrame) 
+  {
     this->climbFrame++;
     this->nextFrame = true;
   }
 }
 
-void Character::playPatternClimb(uint8_t frame) {
-  if (!this->climbInitialized) {
+void Character::playPatternClimb(uint8_t frame) 
+{
+  if (!this->climbInitialized) 
+  {
     this->y = this->yToClimb - 4;//? ajust...
     this->climbInitialized = true;
   }
-  if (this->climbInitialized) {
-    if(this->y + CHARACTER_H >= this->yToClimb) {
-      if (frame>=8) frame = 8;//prevent pattern array out of bound iteration
+  if (this->climbInitialized) 
+  {
+    if(this->y + CHARACTER_H > this->yToClimb) 
+    {
+      if (frame > CLIMB_PATTERN_LENGTH - 1) frame = CLIMB_PATTERN_LENGTH - 1;//prevent pattern array out of bound iteration
       this->G_resistance = CLIMB_VY_PATTERN[frame] - GRAVITY;
-    } else { 
+    } else 
+    { 
       this->G_resistance = 0;
       this->reqYMarker = 'n';
       this->climbInitialized = false;
@@ -295,27 +310,33 @@ void Character::playPatternClimb(uint8_t frame) {
   }
 }
 
-float Character::getX() {
+float Character::getX() 
+{
   return this->x;
 }
 
-float Character::getY() {
+float Character::getY() 
+{
   return this->y;
 }
 
-void Character::setPosition(float x, float y) {
+void Character::setPosition(float x, float y) 
+{
   this->x = x;
   this->y = y;
 }
 
-float Character::getVx() {
+float Character::getVx() 
+{
   return this->vx;
 }
 
-float Character::getVy() {
+float Character::getVy() 
+{
   return this->vy;
 }
 
-char Character::getDirection() {
+char Character::getDirection() 
+{
   return this->direction;
 }

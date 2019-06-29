@@ -7,7 +7,8 @@
 #include "Space.h"
 #include "View.h"
 
-class GameController {
+class GameController 
+{
   
   private:
     Character* character;

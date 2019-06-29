@@ -24,7 +24,7 @@ void setup() {
 
 void loop() {
   
-  while(!gb.update());
+  gb.waitForUpdate();
   
   gameController->draw();
   gameController->updateGame();
