@@ -66,6 +66,7 @@ class Character
     void reqJump();
     void reqStand();
     void reqStopY();
+    void reqEnterDoor();
     
     void update(Space* space);
      

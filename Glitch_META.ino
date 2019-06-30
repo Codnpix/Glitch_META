@@ -9,8 +9,8 @@ Character* character;
 Space* space;
 View* view;
 
-void setup() {
-  
+void setup() 
+{
   gb.begin();
   
   character = new Character();
@@ -22,8 +22,8 @@ void setup() {
   gameController->draw();
 }
 
-void loop() {
-  
+void loop() 
+{
   gb.waitForUpdate();
   
   gameController->draw();
@@ -34,15 +34,13 @@ void loop() {
   
   /*
    * generate pattern curve : 
-   * 
-   
+   *  
    if(gb.buttons.pressed(BUTTON_B)) {
       for(int8_t x=-10; x<10;x++) {
       float y = -(x * x) / 4.0;
       SerialUSB.println(y);
     }
     
-  }*/
-  
-  
+  }
+  */
 }

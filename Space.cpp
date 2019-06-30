@@ -1,5 +1,12 @@
 #include "Space.h"
 
+void Space::init(uint8_t index)
+{
+  this->setIndex(index);
+  this->setLogic();
+  this->setDoors();
+}
+
 uint8_t Space::getIndex() 
 {
   return this->index;
@@ -65,7 +72,7 @@ void Space::setDoors()
   }
 }
 
-Door Space::getDoors(uint8_t index) 
+Door Space::getDoor(uint8_t index) 
 {
   return this->doors[index];
 }

@@ -10,17 +10,18 @@ class Space
 {
   private:
     uint8_t index;
-    
     char logicMap[16][30];
     Door doors[4];
-    
-  public:
-    uint8_t getIndex();
+
     void setIndex(uint8_t index);
-    char getLogic(uint8_t row, uint8_t col);
     void setLogic();
     void setDoors();
-    Door getDoors(uint8_t index);
+    
+  public:
+    void init(uint8_t index);
+    uint8_t getIndex();
+    char getLogic(uint8_t row, uint8_t col);
+    Door getDoor(uint8_t index);
     uint8_t getSpawnX();
     uint8_t getSpawnY();
 };

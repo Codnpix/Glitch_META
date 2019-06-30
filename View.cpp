@@ -33,7 +33,7 @@ void View::draw(Space* space, Character* character)
 
   for (uint8_t doorIndex = 0; doorIndex < NB_DOORS_PER_SPACE; doorIndex ++) 
   {
-    Door door = space->getDoors(doorIndex);
+    Door door = space->getDoor(doorIndex);
     uint8_t doorX, doorY;
     doorX = this->cameraPosX + door.x;
     doorY = this->cameraPosY + door.y;

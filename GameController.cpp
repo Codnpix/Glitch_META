@@ -1,6 +1,9 @@
 #include "GameController.h"
 #include "constants.h"
 
+#define STREET 0
+#define STORE 1
+
 GameController::GameController(Character* character, Space* space, View* view) 
 {
   this->character = character;
@@ -10,8 +13,7 @@ GameController::GameController(Character* character, Space* space, View* view)
 
 void GameController::initGame() 
 {
-  this->initSpace();
-  this->initCharacter();
+  this->loadSpace(STREET);
 }
 
 void GameController::initCharacter() 
@@ -21,9 +23,14 @@ void GameController::initCharacter()
 
 void GameController::initSpace()
 {
-  this->space->setIndex(1);//tmp
-  this->space->setLogic();
-  this->space->setDoors();
+  this->space->init(this->currentSpace);
+}
+
+void GameController::loadSpace(uint8_t spaceIndex)
+{
+  this->setSpace(spaceIndex);
+  this->initSpace();
+  this->initCharacter();
 }
 
 void GameController::getInputs() 
@@ -43,9 +50,10 @@ void GameController::getInputs()
   {
     this->character->reqJump();
   }
-  if(gb.buttons.repeat(BUTTON_UP, 1)) 
+  if(gb.buttons.pressed(BUTTON_UP)) 
   {
-    //this->character->reqUp();
+    this->enterDoor();
+    //this->character->reqEnterDoor();
   }
   if(gb.buttons.repeat(BUTTON_DOWN, 1)) 
   {
@@ -55,7 +63,7 @@ void GameController::getInputs()
   if(gb.buttons.released(BUTTON_UP) 
   || gb.buttons.released(BUTTON_DOWN)) 
   {
-    this->character->reqStopY();
+    //this->character->reqStopY();
   }
   
   if(gb.buttons.released(BUTTON_LEFT) 
@@ -80,4 +88,45 @@ void GameController::draw()
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   this->view->draw(this->space, this->character);
+}
+
+uint8_t GameController::getCurrentSpace() 
+{
+  return this->currentSpace;
+}
+
+void GameController::setSpace(uint8_t spaceIndex)
+{
+  this->currentSpace = spaceIndex;
+}
+
+void GameController::enterDoor()
+{
+  Door door;
+  for (uint8_t i = 0; i < NB_DOORS_PER_SPACE; i++)
+  {
+    if (this->isCharacterFacingDoor(this->space->getDoor(i)))
+    {
+      door = this->space->getDoor(i);
+      this->loadSpace(door.destinationSpace);
+      break;
+      }
+  }
+}
+
+bool GameController::isCharacterFacingDoor(Door door)
+{
+  uint8_t charLeft, charRight, charTop, charBottom;
+  charLeft = (uint8_t)this->character->getX();
+  charRight = charLeft + CHARACTER_W;
+  charTop = (uint8_t)this->character->getY();
+  charBottom = charTop + CHARACTER_H;
+
+  if (charLeft <= door.x + door.w
+      && charRight >= door.x
+      && charTop <= door.y + door.h
+      && charBottom >= door.y) 
+      {
+        return true;
+      } else return false;
 }

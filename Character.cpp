@@ -1,6 +1,7 @@
 #include "Character.h"
 
-void Character::init(uint8_t spawnX, uint8_t spawnY) {
+void Character::init(uint8_t spawnX, uint8_t spawnY) 
+{
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
   this->isJumping = false;
@@ -9,51 +10,70 @@ void Character::init(uint8_t spawnX, uint8_t spawnY) {
   this->animationState = "STAND";
 }
 
-void Character::reqWalkRight() {
+void Character::reqWalkRight() 
+{
   this->reqXMarker = 'r';
   this->direction = 'r';
 }
 
-void Character::reqWalkLeft() {
+void Character::reqWalkLeft() 
+{
   this->reqXMarker = 'l';
   this->direction = 'l';
 }
 
-void Character::reqStand() {
+void Character::reqStand() 
+{
   this->reqXMarker = 'n';
 }
 
-void Character::reqStopY() {
-  if(this->reqYMarker == 'u' || this->reqYMarker == 'd') this->reqYMarker = 's';
+void Character::reqStopY() 
+{
+ // if(this->reqYMarker == 'u' || this->reqYMarker == 'd') this->reqYMarker = 's';
 }
 
-void Character::reqJump() {
+void Character::reqJump() 
+{
   this->reqYMarker = 'j';
 }
 
-void Character::applyMove() {
+void Character::reqEnterDoor()
+{
+  //this wille be just an animation state change, character will show his back, facing the door
+}
+
+void Character::applyMove() 
+{
   this->x += this->vx;
   this->y += this->vy;
-  if (this->isOnGround) {
+  if (this->isOnGround) 
+  {
     this->y = yGround - CHARACTER_H;//correction, set the character right on the floor e.g. if he stops one pixel too low
   }
 }
 
-void Character::updateAnimationState() {
-  if (this->vx != 0 && this->isOnGround){
+void Character::updateAnimationState() 
+{
+  if (this->vx != 0 && this->isOnGround)
+  {
     this->animationState = "WALK";
-  } else if (this->vx == 0 && this->isOnGround){
+  } else if (this->vx == 0 && this->isOnGround)
+  {
     this->animationState = "STAND";
-  } else if (this->isJumping){
+  } else if (this->isJumping)
+  {
     this->animationState = "JUMP";
-  } else if (this->isClimbing) {
+  } else if (this->isClimbing) 
+  {
     this->animationState = "CLIMB";
-  } else if (!this->isJumping && this->vy > 0) {
+  } else if (!this->isJumping && this->vy > 0) 
+  {
     this->animationState = "FALL";
   }
 }
 
-void Character::update(Space* space) {
+void Character::update(Space* space) 
+{
   this->checkCollisions(space);
   this->handleXReqs();
   this->handleGround();//update the ground constraint for Y moves
@@ -75,25 +95,29 @@ void Character::update(Space* space) {
   //gb.display.printf("STATE : %s",this->animationState);
 }
 
-void Character::handleXReqs() {
-  if (this->reqXMarker == 'r') {
+void Character::handleXReqs() 
+{
+  if (this->reqXMarker == 'r') 
+  {
     if (!this->collidesRight) this->vx = 1;
-    else {
-      this->vx = 0;
-    }
-  } else if (this->reqXMarker == 'l') {
+    else this->vx = 0;
+  } 
+  else if (this->reqXMarker == 'l') 
+  {
     if (!this->collidesLeft) this->vx = -1;
-    else {
-      this->vx = 0;
-    }
-  } else if (this->reqXMarker == 'n') this->vx = 0;
+    else this->vx = 0;
+  } 
+  else if (this->reqXMarker == 'n') this->vx = 0;
 }
 
-void Character::handleGround() {
-  if(this->isOnGround && this->reqYMarker == 'n') {
+void Character::handleGround() 
+{
+  if(this->isOnGround && this->reqYMarker == 'n') 
+  {
     this->G_resistance = - GRAVITY;
   }
-  if(this->isOnGround && this->vy > 0) {
+  if(this->isOnGround && this->vy > 0) 
+  {
     this->isJumping = false;
     this->reqYMarker = 'n';
     this->jumpFrame = 0;
@@ -101,25 +125,30 @@ void Character::handleGround() {
   }
 }
 
-void Character::handleYReqs(char req) {
+void Character::handleYReqs(char req) 
+{
   //jumping
-  if (req == 'j') {
+  if (req == 'j') 
+  {
     this->isJumping = true;
     this->trigJump();
-  } else if(req == 'n' && !this->isOnGround) {
+  } 
+  else if(req == 'n' && !this->isOnGround) 
+  {
     this->G_resistance = 0;
   }
   //climbing
-  if (req == 'c') {
+  if (req == 'c') 
+  {
     this->isJumping = false;
     this->isClimbing = true;
     this->trigClimb();
   }
 }
 
-void Character::checkCollisions(Space* space) {
+void Character::checkCollisions(Space* space) 
+{
   //parse logic map, check collisions :
-
   uint8_t colNum = floor((this->x) / LOGIC_TILE_W);
   uint8_t rowNum = floor((this->y) / LOGIC_TILE_H);
   int16_t tileX, tileY;
@@ -132,9 +161,10 @@ void Character::checkCollisions(Space* space) {
   uint8_t i;
   i = 0;
   
-  for (uint8_t row = rowNum; row < rowNum + 3; row++) {
-    for (uint8_t col = colNum; col < colNum + 2; col ++) {
-      
+  for (uint8_t row = rowNum; row < rowNum + 3; row++) 
+  {
+    for (uint8_t col = colNum; col < colNum + 2; col ++) 
+    {
       tileX = LOGIC_TILE_W * col;
       tileY = LOGIC_TILE_H * row;
       
@@ -154,40 +184,39 @@ void Character::checkCollisions(Space* space) {
   }
   //ground collision test
   if ((this->collides(nTiles[4]) && nTiles[4].type == 's' && (this->x <= nTiles[4].right - 3)) 
-  || (this->collides(nTiles[5]) && nTiles[5].type == 's' && (this->x+CHARACTER_W >= nTiles[5].left + 3))) {//you have to bite the ground on 3px min to be onGround
-    
+  || (this->collides(nTiles[5]) && nTiles[5].type == 's' && (this->x+CHARACTER_W >= nTiles[5].left + 3))) 
+  {//we have to bite the ground on 3px min to be onGround
     this->isOnGround = true;
     this->yGround = nTiles[4].top;
     
-  } else if ((this->collides(nTiles[4]) && nTiles[4].type != 's') 
-  || (this->collides(nTiles[5]) && nTiles[5].type != 's')) {
-    
+  }
+  else if ((this->collides(nTiles[4]) && nTiles[4].type != 's') 
+  || (this->collides(nTiles[5]) && nTiles[5].type != 's')) 
+  {
     this->isOnGround = false;
-    
   }
   
   //right or left collision test
  if ((this->collides(nTiles[1]) && nTiles[1].type == 's')
-  || (this->collides(nTiles[3]) && nTiles[3].type == 's')) {
-    
+  || (this->collides(nTiles[3]) && nTiles[3].type == 's')) 
+  {
     this->collidesRight = true;
-    
-  } else if ((this->collides(nTiles[1]) && nTiles[1].type != 's')
-  && (this->collides(nTiles[3]) && nTiles[3].type != 's')) {
-    
+  } 
+  else if ((this->collides(nTiles[1]) && nTiles[1].type != 's')
+  && (this->collides(nTiles[3]) && nTiles[3].type != 's')) 
+  {
     this->collidesRight = false;
   }
   
   if ((this->collides(nTiles[0]) && nTiles[0].type == 's')
-  || (this->collides(nTiles[2]) && nTiles[2].type == 's')) {
-    
+  || (this->collides(nTiles[2]) && nTiles[2].type == 's')) 
+  {
     this->collidesLeft = true;
-    
-  } else if ((this->collides(nTiles[0]) && nTiles[0].type != 's')
-  && (this->collides(nTiles[2]) && nTiles[2].type != 's')) {
-    
+  } 
+  else if ((this->collides(nTiles[0]) && nTiles[0].type != 's')
+  && (this->collides(nTiles[2]) && nTiles[2].type != 's')) 
+  {
     this->collidesLeft = false;
-    
   }
 
   //tests if character can grab ground above him

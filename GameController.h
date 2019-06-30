@@ -14,15 +14,21 @@ class GameController
     Character* character;
     Space* space;
     View* view;
+    uint8_t currentSpace;
 
     void initSpace();
     void initCharacter();
     void getInputs();
+    void enterDoor();
+    bool isCharacterFacingDoor(Door door);
+    void setSpace(uint8_t spaceIndex);
+    void loadSpace(uint8_t spaceIndex);
 
   public:
     GameController(Character* character, Space* space, View* view);
     void initGame();
     void updateGame();
     void draw();
+    uint8_t getCurrentSpace();
 };
 #endif
