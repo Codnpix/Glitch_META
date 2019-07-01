@@ -1,6 +1,5 @@
 #include "View.h"
 #include "graphicAssets.h"
-#include "constants.h"
 
 void View::draw(Space* space, Character* character) 
 {
@@ -25,25 +24,13 @@ void View::draw(Space* space, Character* character)
         int16_t tileX, tileY;
         tileX = this->cameraPosX + LOGIC_TILE_W * col;
         tileY = this->cameraPosY + LOGIC_TILE_H * row;
-        //gb.display.setColor(GREEN);
-        //gb.display.fillRect(tileX, tileY, LOGIC_TILE_W, LOGIC_TILE_H);//debugging
       }
     }
   }
-
-  for (uint8_t doorIndex = 0; doorIndex < NB_DOORS_PER_SPACE; doorIndex ++) 
-  {
-    Door door = space->getDoor(doorIndex);
-    uint8_t doorX, doorY;
-    doorX = this->cameraPosX + door.x;
-    doorY = this->cameraPosY + door.y;
-    //gb.display.setColor(BLUE);
-    //gb.display.fillRect(doorX, doorY, door.w, door.h);//debugging
-  }
+  
   //character
   int8_t charWdir;
   uint8_t wDif = (CHARACTER_GRAPHIC_WIDTH - CHARACTER_W) / 2 ;
-  //charWdir = (character->getDirection() == 'r') ? -CHARACTER_W : CHARACTER_W;
   charWdir = (character->getDirection() == 'r') ? -CHARACTER_GRAPHIC_WIDTH : CHARACTER_GRAPHIC_WIDTH;
   this->setSpriteSheet(character);
   this->handleCharacterAnimation(character);

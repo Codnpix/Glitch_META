@@ -1,18 +1,30 @@
 #include "GameController.h"
-#include "constants.h"
 
+//spaces :
 #define STREET 0
 #define STORE 1
 
-GameController::GameController(Character* character, Space* space, View* view) 
+//cinematics
+#define CHANGE_SPACE 11
+#define GLITCH 12
+
+//cinematic sequences steps
+//change space
+#define FADE_OUT 0
+#define LOAD_SPACE 1
+#define FADE_IN 2
+
+GameController::GameController() 
 {
-  this->character = character;
-  this->space = space;
-  this->view = view;
+  this->character = new Character();
+  this->space = new Space();
+  this->view = new View();
+  this->cinematic = new Cinematic();
 }
 
 void GameController::initGame() 
 {
+  this->cinematicMode = false;
   this->loadSpace(STREET);
 }
 
@@ -28,9 +40,54 @@ void GameController::initSpace()
 
 void GameController::loadSpace(uint8_t spaceIndex)
 {
-  this->setSpace(spaceIndex);
-  this->initSpace();
-  this->initCharacter();
+    this->setSpace(spaceIndex);
+    this->initSpace();
+    this->initCharacter();
+}
+
+void GameController::changeSpace(uint8_t spaceIndex)
+{
+  this->cinematicMode = true;
+  this->nextSpaceIndex = spaceIndex;
+  this->cinematicSeq = CHANGE_SPACE;
+  this->cinematicIndex = FADE_OUT;//initialize sequence first step
+}
+
+void GameController::handleCinematic()
+{
+  switch(this->cinematicSeq)
+  {
+    case CHANGE_SPACE:
+      this->handleChangeSpace();
+      break;
+    case GLITCH:
+      //Glitch sequence
+      break;
+  }
+}
+
+void GameController::handleChangeSpace()
+{
+  switch(this->cinematicIndex)
+    {
+      case FADE_OUT:
+        if (!this->cinematic->playFadeOut())
+        {
+          this->cinematicIndex++;
+        }
+        break;
+      case LOAD_SPACE:
+        this->loadSpace(this->nextSpaceIndex);
+        this->cinematic->playClear();
+        this->cinematicIndex++;
+        break;
+      case FADE_IN:
+        if (!this->cinematic->playFadeIn())
+        {
+          this->cinematicMode = false;
+        }
+        break;
+    }
 }
 
 void GameController::getInputs() 
@@ -53,19 +110,11 @@ void GameController::getInputs()
   if(gb.buttons.pressed(BUTTON_UP)) 
   {
     this->enterDoor();
-    //this->character->reqEnterDoor();
   }
   if(gb.buttons.repeat(BUTTON_DOWN, 1)) 
   {
     //this->character->reqDown();
   }
-
-  if(gb.buttons.released(BUTTON_UP) 
-  || gb.buttons.released(BUTTON_DOWN)) 
-  {
-    //this->character->reqStopY();
-  }
-  
   if(gb.buttons.released(BUTTON_LEFT) 
   || gb.buttons.released(BUTTON_RIGHT)) 
   {
@@ -79,7 +128,6 @@ void GameController::updateGame()
   this->character->update(this->space);
 }
 
-
 void GameController::draw() 
 {
   uint8_t spaceIndex;
@@ -88,6 +136,8 @@ void GameController::draw()
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   this->view->draw(this->space, this->character);
+  
+  if(this->cinematicMode) this->handleCinematic();
 }
 
 uint8_t GameController::getCurrentSpace() 
@@ -107,8 +157,9 @@ void GameController::enterDoor()
   {
     if (this->isCharacterFacingDoor(this->space->getDoor(i)))
     {
+      //this->character->reqEnterDoor(); //play animation character facing door
       door = this->space->getDoor(i);
-      this->loadSpace(door.destinationSpace);
+      this->changeSpace(door.destinationSpace);
       break;
       }
   }

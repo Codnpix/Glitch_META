@@ -27,11 +27,6 @@ void Character::reqStand()
   this->reqXMarker = 'n';
 }
 
-void Character::reqStopY() 
-{
- // if(this->reqYMarker == 'u' || this->reqYMarker == 'd') this->reqYMarker = 's';
-}
-
 void Character::reqJump() 
 {
   this->reqYMarker = 'j';
@@ -177,9 +172,7 @@ void Character::checkCollisions(Space* space)
       tile.bottom = tileY + tileH;
       tile.type = tileType;
       nTiles[i] = tile;
-      
       i++;
-
     }
   }
   //ground collision test
@@ -188,14 +181,12 @@ void Character::checkCollisions(Space* space)
   {//we have to bite the ground on 3px min to be onGround
     this->isOnGround = true;
     this->yGround = nTiles[4].top;
-    
   }
   else if ((this->collides(nTiles[4]) && nTiles[4].type != 's') 
   || (this->collides(nTiles[5]) && nTiles[5].type != 's')) 
   {
     this->isOnGround = false;
   }
-  
   //right or left collision test
  if ((this->collides(nTiles[1]) && nTiles[1].type == 's')
   || (this->collides(nTiles[3]) && nTiles[3].type == 's')) 
@@ -218,14 +209,12 @@ void Character::checkCollisions(Space* space)
   {
     this->collidesLeft = false;
   }
-
   //tests if character can grab ground above him
   if (this->collidesLeft 
   && nTiles[0].type == ' ' 
   && this->direction == 'l') 
   {
     this->canGrabLeft = true;//no need ?
-    
     if (this->reqXMarker == 'l')
     {
       

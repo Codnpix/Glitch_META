@@ -25,4 +25,6 @@ static const uint8_t NB_DOORS_PER_SPACE = 4;
 
 static const uint8_t GRAVITY = 3;
 
+static const uint8_t FADE_LENGTH = 15;
+
 #endif

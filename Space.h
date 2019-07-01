@@ -3,7 +3,6 @@
 
 #include <Gamebuino-Meta.h>
 #include "logicAssets.h"
-#include "constants.h"
 #include "Doors.h"
 
 class Space 

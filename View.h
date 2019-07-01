@@ -4,6 +4,7 @@
 #include <Gamebuino-Meta.h>
 #include "Space.h"
 #include "Character.h"
+#include "Cinematic.h"
 
 class View 
 {
