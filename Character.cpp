@@ -308,7 +308,7 @@ void Character::playPatternClimb(uint8_t frame)
 {
   if (!this->climbInitialized) 
   {
-    this->y = this->yToClimb - 4;//? ajust...
+    this->y = this->yToClimb - 3;//? ajust...
     this->climbInitialized = true;
   }
   if (this->climbInitialized) 

@@ -1,13 +1,21 @@
 #include "Space.h"
 
-void Space::init(uint8_t index)
+void Space::init(uint8_t index, uint8_t spawnDoorIndex)
 {
   this->setIndex(index);
   this->setLogic();
   this->setDoors();
+  this->setSpawn(spawnDoorIndex);
 }
 
-uint8_t Space::getIndex() 
+void Space::setSpawn(uint8_t doorIndex)
+{
+  Door door = spacesDoors[this->index][doorIndex];
+  this->spawnX = door.x + (door.w / 2);
+  this->spawnY = door.y + door.h - CHARACTER_H;
+}
+
+uint8_t Space::getIndex()
 {
   return this->index;
 }
@@ -35,7 +43,7 @@ char Space::getLogic(uint8_t row, uint8_t col)
 
 uint8_t Space::getSpawnX() 
 {
-  uint8_t x;
+  /*uint8_t x;
   for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
   {
     for (uint8_t col = 0; col < LOGIC_COLS; col++) 
@@ -47,12 +55,13 @@ uint8_t Space::getSpawnX()
       }
     }
   }
-  return x;
+  return x;*/
+  return this->spawnX;
 }
 
 uint8_t Space::getSpawnY() 
 {
-  for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
+  /*for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
   {
     for (uint8_t col = 0; col < LOGIC_COLS; col++) 
     {
@@ -61,7 +70,8 @@ uint8_t Space::getSpawnY()
         return (LOGIC_TILE_H * row) + LOGIC_TILE_H - CHARACTER_H;
       }
     }
-  }
+  }*/
+  return this->spawnY;
 }
 
 void Space::setDoors() 

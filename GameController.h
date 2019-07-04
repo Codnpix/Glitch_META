@@ -17,15 +17,16 @@ class GameController
     uint8_t cinematicSeq;
     bool nextFrame;
     uint8_t nextSpaceIndex;
+    uint8_t nextDoorIndex;
 
-    void initSpace();
+    void initSpace(uint8_t doorIndex);
     void initCharacter();
     void getInputs();
     void enterDoor();
     bool isCharacterFacingDoor(Door door);
     void setSpace(uint8_t spaceIndex);
-    void loadSpace(uint8_t spaceIndex);
-    void changeSpace(uint8_t spaceIndex);
+    void loadSpace(uint8_t spaceIndex, uint8_t doorIndex);
+    void changeSpace(uint8_t spaceIndex, uint8_t doorIndex);
 
     void handleCinematic();
     void handleChangeSpace();

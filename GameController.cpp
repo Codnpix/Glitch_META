@@ -24,8 +24,9 @@ GameController::GameController()
 
 void GameController::initGame() 
 {
+  uint8_t defaultSpawnDoorIndex = 0;
   this->cinematicMode = false;
-  this->loadSpace(STREET);
+  this->loadSpace(STREET, defaultSpawnDoorIndex);
 }
 
 void GameController::initCharacter() 
@@ -33,22 +34,23 @@ void GameController::initCharacter()
   this->character->init(this->space->getSpawnX(), this->space->getSpawnY());
 }
 
-void GameController::initSpace()
+void GameController::initSpace(uint8_t doorIndex)
 {
-  this->space->init(this->currentSpace);
+  this->space->init(this->currentSpace, doorIndex);
 }
 
-void GameController::loadSpace(uint8_t spaceIndex)
+void GameController::loadSpace(uint8_t spaceIndex, uint8_t doorIndex)
 {
     this->setSpace(spaceIndex);
-    this->initSpace();
+    this->initSpace(doorIndex);
     this->initCharacter();
 }
 
-void GameController::changeSpace(uint8_t spaceIndex)
+void GameController::changeSpace(uint8_t spaceIndex, uint8_t doorIndex)
 {
   this->cinematicMode = true;
   this->nextSpaceIndex = spaceIndex;
+  this->nextDoorIndex = doorIndex;
   this->cinematicSeq = CHANGE_SPACE;
   this->cinematicIndex = FADE_OUT;//initialize sequence first step
 }
@@ -77,7 +79,7 @@ void GameController::handleChangeSpace()
         }
         break;
       case LOAD_SPACE:
-        this->loadSpace(this->nextSpaceIndex);
+        this->loadSpace(this->nextSpaceIndex, this->nextDoorIndex);
         this->cinematic->playClear();
         this->cinematicIndex++;
         break;
@@ -159,7 +161,7 @@ void GameController::enterDoor()
     {
       //this->character->reqEnterDoor(); //play animation character facing door
       door = this->space->getDoor(i);
-      this->changeSpace(door.destinationSpace);
+      this->changeSpace(door.destinationSpace, door.destinationDoor);
       break;
       }
   }
