@@ -19,4 +19,6 @@ static const float JUMP_VY_PATTERN[13] =
   4.40
 };
 
+static const float CLIMB_SPEED = -3.65;
+
 #endif

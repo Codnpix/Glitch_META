@@ -1,13 +1,13 @@
 #include "Character.h"
 
 //Y move states
-#define CLIMBING 0
-#define JUMPING 1
+#define CLIMBING 1
+#define JUMPING 2
 //grab state
-#define CAN_GRAB_LEFT 0
-#define CAN_GRAB_RIGHT 1
+#define CAN_GRAB_LEFT 1
+#define CAN_GRAB_RIGHT 2
 
-#define NONE 2
+#define NONE 3
 
 void Character::init(uint8_t spawnX, uint8_t spawnY) 
 {
@@ -37,7 +37,14 @@ void Character::reqStand()
 
 void Character::reqJump() 
 {
-  this->reqYMarker = this->moveStateY == JUMPING && this->checkGrab() ? 'c' : 'j';
+  if ((this->moveStateY == JUMPING && this->checkGrab()) || this->reqYMarker == 'c')
+  {
+    this->reqYMarker = 'c';
+  }
+  else
+  {
+    this->reqYMarker = 'j';
+  }
 }
 
 void Character::reqEnterDoor()
@@ -49,7 +56,7 @@ void Character::applyMove()
 {
   this->x += this->vx;
   this->y += this->vy;
-  if (this->isOnGround) 
+  if (this->isOnGround && this->moveStateY == NONE) 
   {
     this->y = yGround - CHARACTER_H;//correction, set the character right on the floor e.g. if he stops one pixel too low
   }
@@ -73,7 +80,7 @@ void Character::updateAnimationState()
   {
     this->animationState = "CLIMB";
   } 
-  else if ((this->moveStateY == JUMPING || this->moveStateY == NONE)&& this->vy > 0)
+  else if ((this->moveStateY == JUMPING || this->moveStateY == NONE) && this->vy > 0)
   {
     this->animationState = "FALL";
   }
@@ -89,21 +96,24 @@ void Character::update(Space* space)
   this->handleGround();//update the ground constraint for Y moves
   this->handleYReqs(this->reqYMarker);
   this->vy = GRAVITY + this->G_resistance;//apply gravity resistance calculation on  vertical speed vy
+  if (this->animationState == "FALL")
+  {
+    this->G_acceleration += 0.30;
+  }
   this->applyMove();//apply speed to position
   //animation
   this->updateAnimationState();
 
   //debugging
   gb.display.setColor(RED);
-  if (this->isOnGround) gb.display.println("GROUND");
-  //if (this->canGrabLeft) gb.display.println("CAN GRAB LEFT");
-  //if (this->canGrabRight) gb.display.println("CAN GRAB RIGHT");
-  //if (this->isClimbing) gb.display.println("CLIMBING");
+  //if (this->isOnGround) gb.display.println("GROUND");
+  //gb.display.printf("climb frame: %d\n",this->climbFrame); 
   //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
+  if(this->moveStateY == CLIMBING) gb.display.println("CLIMB");
   //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
   //gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
   //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
-  gb.display.printf("STATE : %s",this->animationState);
+  //gb.display.printf("STATE : %s",this->animationState);
 }
 
 void Character::handleXReqs() 
@@ -123,16 +133,21 @@ void Character::handleXReqs()
 
 void Character::handleGround() 
 {
-  if(this->isOnGround && this->reqYMarker == 'n') 
+  if (this->isOnGround)
   {
-    this->G_resistance = - GRAVITY;
-  }
-  if(this->isOnGround && this->vy > 0) 
-  {
-    this->moveStateY = NONE;
-    this->reqYMarker = 'n';
-    this->jumpFrame = 0;
-    this->G_resistance = - GRAVITY;
+    this->G_acceleration = 0;
+    
+    if(this->reqYMarker == 'n') 
+    {
+      this->G_resistance = - GRAVITY;
+    }
+    if(this->vy > 0) 
+    {
+      this->moveStateY = NONE;
+      this->reqYMarker = 'n';
+      this->jumpFrame = 0;
+      this->G_resistance = - GRAVITY;
+    }
   }
 }
 
@@ -147,7 +162,8 @@ void Character::handleYReqs(char req)
   } 
   else if(req == 'n' && !this->isOnGround) 
   {
-    this->G_resistance = 0;
+    this->G_resistance = 0 + G_acceleration;
+    this->moveStateY = NONE;
   }
   //climbing
   if (req == 'c')
@@ -194,15 +210,6 @@ void Character::setNTiles(Space* space)
 
 void Character::checkCollisions(Space* space) 
 {
-  //ground collision test
-  if ((this->collides(this->nTiles[4]) && this->nTiles[4].type == 's' && (this->x <= this->nTiles[4].right - 2)) 
-  || (this->collides(this->nTiles[5]) && this->nTiles[5].type == 's' && (this->x+CHARACTER_W >= this->nTiles[5].left + 2))) 
-  {//right+2 and left-2 is because we have to bite the ground on 2px min to be onGround
-    this->isOnGround = true;
-    this->yGround = this->nTiles[4].top;
-  }
-  else this->isOnGround = false;
-  
   //right or left collision test
  if ((this->collides(this->nTiles[1]) && this->nTiles[1].type == 's')
   || (this->collides(this->nTiles[3]) && this->nTiles[3].type == 's')) 
@@ -225,6 +232,16 @@ void Character::checkCollisions(Space* space)
   {
     this->collidesLeft = false;
   }
+
+  //ground collision test
+  if ((this->collides(this->nTiles[4]) && this->nTiles[4].type == 's' && (this->x <= this->nTiles[4].right - 2)) 
+  || (this->collides(this->nTiles[5]) && this->nTiles[5].type == 's' && (this->x+CHARACTER_W >= this->nTiles[5].left + 2))) 
+  {//right+2 and left-2 is because we have to bite the ground on 2px min to be onGround
+    this->isOnGround = true;
+    this->yGround = this->nTiles[4].top;
+  }
+  else this->isOnGround = false;
+  
   //unlock collisions for not getting stuck if character wants to get away from collision
   if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;
   if (this->collidesRight && this->vx < 0) this->collidesRight = false;
@@ -276,10 +293,11 @@ bool Character::collides(Tile tile)
 
 void Character::playJump() 
 {
-  if (this->isOnGround)
+  if (this->reqYMarker == 'n') this->jumpInitialized = false;
+  if (!this->jumpInitialized)
   {
     this->jumpFrame = 0;
-    this->isOnGround = false;
+    this->jumpInitialized = true;
   }
   this->nextFrame = false;
   this->playPatternJump(this->jumpFrame);
@@ -295,6 +313,13 @@ void Character::playPatternJump(uint8_t frame)
   if (frame < JUMP_PATTERN_LENGTH) 
   {
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
+    this->jumpFrame = frame;
+    this->moveStateY = JUMPING;
+  }
+  if (this->isOnGround && this->vy >= 0) {
+    this->reqYMarker == 'n';
+    this->moveStateY = NONE;
+    this->jumpFrame = 0;
   }
 }
 
@@ -305,38 +330,30 @@ void Character::playClimb()
     this->G_resistance = 0;
     this->reqYMarker = 'n';
     this->climbInitialized = false;
-    this->climbplayed = false;
     this->moveStateY = NONE;
     return;
   }
-  if (!this->climbplayed) 
-  {
-    this->climbFrame = 0;
-    this->climbplayed = true;
-  }
-  this->nextFrame = false;
-  this->playPatternClimb(this->climbFrame);
-  if (!this->nextFrame) 
-  {
-    this->climbFrame++;
-    this->nextFrame = true;
-  }
+  this->playPatternClimb();
 }
 
-void Character::playPatternClimb(uint8_t frame) 
+void Character::playPatternClimb() 
 {
   if (!this->climbInitialized) 
   {
-    this->y = this->yToClimb;//? ajust...
+    this->y = this->yToClimb;
     this->climbInitialized = true;
+    this->climbFrame = 0;
   }
   if (this->climbInitialized) 
   {
-    this->G_resistance = -4;//tmp ?
+    this->moveStateY = CLIMBING;
+    this->G_resistance = CLIMB_SPEED;
+    this->climbFrame ++;
     if(this->y <= this->yToClimb - CHARACTER_H)
     {
       this->moveStateY = NONE;
       this->reqYMarker = 'n';  
+      this->climbFrame = 0;
     }
   }
 }
@@ -375,4 +392,21 @@ char Character::getDirection()
 char* Character::getAnimationState()
 {
   return this->animationState;
+}
+
+uint8_t Character::getAnimationFrame()
+{
+  switch(this->moveStateY)
+  {
+    case JUMPING:
+      return this->jumpFrame;
+      break;
+    case CLIMBING:
+      gb.display.println("CLIMB");
+      return this->climbFrame;
+      break;
+    case NONE:
+      return 0;
+      break;
+  }
 }

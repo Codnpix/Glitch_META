@@ -19,6 +19,7 @@ class Character
 
     char* animationState;
     uint8_t moveStateY;
+    float G_acceleration;
     
     bool collidesRight;
     bool collidesLeft;
@@ -26,8 +27,8 @@ class Character
     uint8_t grabState;
     
     uint8_t yToClimb;
-    bool climbplayed;
     bool climbInitialized;
+    bool jumpInitialized;
     
     char direction;
     uint8_t jumpFrame;
@@ -39,7 +40,7 @@ class Character
     void playJump();
     void playPatternJump(uint8_t frame);
     void playClimb();
-    void playPatternClimb(uint8_t frame);
+    void playPatternClimb();
     
     void applyMove();
     void updateAnimationState();
@@ -73,5 +74,6 @@ class Character
 
     void init(uint8_t spawnX, uint8_t spawnY);
     char* getAnimationState();
+    uint8_t getAnimationFrame();
 };
 #endif

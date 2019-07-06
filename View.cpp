@@ -98,20 +98,22 @@ void View::handleCharacterAnimation(Character* character)
   }
   else if (character->getAnimationState() == "JUMP") 
   {
-    if (this->charAnimFrame < CHARACTER_JUMP_FRAMES_NB)
+    if (character->getAnimationFrame() < CHARACTER_JUMP_FRAMES_NB)
     {
-      this->charAnimFrame = ++this->charAnimFrame;
-    } else 
+      this->charAnimFrame = character->getAnimationFrame();
+    } 
+    else 
     {
       this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
     }
   }
   else if (character->getAnimationState() == "CLIMB") 
   {
-    if (this->charAnimFrame < CHARACTER_CLIMB_FRAMES_NB)
+    if (character->getAnimationFrame() < CHARACTER_CLIMB_FRAMES_NB)
     {
-      this->charAnimFrame = ++this->charAnimFrame;
-    } else 
+      this->charAnimFrame = character->getAnimationFrame();
+    } 
+    else 
     {
       this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
     }
