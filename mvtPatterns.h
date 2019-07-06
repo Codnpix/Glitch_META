@@ -19,20 +19,4 @@ static const float JUMP_VY_PATTERN[13] =
   4.40
 };
 
-static const float CLIMB_VY_PATTERN[12] = 
-{
-  -1.60,
-  -1.10,
-  -0.65,
-  -0.50,
-  -0.65,
-  -0.45,
-  -0.35,
-  -0.25,
-  -0.18,
-  -0.13,
-  -0.07,
-  0.00
-};
-
 #endif

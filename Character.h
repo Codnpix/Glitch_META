@@ -14,20 +14,19 @@ class Character
     float vx;
     float vy;
     
-    char reqXMarker;//right and left move request marker
-    char reqYMarker;//jump and fall request marker
+    char reqXMarker;//X moves request marker
+    char reqYMarker;//Y moves request marker
+
+    char* animationState;
+    uint8_t moveStateY;
     
     bool collidesRight;
     bool collidesLeft;
-    //bool collidesTop; //no need
     bool isOnGround;
+    uint8_t grabState;
     
-    bool canGrabLeft;
-    bool canGrabRight;
-    
-    //bool wasClimbing;
     uint8_t yToClimb;
-    bool climbTrigged;
+    bool climbplayed;
     bool climbInitialized;
     
     char direction;
@@ -37,30 +36,26 @@ class Character
     uint8_t yGround;//y coordinate of the current ground
     float G_resistance;
 
-    void trigJump();
+    void playJump();
     void playPatternJump(uint8_t frame);
-    void trigClimb();
+    void playClimb();
     void playPatternClimb(uint8_t frame);
     
     void applyMove();
     void updateAnimationState();
     
     void checkCollisions(Space* space);
+    bool checkGrab();
     bool collides(Tile aTile);
-    //bool isVerticalAlignedWith(Tile aTile);
 
     void handleXReqs();
     void handleGround();
     void handleYReqs(char req);
 
-  public:
-    bool isClimbing;//replace by private prop + public getter
-    bool isJumping;//replace by private prop + public getter
+    Tile nTiles[2 * 3];
+    void setNTiles(Space * space);
     
-    char* animationState;//replace by private prop + public getter
-    //uint8_t animationFrame;//replace by private prop + public getter
-  
-    //char typeOfCollision;
+  public:
     void reqWalkRight();
     void reqWalkLeft();
     void reqJump();
@@ -77,6 +72,6 @@ class Character
     void setPosition(float x, float y);
 
     void init(uint8_t spawnX, uint8_t spawnY);
-    
+    char* getAnimationState();
 };
 #endif

@@ -64,17 +64,17 @@ void View::setCameraPosY(int16_t y) {
 
 void View::setSpriteSheet(Character* character) 
 {
-  if (character->animationState == "WALK" ) 
+  if (character->getAnimationState() == "WALK" ) 
   {
     this->spriteSheet = charSpriteWalk;
-  } else if (character->animationState == "JUMP" 
-  || character->animationState == "FALL") 
+  } else if (character->getAnimationState() == "JUMP" 
+  || character->getAnimationState() == "FALL") 
   {
     this->spriteSheet = charSpriteJump;
-  } else if (character->animationState == "CLIMB") 
+  } else if (character->getAnimationState() == "CLIMB") 
   {
     this->spriteSheet = charSpriteClimb;
-  } else if (character->animationState == "STAND") 
+  } else if (character->getAnimationState() == "STAND") 
   {
     this->spriteSheet = charSpriteBase;
   }
@@ -82,7 +82,7 @@ void View::setSpriteSheet(Character* character)
 
 void View::handleCharacterAnimation(Character* character) 
 {
-  if(character->animationState == "WALK") 
+  if(character->getAnimationState() == "WALK") 
   {
     this->charWalkClock = this->charWalkClock ?: 0;
     this->charWalkClock++;
@@ -92,11 +92,11 @@ void View::handleCharacterAnimation(Character* character)
       this->charWalkClock = 0;
     }
   }
-  else if(character->animationState == "STAND") 
+  else if(character->getAnimationState() == "STAND") 
   {
     this->charAnimFrame = 0;
   }
-  else if (character->animationState == "JUMP") 
+  else if (character->getAnimationState() == "JUMP") 
   {
     if (this->charAnimFrame < CHARACTER_JUMP_FRAMES_NB)
     {
@@ -106,7 +106,7 @@ void View::handleCharacterAnimation(Character* character)
       this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
     }
   }
-  else if (character->animationState == "CLIMB") 
+  else if (character->getAnimationState() == "CLIMB") 
   {
     if (this->charAnimFrame < CHARACTER_CLIMB_FRAMES_NB)
     {
@@ -116,7 +116,7 @@ void View::handleCharacterAnimation(Character* character)
       this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
     }
   }
-  else if (character->animationState == "FALL") 
+  else if (character->getAnimationState() == "FALL") 
   {
     this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
   }
