@@ -98,7 +98,7 @@ void Character::update(Space* space)
   this->vy = GRAVITY + this->G_resistance;//apply gravity resistance calculation on  vertical speed vy
   if (this->animationState == "FALL")
   {
-    this->G_acceleration += 0.30;
+    this->G_acceleration += 0.10;
   }
   this->applyMove();//apply speed to position
   //animation
@@ -109,7 +109,7 @@ void Character::update(Space* space)
   //if (this->isOnGround) gb.display.println("GROUND");
   //gb.display.printf("climb frame: %d\n",this->climbFrame); 
   //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
-  if(this->moveStateY == CLIMBING) gb.display.println("CLIMB");
+  //if(this->moveStateY == CLIMBING) gb.display.println("CLIMB");
   //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
   //gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
   //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
@@ -402,7 +402,6 @@ uint8_t Character::getAnimationFrame()
       return this->jumpFrame;
       break;
     case CLIMBING:
-      gb.display.println("CLIMB");
       return this->climbFrame;
       break;
     case NONE:

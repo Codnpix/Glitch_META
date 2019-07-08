@@ -30,8 +30,8 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_W,//w
       6 * LOGIC_TILE_H,//y
       2 * LOGIC_TILE_H,//h
-      1, //destination space
-      1,//destination door
+      2, //destination space
+      0,//destination door
     }, 
     {//door top right on space 1
       22 * LOGIC_TILE_W,//x
@@ -47,7 +47,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_H,//y
       LOGIC_TILE_H,//h
       1, //destination space
-      0,//destination door
+      3,//destination door
     }
   },
   //SPACE 2, The Store
@@ -65,8 +65,8 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_W,//w
       LOGIC_TILE_H,//y
       4 * LOGIC_TILE_H,//h
-      0, //destination space
-      0,//destination door
+      2, //destination space
+      2,//destination door
     }, 
     {//door top middle on space 2
       9 * LOGIC_TILE_W,//x
@@ -81,6 +81,41 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_W,//w
       LOGIC_TILE_H,//y
       2 * LOGIC_TILE_H,//h
+      0, //destination space
+      3,//destination door
+    }
+  },
+  //SPACE 3, The Lab
+  {
+    {//door top left on space 3
+      6 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//width
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//height
+      0, //destination space
+      1,//destination door
+    },
+    {//door top left on space 3
+      3 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//width
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//height
+      0, //destination space
+      1,//destination door
+    },
+    {//door bottom right on space 3
+      SPACE_W - (4 * LOGIC_TILE_W),//x
+      2 * LOGIC_TILE_W,//w
+      SPACE_H - (5 * LOGIC_TILE_H),//y
+      4 * LOGIC_TILE_H,//h
+      1, //destination space
+      1,//destination door
+    }, 
+    {//door top right on space 3
+      SPACE_W - (9 * LOGIC_TILE_W),//x
+      3 * LOGIC_TILE_W,//w
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//h
       0, //destination space
       0,//destination door
     }
