@@ -43,7 +43,7 @@ void Character::reqJump()
   }
   else
   {
-    this->reqYMarker = 'j';
+    this->reqYMarker = this->animationState != "FALL" ? 'j' : 'n';
   }
 }
 
