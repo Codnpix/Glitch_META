@@ -116,7 +116,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       3 * LOGIC_TILE_W,//w
       2 * LOGIC_TILE_H,//y
       LOGIC_TILE_H,//h
-      0, //destination space
+      4, //destination space
       0,//destination door
     }
   },
@@ -154,6 +154,41 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       0, //destination space
       2,//destination door
     }
-  }
+  },
+  //SPACE 5, The Parallel Street
+  {
+    {//door bottom left on space 1
+      5 * LOGIC_TILE_W,//x
+      4 * LOGIC_TILE_W,//width
+      SPACE_H - (5 * LOGIC_TILE_H),//y
+      4 * LOGIC_TILE_H,//height
+      1, //destination space
+      0,//destination door
+    },
+    {//door bottom left on space 1
+      5 * LOGIC_TILE_W,//x
+      4 * LOGIC_TILE_W,//width
+      SPACE_H - (5 * LOGIC_TILE_H),//y
+      4 * LOGIC_TILE_H,//height
+      1, //destination space
+      0,//destination door
+    },
+    {//door bottom left on space 1
+      5 * LOGIC_TILE_W,//x
+      4 * LOGIC_TILE_W,//width
+      SPACE_H - (5 * LOGIC_TILE_H),//y
+      4 * LOGIC_TILE_H,//height
+      1, //destination space
+      0,//destination door
+    },
+    {//door top left on space 1
+      3 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//w
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//h
+      1, //destination space
+      3,//destination door
+    }
+  },
 };
 #endif
