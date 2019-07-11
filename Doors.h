@@ -162,7 +162,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       4 * LOGIC_TILE_W,//width
       SPACE_H - (5 * LOGIC_TILE_H),//y
       4 * LOGIC_TILE_H,//height
-      1, //destination space
+      5, //destination space
       0,//destination door
     },
     {//door bottom left on space 1
@@ -170,7 +170,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       4 * LOGIC_TILE_W,//width
       SPACE_H - (5 * LOGIC_TILE_H),//y
       4 * LOGIC_TILE_H,//height
-      1, //destination space
+      5, //destination space
       0,//destination door
     },
     {//door bottom left on space 1
@@ -178,7 +178,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       4 * LOGIC_TILE_W,//width
       SPACE_H - (5 * LOGIC_TILE_H),//y
       4 * LOGIC_TILE_H,//height
-      1, //destination space
+      5, //destination space
       0,//destination door
     },
     {//door top left on space 1
@@ -186,9 +186,44 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_W,//w
       2 * LOGIC_TILE_H,//y
       LOGIC_TILE_H,//h
-      1, //destination space
+      5, //destination space
       3,//destination door
     }
   },
+  //SPACE 6, The Parallel Store
+  {
+    {//door bottom left on space 6
+      LOGIC_TILE_W,//x
+      LOGIC_TILE_W,//width
+      SPACE_H - (6 * LOGIC_TILE_H),//y
+      5 * LOGIC_TILE_H,//height
+      4, //destination space
+      0,//destination door
+    },
+    {//door bottom left on space 6
+      LOGIC_TILE_W,//x
+      LOGIC_TILE_W,//width
+      SPACE_H - (6 * LOGIC_TILE_H),//y
+      5 * LOGIC_TILE_H,//height
+      4, //destination space
+      0,//destination door
+    },
+    {//door top right on space 6
+      SPACE_W - (9 * LOGIC_TILE_W),//x
+      3 * LOGIC_TILE_W,//w
+      0,//y
+      5 * LOGIC_TILE_H,//h
+      4, //destination space
+      0,//destination door
+    }, 
+    {//door top left on space 6
+      2 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//w
+      LOGIC_TILE_H,//y
+      2 * LOGIC_TILE_H,//h
+      4, //destination space
+      3,//destination door
+    }
+  }
 };
 #endif
