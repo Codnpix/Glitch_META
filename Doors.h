@@ -73,8 +73,8 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       2 * LOGIC_TILE_W,//w
       2 * LOGIC_TILE_H,//y
       2 * LOGIC_TILE_H,//h
-      0, //destination space
-      0,//destination door
+      7, //destination space
+      1,//destination door
     }, 
     {//door top left on space 2
       2 * LOGIC_TILE_W,//x
@@ -213,7 +213,7 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       3 * LOGIC_TILE_W,//w
       0,//y
       5 * LOGIC_TILE_H,//h
-      4, //destination space
+      6, //destination space
       0,//destination door
     }, 
     {//door top left on space 6
@@ -224,6 +224,76 @@ static const Door spacesDoors[NB_OF_SPACES][NB_DOORS_PER_SPACE] =
       4, //destination space
       3,//destination door
     }
-  }
+  },
+   //SPACE 7, The parallel Lab
+  {
+    {//door top right on space 7
+      SPACE_W - 5 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//width
+      0,//y
+      5 * LOGIC_TILE_H,//height
+      5, //destination space
+      2,//destination door
+    },
+    {//door bottom middle on space 7
+      14 * LOGIC_TILE_W,//x
+      3 * LOGIC_TILE_W,//width
+      SPACE_H - 7 * LOGIC_TILE_H,//y
+      5 * LOGIC_TILE_H,//height
+      7, //destination space
+      0,//destination door
+    },
+    {//door bottom right on space 7
+      SPACE_W - (6 * LOGIC_TILE_W),//x
+      2 * LOGIC_TILE_W,//w
+      SPACE_H - (3 * LOGIC_TILE_H),//y
+      2 * LOGIC_TILE_H,//h
+      7, //destination space
+      2,//destination door
+    }, 
+    {//door bottom right on space 7
+      SPACE_W - (6 * LOGIC_TILE_W),//x
+      2 * LOGIC_TILE_W,//w
+      SPACE_H - (3 * LOGIC_TILE_H),//y
+      2 * LOGIC_TILE_H,//h
+      7, //destination space
+      2,//destination door
+    }
+  },
+  //SPACE 8, void
+  {
+    {//door bottom left on space 8
+      5 * LOGIC_TILE_W,//x
+      3 * LOGIC_TILE_W,//width
+      SPACE_H - 6 * LOGIC_TILE_H,//y
+      5 * LOGIC_TILE_H,//height
+      6, //destination space
+      1,//destination door
+    },
+    {//door top right on space 8
+      SPACE_W - 5 * LOGIC_TILE_W,//x
+      3 * LOGIC_TILE_W,//width
+      3 * LOGIC_TILE_H,//y
+      2 * LOGIC_TILE_H,//height
+      1, //destination space
+      2,//destination door
+    },
+    {//door top left on space 8
+      5 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//w
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//h
+      6, //destination space
+      2,//destination door
+    }, 
+    {//door top left on space 8
+      5 * LOGIC_TILE_W,//x
+      2 * LOGIC_TILE_W,//w
+      2 * LOGIC_TILE_H,//y
+      LOGIC_TILE_H,//h
+      6, //destination space
+      2,//destination door
+    }
+  },
 };
 #endif
