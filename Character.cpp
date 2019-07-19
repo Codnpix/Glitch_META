@@ -103,17 +103,6 @@ void Character::update(Space* space)
   this->applyMove();//apply speed to position
   //animation
   this->updateAnimationState();
-
-  //debugging
-  gb.display.setColor(RED);
-  //if (this->isOnGround) gb.display.println("GROUND");
-  //gb.display.printf("climb frame: %d\n",this->climbFrame); 
-  //if (this->collidesLeft || this->collidesRight) gb.display.println("COLLIDES");
-  //if(this->moveStateY == CLIMBING) gb.display.println("CLIMB");
-  //gb.display.printf("Y TO CLIMB : %d \n",this->yToClimb);
-  //gb.display.printf("Y MARKER : %c \n",this->reqYMarker);
-  //gb.display.printf("X MARKER : %c \n",this->reqXMarker);
-  //gb.display.printf("STATE : %s",this->animationState);
 }
 
 void Character::handleXReqs() 
