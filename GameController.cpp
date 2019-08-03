@@ -138,7 +138,6 @@ void GameController::draw()
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   this->view->draw(this->space, this->character);
-  
   if(this->cinematicMode) this->handleCinematic();
 }
 

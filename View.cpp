@@ -13,7 +13,8 @@ void View::draw(Space* space, Character* character)
   gb.display.setPalette(DECOR_PALETTES[this->spaceIndex]);
   gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
-//TEMPORAIRE draw logictiles
+  /*
+  //debug : draw logic tiles...
   for (uint8_t row = 0; row < LOGIC_ROWS; row ++) 
   {
     for (uint8_t col = 0; col < LOGIC_COLS; col++) 
@@ -27,6 +28,7 @@ void View::draw(Space* space, Character* character)
       }
     }
   }
+  */
   
   //character
   int8_t charWdir;
@@ -34,6 +36,7 @@ void View::draw(Space* space, Character* character)
   charWdir = (character->getDirection() == 'r') ? -CHARACTER_GRAPHIC_WIDTH : CHARACTER_GRAPHIC_WIDTH;
   this->setSpriteSheet(character);
   this->handleCharacterAnimation(character);
+  this->drawObjects(space->getObjectCollection());
   this->drawCharacter(this->cameraPosX + charX - wDif, this->cameraPosY + charY, character, charWdir, CHARACTER_H);
 }
 
@@ -129,4 +132,14 @@ void View::drawCharacter(float X, float Y, Character* character, int8_t charW, u
   gb.display.setPalette(CHAR_SPRITE_PALETTE);
   this->spriteSheet.setFrame(this->charAnimFrame);
   gb.display.drawImage(X, Y, this->spriteSheet, charW, charH);
+}
+
+void View::drawObjects(ObjectCollection * objCol)
+{
+  gb.display.setColor(RED);
+  for (uint8_t i = 0; i < MAX_SPACE_OBJECTS_NB; i++)
+  {
+    Object obj = objCol->getObject(i);
+    gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);
+  }
 }

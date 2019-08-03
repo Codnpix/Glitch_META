@@ -27,4 +27,6 @@ static const uint8_t GRAVITY = 3;
 
 static const uint8_t FADE_LENGTH = 15;
 
+static const uint8_t MAX_SPACE_OBJECTS_NB = 3;
+
 #endif

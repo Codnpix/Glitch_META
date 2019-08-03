@@ -18,6 +18,7 @@ class View
     void followCharacter(float charX, float charY);
     void handleCharacterAnimation(Character* character);
     void drawCharacter(float charX, float charY,Character* character, int8_t charW, uint8_t charH);
+    void drawObjects(ObjectCollection * objCol);
     void setSpriteSheet(Character* character);
 
   public:

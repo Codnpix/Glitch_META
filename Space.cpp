@@ -1,11 +1,17 @@
 #include "Space.h"
 
+Space::Space()
+{
+  this->objCol = new ObjectCollection();  
+}
+
 void Space::init(uint8_t index, uint8_t spawnDoorIndex)
 {
   this->setIndex(index);
   this->setLogic();
   this->setDoors();
   this->setSpawn(spawnDoorIndex);
+  this->setObjects();
 }
 
 void Space::setSpawn(uint8_t doorIndex)
@@ -43,34 +49,11 @@ char Space::getLogic(uint8_t row, uint8_t col)
 
 uint8_t Space::getSpawnX() 
 {
-  /*uint8_t x;
-  for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
-  {
-    for (uint8_t col = 0; col < LOGIC_COLS; col++) 
-    {
-      char tile = this->getLogic(row, col);
-      if (tile == 'c') 
-      {
-        x = LOGIC_TILE_W * col;
-      }
-    }
-  }
-  return x;*/
   return this->spawnX;
 }
 
 uint8_t Space::getSpawnY() 
 {
-  /*for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
-  {
-    for (uint8_t col = 0; col < LOGIC_COLS; col++) 
-    {
-      if (this->getLogic(row, col) == 'c') 
-      {
-        return (LOGIC_TILE_H * row) + LOGIC_TILE_H - CHARACTER_H;
-      }
-    }
-  }*/
   return this->spawnY;
 }
 
@@ -82,7 +65,32 @@ void Space::setDoors()
   }
 }
 
+void Space::setObjects()
+{
+  this->objCol->clear();
+  uint8_t objectIndex = 0;
+  for (uint8_t row = 0; row < LOGIC_ROWS; row++) 
+  {
+    for (uint8_t col = 0; col < LOGIC_COLS; col++) 
+    {
+      if (this->logicMap[row][col] == 'a')
+      {
+        Object apple;
+        apple.x = col * LOGIC_TILE_W;
+        apple.y = row * LOGIC_TILE_H;
+        this->objCol->setObject(apple, objectIndex);
+        objectIndex ++;
+      }
+    }
+  }
+}
+
 Door Space::getDoor(uint8_t index) 
 {
   return this->doors[index];
+}
+
+ObjectCollection * Space::getObjectCollection()
+{
+  return this->objCol;
 }
