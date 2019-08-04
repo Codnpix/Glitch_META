@@ -3,6 +3,7 @@
 
 #include <Gamebuino-Meta.h>
 #include "View.h"//includes character.h=>(with space.h, constants.h), Cinematic.h
+#include "Backpack.h"
 
 class GameController 
 {
@@ -11,6 +12,7 @@ class GameController
     Space* space;
     View* view;
     Cinematic* cinematic;
+    Backpack * backpack;
     uint8_t currentSpace;
     bool cinematicMode;
     uint8_t cinematicIndex;

@@ -5,7 +5,7 @@ Backpack::Backpack()
   this->nbObjects = 0;
 }
 
-void Backpack::pickObject(Object obj)
+void Backpack::addObject(Object obj)
 {
   this->objects[this->nbObjects] = obj;
   this->nbObjects ++;

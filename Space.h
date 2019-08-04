@@ -9,13 +9,12 @@
 class Space 
 {
   private:
+    ObjectCollection * objCol;
     uint8_t index;
     char logicMap[16][30];
     Door doors[4];
     uint8_t spawnX;
     uint8_t spawnY;
-
-    ObjectCollection * objCol;
 
     void setIndex(uint8_t index);
     void setLogic();

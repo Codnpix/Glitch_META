@@ -20,6 +20,7 @@ GameController::GameController()
   this->space = new Space();
   this->view = new View();
   this->cinematic = new Cinematic();
+  this->backpack = new Backpack();
 }
 
 void GameController::initGame() 

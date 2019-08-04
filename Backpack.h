@@ -6,10 +6,10 @@
 class Backpack
 {
   private:
-    Object objects[3];
+    Object objects[TOTAL_OBJECTS];
     uint8_t nbObjects;
   public:
     Backpack();
-    void pickObject(Object obj);
+    void addObject(Object obj);
 };
 #endif
