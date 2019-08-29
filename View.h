@@ -5,8 +5,9 @@
 #include "Space.h"
 #include "Character.h"
 #include "Cinematic.h"
+#include "Object.h"
 
-class View 
+class View
 {
   private:
     int16_t cameraPosX;
@@ -23,7 +24,7 @@ class View
 
   public:
     Image spriteSheet;
-    void draw(Space* space, Character* character);
+    void draw(Space* space, Character* character, ObjectCollection* objCol);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);
     void setSpaceIndex(uint8_t index);

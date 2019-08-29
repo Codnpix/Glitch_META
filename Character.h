@@ -6,30 +6,30 @@
 #include "mvtPatterns.h"
 #include "Space.h"
 
-class Character 
+class Character
 {
   private:
     float x;
     float y;
     float vx;
     float vy;
-    
+
     char reqXMarker;//X moves request marker
     char reqYMarker;//Y moves request marker
 
-    char* animationState;
+    char * animationState;
     uint8_t moveStateY;
     float G_acceleration;
-    
+
     bool collidesRight;
     bool collidesLeft;
     bool isOnGround;
     uint8_t grabState;
-    
+
     uint8_t yToClimb;
     bool climbInitialized;
     bool jumpInitialized;
-    
+
     char direction;
     uint8_t jumpFrame;
     uint8_t climbFrame;
@@ -41,10 +41,10 @@ class Character
     void playPatternJump(uint8_t frame);
     void playClimb();
     void playPatternClimb();
-    
+
     void applyMove();
     void updateAnimationState();
-    
+
     void checkCollisions(Space* space);
     bool checkGrab();
     bool collides(Tile aTile);
@@ -55,16 +55,16 @@ class Character
 
     Tile nTiles[2 * 3];
     void setNTiles(Space * space);
-    
+
   public:
     void reqWalkRight();
     void reqWalkLeft();
     void reqJump();
     void reqStand();
     void reqEnterDoor();
-    
+
     void update(Space* space);
-     
+
     float getX();
     float getY();
     float getVx();

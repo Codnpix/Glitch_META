@@ -4,15 +4,19 @@
 #include <Gamebuino-Meta.h>
 #include "View.h"//includes character.h=>(with space.h, constants.h), Cinematic.h
 #include "Backpack.h"
+#include "Object.h"
 
-class GameController 
+class GameController
 {
   private:
+
     Character* character;
     Space* space;
     View* view;
     Cinematic* cinematic;
     Backpack * backpack;
+    ObjectCollection * objCol;
+
     uint8_t currentSpace;
     bool cinematicMode;
     uint8_t cinematicIndex;

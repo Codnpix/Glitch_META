@@ -1,26 +1,26 @@
 #include "View.h"
 #include "graphicAssets.h"
 
-void View::draw(Space* space, Character* character) 
+void View::draw(Space* space, Character* character, ObjectCollection * objCol)
 {
   float charX = character->getX();
   float charY = character->getY();
   this->followCharacter(charX, charY);
 
   gb.display.clear();
-  
+
   //decor
   gb.display.setPalette(DECOR_PALETTES[this->spaceIndex]);
   gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
   /*
   //debug : draw logic tiles...
-  for (uint8_t row = 0; row < LOGIC_ROWS; row ++) 
+  for (uint8_t row = 0; row < LOGIC_ROWS; row ++)
   {
-    for (uint8_t col = 0; col < LOGIC_COLS; col++) 
+    for (uint8_t col = 0; col < LOGIC_COLS; col++)
     {
       char tile = space->getLogic(row, col);
-      if (tile == 's') 
+      if (tile == 's')
       {
         int16_t tileX, tileY;
         tileX = this->cameraPosX + LOGIC_TILE_W * col;
@@ -29,14 +29,14 @@ void View::draw(Space* space, Character* character)
     }
   }
   */
-  
+
   //character
   int8_t charWdir;
   uint8_t wDif = (CHARACTER_GRAPHIC_WIDTH - CHARACTER_W) / 2 ;
   charWdir = (character->getDirection() == 'r') ? -CHARACTER_GRAPHIC_WIDTH : CHARACTER_GRAPHIC_WIDTH;
   this->setSpriteSheet(character);
   this->handleCharacterAnimation(character);
-  this->drawObjects(space->getObjectCollection());
+  this->drawObjects(objCol);
   this->drawCharacter(this->cameraPosX + charX - wDif, this->cameraPosY + charY, character, charWdir, CHARACTER_H);
 }
 
@@ -51,12 +51,12 @@ void View::followCharacter(float charX, float charY)
   else this->setCameraPosY(SCREEN_H / 2 - charY - CHARACTER_H / 2);
 }
 
-void View::setSpaceIndex(uint8_t index) 
+void View::setSpaceIndex(uint8_t index)
 {
   this->spaceIndex = index;
 }
 
-void View::setCameraPosX(int16_t x) 
+void View::setCameraPosX(int16_t x)
 {
   this->cameraPosX = x;
 }
@@ -65,69 +65,69 @@ void View::setCameraPosY(int16_t y) {
   this->cameraPosY = y;
 }
 
-void View::setSpriteSheet(Character* character) 
+void View::setSpriteSheet(Character* character)
 {
-  if (character->getAnimationState() == "WALK" ) 
+  if (character->getAnimationState() == "WALK" )
   {
     this->spriteSheet = charSpriteWalk;
-  } else if (character->getAnimationState() == "JUMP" 
-  || character->getAnimationState() == "FALL") 
+  } else if (character->getAnimationState() == "JUMP"
+  || character->getAnimationState() == "FALL")
   {
     this->spriteSheet = charSpriteJump;
-  } else if (character->getAnimationState() == "CLIMB") 
+  } else if (character->getAnimationState() == "CLIMB")
   {
     this->spriteSheet = charSpriteClimb;
-  } else if (character->getAnimationState() == "STAND") 
+  } else if (character->getAnimationState() == "STAND")
   {
     this->spriteSheet = charSpriteBase;
   }
 }
 
-void View::handleCharacterAnimation(Character* character) 
+void View::handleCharacterAnimation(Character* character)
 {
-  if(character->getAnimationState() == "WALK") 
+  if(character->getAnimationState() == "WALK")
   {
     this->charWalkClock = this->charWalkClock ?: 0;
     this->charWalkClock++;
-    if (this->charWalkClock == CHARACTER_WALK_SPEED) 
+    if (this->charWalkClock == CHARACTER_WALK_SPEED)
     {
       this->charAnimFrame = ++this->charAnimFrame % CHARACTER_WALK_FRAMES_NB;
       this->charWalkClock = 0;
     }
   }
-  else if(character->getAnimationState() == "STAND") 
+  else if(character->getAnimationState() == "STAND")
   {
     this->charAnimFrame = 0;
   }
-  else if (character->getAnimationState() == "JUMP") 
+  else if (character->getAnimationState() == "JUMP")
   {
     if (character->getAnimationFrame() < CHARACTER_JUMP_FRAMES_NB)
     {
       this->charAnimFrame = character->getAnimationFrame();
-    } 
-    else 
+    }
+    else
     {
       this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
     }
   }
-  else if (character->getAnimationState() == "CLIMB") 
+  else if (character->getAnimationState() == "CLIMB")
   {
     if (character->getAnimationFrame() < CHARACTER_CLIMB_FRAMES_NB)
     {
       this->charAnimFrame = character->getAnimationFrame();
-    } 
-    else 
+    }
+    else
     {
       this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
     }
   }
-  else if (character->getAnimationState() == "FALL") 
+  else if (character->getAnimationState() == "FALL")
   {
     this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
   }
 }
 
-void View::drawCharacter(float X, float Y, Character* character, int8_t charW, uint8_t charH) 
+void View::drawCharacter(float X, float Y, Character* character, int8_t charW, uint8_t charH)
 {
   gb.display.setPalette(CHAR_SPRITE_PALETTE);
   this->spriteSheet.setFrame(this->charAnimFrame);
@@ -137,9 +137,11 @@ void View::drawCharacter(float X, float Y, Character* character, int8_t charW, u
 void View::drawObjects(ObjectCollection * objCol)
 {
   gb.display.setColor(RED);
-  for (uint8_t i = 0; i < MAX_SPACE_OBJECTS_NB; i++)
+  for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
   {
-    Object obj = objCol->getObject(i);
-    gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);
+    if(objCol->getObject(i).spaceIndex == this->spaceIndex && objCol->getObject(i).state == 0)
+    {
+        gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);//TMP
+    }
   }
 }

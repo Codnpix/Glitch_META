@@ -1,9 +1,5 @@
 #include "GameController.h"
 
-//spaces :
-#define STREET 0
-#define STORE 1
-
 //cinematics
 #define CHANGE_SPACE 11
 #define GLITCH 12
@@ -14,23 +10,24 @@
 #define LOAD_SPACE 1
 #define FADE_IN 2
 
-GameController::GameController() 
+GameController::GameController()
 {
   this->character = new Character();
   this->space = new Space();
   this->view = new View();
   this->cinematic = new Cinematic();
   this->backpack = new Backpack();
+  this->objCol = new ObjectCollection();
 }
 
-void GameController::initGame() 
+void GameController::initGame()
 {
-  uint8_t defaultSpawnDoorIndex = 0;
+  //uint8_t defaultSpawnDoorIndex = 0;
   this->cinematicMode = false;
-  this->loadSpace(STREET, defaultSpawnDoorIndex);
+  this->loadSpace(0, 0);
 }
 
-void GameController::initCharacter() 
+void GameController::initCharacter()
 {
   this->character->init(this->space->getSpawnX(), this->space->getSpawnY());
 }
@@ -93,10 +90,10 @@ void GameController::handleChangeSpace()
     }
 }
 
-void GameController::getInputs() 
+void GameController::getInputs()
 {
-  
-//to come : conditions gameon, dashboard, menu, glitch, etc..
+
+//to come : game state conditions
 
   if(gb.buttons.repeat(BUTTON_RIGHT, 1))
   {
@@ -106,43 +103,39 @@ void GameController::getInputs()
   {
     this->character->reqWalkLeft();
   }
-  if(gb.buttons.pressed(BUTTON_A)) 
+  if(gb.buttons.pressed(BUTTON_A))
   {
     this->character->reqJump();
   }
-  if(gb.buttons.pressed(BUTTON_UP)) 
+  if(gb.buttons.pressed(BUTTON_UP))
   {
     this->enterDoor();
   }
-  if(gb.buttons.repeat(BUTTON_DOWN, 1)) 
-  {
-    //this->character->reqDown();
-  }
-  if(gb.buttons.released(BUTTON_LEFT) 
-  || gb.buttons.released(BUTTON_RIGHT)) 
+  if(gb.buttons.released(BUTTON_LEFT)
+  || gb.buttons.released(BUTTON_RIGHT))
   {
     this->character->reqStand();
   }
 }
 
-void GameController::updateGame() 
+void GameController::updateGame()
 {
   this->getInputs();
   this->character->update(this->space);
 }
 
-void GameController::draw() 
+void GameController::draw()
 {
   uint8_t spaceIndex;
   float charX = this->character->getX();
   float charY = this->character->getY();
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
-  this->view->draw(this->space, this->character);
+  this->view->draw(this->space, this->character, this->objCol);
   if(this->cinematicMode) this->handleCinematic();
 }
 
-uint8_t GameController::getCurrentSpace() 
+uint8_t GameController::getCurrentSpace()
 {
   return this->currentSpace;
 }
@@ -150,6 +143,7 @@ uint8_t GameController::getCurrentSpace()
 void GameController::setSpace(uint8_t spaceIndex)
 {
   this->currentSpace = spaceIndex;
+  //this->objCol->setCurrentSpaceIndex(spaceIndex);
 }
 
 void GameController::enterDoor()
@@ -178,7 +172,7 @@ bool GameController::isCharacterFacingDoor(Door door)
   if (charLeft <= door.x + door.w
       && charRight >= door.x
       && charTop <= door.y + door.h
-      && charBottom >= door.y) 
+      && charBottom >= door.y)
       {
         return true;
       } else return false;
