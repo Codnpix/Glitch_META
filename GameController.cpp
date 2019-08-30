@@ -131,7 +131,7 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
 void GameController::handleAction()
 {
     Object obj = this->objCol->checkCharacterObjectOverlap(this->character->getX(), this->character->getY(), this->currentSpace);
-    if (obj.id != '0' && obj.id != 0) //we got a real object available
+    if (obj.id != '0') //we got a real object available
     {
         this->pickObject(obj);
         return;
@@ -142,7 +142,7 @@ void GameController::handleAction()
         bool facingCtnr =
         this->stkCtnr->characterIsFacingContainer(this->character->getX(), this->character->getY(), this->currentSpace);
         uint8_t droppedObjId = this->backpack->dropLastObject();
-        this->dropObject(droppedObjId, false);
+        this->dropObject(droppedObjId, facingCtnr);
     }
 }
 

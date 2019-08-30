@@ -172,11 +172,11 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
 void View::_debug_drawObjCol(ObjectCollection * objCol)
 {
   gb.display.setColor(RED);
-  gb.display.printf("obj: %d,%d,%d,%d,%d,%d",
-  objCol->getObject(0).state,
-  objCol->getObject(1).state,
-  objCol->getObject(2).state,
-  objCol->getObject(3).state,
-  objCol->getObject(4).state,
-  objCol->getObject(5).state);
+  gb.display.printf("obj: %c,%c,%c,%c,%c,%c \n",
+  objCol->getObject(0).id,
+  objCol->getObject(1).id,
+  objCol->getObject(2).id,
+  objCol->getObject(3).id,
+  objCol->getObject(4).id,
+  objCol->getObject(5).id);
 }

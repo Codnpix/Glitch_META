@@ -40,6 +40,8 @@ Object ObjectCollection::getObject(uint8_t index)
 
 Object ObjectCollection::checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex)
 {
+  Object obj;
+  obj.id = '0';
     for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
     {
         uint8_t charLeft = x;
@@ -60,9 +62,11 @@ Object ObjectCollection::checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8
         && charBottom >= objTop
         && objectAvailable)
         {
-            return this->objects[i];
+            obj = this->objects[i];
+            break;
         }
     }
+    return obj;
 }
 
 void ObjectCollection::setState(Object obj, bool state)
