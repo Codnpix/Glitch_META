@@ -136,7 +136,6 @@ void View::drawCharacter(float X, float Y, Character* character, int8_t charW, u
 
 void View::drawObjects(ObjectCollection * objCol)
 {
-  gb.display.setColor(RED);
   for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
   {
     if(objCol->getObject(i).spaceIndex == this->spaceIndex
@@ -145,8 +144,10 @@ void View::drawObjects(ObjectCollection * objCol)
     {
         if (isDigit(objCol->getObject(i).id))//it's a stack fragment
         {
+            uint8_t index = objCol->getObject(i).id - '1';//converting char type id to int
             //pick the corresponding image
-            gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);//TMP
+            gb.display.setPalette(STACK_FRAG_PALETTE);
+            gb.display.drawImage(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, stack_fragments[index]);
         }
         else //it's an apple
         {
@@ -161,17 +162,20 @@ void View::drawObjects(ObjectCollection * objCol)
 
 void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
 {
-    gb.display.setColor(YELLOW);
-    uint8_t seq[TOTAL_OBJECTS];
-    for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
+    gb.display.setPalette(STACK_FRAG_PALETTE);
+    for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
     {
-        seq[i] = backpack->getObject(i).id;
+        uint8_t index = backpack->getObject(i).id - '0';
+        if (index > 0)
+        {
+            gb.display.drawImage(i * 6 ,0, stack_frag_small[index - 1]);
+        }
     }
-    gb.display.printf("%c,%c,%c,%c \n", seq[0], seq[1], seq[2], seq[3]);//tmp
-    
+        
     gb.display.setPalette(APPLE_PALETTE);
-    gb.display.drawImage(1, 6, apple_small_img);
-    gb.display.setCursorX(8);
+    gb.display.drawImage(SCREEN_W - 14 - 7, 0, apple_small_img);
+    gb.display.setCursor(SCREEN_W - 14, 0);
+    gb.display.setColor(YELLOW);
     gb.display.printf("%d/%d \n", bonusCount, NB_TOTAL_BONUS);//tmp
 }
 

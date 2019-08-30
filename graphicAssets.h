@@ -1858,6 +1858,177 @@ const uint8_t apple_small_data[] =
 };
 Image apple_small_img = Image(apple_small_data);
 
+const Color STACK_FRAG_PALETTE[] = 
+{
+  (Color)0xa514, // color 0x0
+  (Color)0xce59, // color 0x1
+  (Color)0xe73c, // color 0x2
+  (Color)0xcee0, // color 0x3
+  (Color)0xefe0, // color 0x4
+  (Color)0xf7f1, // color 0x5
+  (Color)0xdac0, // color 0x6
+  (Color)0xfb20, // color 0x7
+  (Color)0xfdd1, // color 0x8
+  (Color)0x0600, // color 0x9
+  (Color)0x07e0, // color 0xa
+  (Color)0x8ff1, // color 0xb
+  (Color)0x7015, // color 0xc
+  (Color)0xa81f, // color 0xd
+  (Color)0xdc5f, // color 0xe
+  (Color)0xffff  // color 0xf
+};
+
+const uint8_t stack_frag_yellow_data[] = 
+{
+  8,    // frame width
+  8,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x00, 0x01, 0x02, 0x12, 
+  0x00, 0x10, 0x11, 0x21, 
+  0x03, 0x43, 0x54, 0x52, 
+  0x34, 0x34, 0x45, 0x55, 
+  0x33, 0x43, 0x54, 0x55, 
+  0x04, 0x34, 0x45, 0x52, 
+  0x00, 0x01, 0x01, 0x21, 
+  0x00, 0x10, 0x12, 0x12
+};
+Image stack_frag_yellow_img = Image(stack_frag_yellow_data);
+
+const uint8_t stack_frag_red_data[] = 
+{
+  8,    // frame width
+  8,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x00, 0x01, 0x02, 0x12, 
+  0x00, 0x10, 0x11, 0x21, 
+  0x06, 0x76, 0x87, 0x82, 
+  0x67, 0x67, 0x78, 0x88, 
+  0x66, 0x76, 0x87, 0x88, 
+  0x07, 0x67, 0x78, 0x82, 
+  0x00, 0x01, 0x01, 0x21, 
+  0x00, 0x10, 0x12, 0x12
+};
+Image stack_frag_red_img = Image(stack_frag_red_data);
+
+const uint8_t stack_frag_green_data[] = 
+{
+  8,    // frame width
+  8,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x00, 0x01, 0x02, 0x12, 
+  0x00, 0x10, 0x11, 0x21, 
+  0x09, 0xa9, 0xba, 0xb2, 
+  0x9a, 0x9a, 0xab, 0xbb, 
+  0x99, 0xa9, 0xba, 0xbb, 
+  0x0a, 0x9a, 0xab, 0xb2, 
+  0x00, 0x01, 0x01, 0x21, 
+  0x00, 0x10, 0x12, 0x12
+};
+Image stack_frag_green_img = Image(stack_frag_green_data);
+
+const uint8_t stack_frag_violet_data[] = 
+{
+  8,    // frame width
+  8,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x00, 0x01, 0x02, 0x12, 
+  0x00, 0x10, 0x11, 0x21, 
+  0x0c, 0xdc, 0xed, 0xe2, 
+  0xcd, 0xcd, 0xde, 0xee, 
+  0xcc, 0xdc, 0xed, 0xee, 
+  0x0d, 0xcd, 0xde, 0xe2, 
+  0x00, 0x01, 0x01, 0x21, 
+  0x00, 0x10, 0x12, 0x12
+};
+Image stack_frag_violet_img = Image(stack_frag_violet_data);
+
+const uint8_t stack_frag_small_yellow_data[] = 
+{
+  5,    // frame width
+  4,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x01, 0x12, 0x20, 
+  0x34, 0x45, 0x50, 
+  0x33, 0x44, 0x50, 
+  0x01, 0x12, 0x20
+};
+Image stack_frag_small_yellow_img = Image(stack_frag_small_yellow_data);
+
+const uint8_t stack_frag_small_red_data[] = 
+{
+  5,    // frame width
+  4,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x01, 0x12, 0x20, 
+  0x67, 0x78, 0x80, 
+  0x66, 0x77, 0x80, 
+  0x01, 0x12, 0x20
+};
+Image stack_frag_small_red_img = Image(stack_frag_small_red_data);
+
+const uint8_t stack_frag_small_green_data[] = 
+{
+  5,    // frame width
+  4,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x01, 0x12, 0x20, 
+  0x9a, 0xab, 0xb0, 
+  0x99, 0xaa, 0xb0, 
+  0x01, 0x12, 0x20
+};
+Image stack_frag_small_green_img = Image(stack_frag_small_green_data);
+
+const uint8_t stack_frag_small_violet_data[] = 
+{
+  5,    // frame width
+  4,    // frame height
+  0x01, // number of frames (lower byte)
+  0x00, // number of frames (higher byte)
+  0,    // animation speed
+  0xff, // transparent color
+  1,    // indexed color mode
+  // frame 1/1
+  0x01, 0x12, 0x20, 
+  0xcd, 0xde, 0xe0, 
+  0xcc, 0xdd, 0xe0, 
+  0x01, 0x12, 0x20
+};
+Image stack_frag_small_violet_img = Image(stack_frag_small_violet_data);
 
 Image decorMaps[NB_OF_SPACES] =
 {
@@ -1869,6 +2040,22 @@ Image decorMaps[NB_OF_SPACES] =
   sp6Decor,
   sp7Decor,
   sp8Decor
+};
+
+Image stack_fragments[NB_STACK_FRAGMENTS] =
+{
+  stack_frag_yellow_img,
+  stack_frag_red_img,
+  stack_frag_green_img,
+  stack_frag_violet_img
+};
+
+Image stack_frag_small[NB_STACK_FRAGMENTS] = 
+{
+  stack_frag_small_yellow_img,
+  stack_frag_small_red_img,
+  stack_frag_small_green_img,
+  stack_frag_small_violet_img
 };
 
 #endif
