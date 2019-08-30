@@ -32,6 +32,6 @@ static const uint8_t NB_TOTAL_BONUS = 2;//? we'll see..
 static const uint8_t TOTAL_OBJECTS = NB_STACK_FRAGMENTS + NB_TOTAL_BONUS;
 static const uint8_t OBJECT_W = 8;
 static const uint8_t OBJECT_H = 8;
-static const char STACK_SEQUENCE[NB_STACK_FRAGMENTS] = {1,2,3,4};//tmp
+static const char STACK_SEQUENCE[NB_STACK_FRAGMENTS] = {'1','2','3','4'};//yellow red green violet
 
 #endif

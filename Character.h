@@ -73,7 +73,7 @@ class Character
     void setPosition(float x, float y);
 
     void init(uint8_t spawnX, uint8_t spawnY);
-    char* getAnimationState();
+    char * getAnimationState();
     uint8_t getAnimationFrame();
 };
 #endif

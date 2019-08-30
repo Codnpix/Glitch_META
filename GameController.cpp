@@ -179,7 +179,11 @@ void GameController::getInputs()
   }
   if(gb.buttons.pressed(BUTTON_B))
   {
-      this->handleAction();
+      if (this->character->getAnimationState() == "STAND"
+      || this->character->getAnimationState() == "WALK")
+      {
+        this->handleAction();
+      }
   }
   if(gb.buttons.pressed(BUTTON_UP))
   {
