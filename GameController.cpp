@@ -28,9 +28,10 @@ GameController::GameController()
 
 void GameController::initGame()
 {
-  //uint8_t defaultSpawnDoorIndex = 0;
+  this->gameWon = false;
+  this->gameLost = false;
   this->cinematicMode = false;
-  this->loadSpace(0, 0);
+  this->loadSpace(0, 0);//spaceindex, doorIndex
   this->bonusCount = 0;
 }
 
@@ -69,9 +70,11 @@ void GameController::handleCinematic()
         break;
     case WIN:
         //win sequence
+        this->cinematic->playWin();
         break;
     case LOSE:
         //lose sequence
+        this->cinematic->playLose();
         break;
   }
 }
@@ -127,6 +130,12 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
     {
         x = this->stkCtnr->getNextEmptySlotX();
         y = this->stkCtnr->getNextEmptySlotY();
+        this->stkCtnr->addObject(objId);
+        bool endGame = this->stkCtnr->stackIsFull();
+        if (endGame) 
+        {
+          this->handleEndGame();
+        }
     }
     else
     {
@@ -134,7 +143,6 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
         y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
     }
     this->objCol->dropObject(x, y, objId, this->currentSpace, toContainer);
-    this->stkCtnr->addObject(objId);
 }
 
 void GameController::handleAction()
@@ -243,4 +251,31 @@ bool GameController::isCharacterFacingDoor(Door door)
       {
         return true;
       } else return false;
+}
+
+void GameController::handleEndGame()
+{
+    bool validSequence = this->stkCtnr->validateSequence();
+    if (validSequence)
+    {
+        this->gameWon = true;
+        this->handleWin();
+    }
+    else
+    {
+        this->gameLost = true;
+        this->handleLose();
+    }
+}
+
+void GameController::handleWin()
+{
+    this->cinematicMode = true;
+    this->cinematicSeq = WIN;
+}
+
+void GameController::handleLose()
+{
+    this->cinematicMode = true;
+    this->cinematicSeq = LOSE;
 }

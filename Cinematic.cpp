@@ -42,3 +42,16 @@ bool Cinematic::playFadeOut()
   }
   else return true;
 }
+
+void Cinematic::playWin()
+{
+    gb.display.clear();
+    gb.display.setColor(YELLOW);
+    gb.display.print("YOU WIN ! \n");
+}
+void Cinematic::playLose()
+{
+    gb.display.clear();
+    gb.display.setColor(BLUE);
+    gb.display.print("YOU LOSE ! \n");
+}

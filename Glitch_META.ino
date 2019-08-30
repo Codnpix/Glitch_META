@@ -3,22 +3,22 @@
 
 GameController* gameController;
 
-void setup() 
+void setup()
 {
   gb.begin();
-  
+
   gameController = new GameController();
 
   gameController->initGame();
   gameController->draw();
 }
 
-void loop() 
+void loop()
 {
   gb.waitForUpdate();
   
-  gameController->draw();
   gameController->updateGame();
+  gameController->draw();
 
   /*
   gb.display.setColor(RED);

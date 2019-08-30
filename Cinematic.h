@@ -14,5 +14,7 @@ class Cinematic
     bool playFadeIn();
     bool playFadeOut();
     void playClear();
+    void playWin();
+    void playLose();
 };
 #endif

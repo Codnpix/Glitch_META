@@ -143,15 +143,17 @@ void View::drawObjects(ObjectCollection * objCol)
     && (objCol->getObject(i).state == 0 || objCol->getObject(i).state == 2)
     && objCol->getObject(i).id != '0')
     {
-        gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);//TMP
-        // if (isDigit(objCol->getObject(i).id))//it's a stack fragment
-        // {
-        //     //pick the corresponding image
-        // }
-        // else //it's an apple
-        // {
-        //     //pick the apple image
-        // }
+        if (isDigit(objCol->getObject(i).id))//it's a stack fragment
+        {
+            //pick the corresponding image
+            gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);//TMP
+        }
+        else //it's an apple
+        {
+            //pick the apple image
+            gb.display.setPalette(APPLE_PALETTE);
+            gb.display.drawImage(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, apple_img);
+        }
 
     }
   }
@@ -166,6 +168,10 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
         seq[i] = backpack->getObject(i).id;
     }
     gb.display.printf("%c,%c,%c,%c \n", seq[0], seq[1], seq[2], seq[3]);//tmp
+    
+    gb.display.setPalette(APPLE_PALETTE);
+    gb.display.drawImage(1, 6, apple_small_img);
+    gb.display.setCursorX(8);
     gb.display.printf("%d/%d \n", bonusCount, NB_TOTAL_BONUS);//tmp
 }
 

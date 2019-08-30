@@ -26,6 +26,8 @@ class GameController
     uint8_t nextSpaceIndex;
     uint8_t nextDoorIndex;
     uint8_t bonusCount;
+    bool gameWon;
+    bool gameLost;
 
     void initSpace(uint8_t doorIndex);
     void initCharacter();
@@ -41,7 +43,10 @@ class GameController
     void handleAction();
     void pickObject(Object obj);
     void dropObject(uint8_t objId, bool toContainer);
-    
+    void handleEndGame();
+    void handleWin();
+    void handleLose();
+
   public:
     GameController();
     void initGame();
