@@ -16,7 +16,8 @@ void ObjectCollection::initAllObjects()
             {
                 if (logicMaps[space][row][col] != 's'
                 && logicMaps[space][row][col] != 'd'
-                && logicMaps[space][row][col] != ' ')
+                && logicMaps[space][row][col] != ' '
+                &&logicMaps[space][row][col] != '&')
                 {
                     Object obj;
                     obj.x = col * LOGIC_TILE_W;

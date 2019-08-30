@@ -10,7 +10,7 @@ typedef struct Object {
   uint8_t y;
   uint8_t spaceIndex;
   char id;
-  bool state;//1 or 0, 1 Object has been picked up, 0 it's on the ground
+  uint8_t state;//1, 0 or 2, 1 Object has been picked up, 0 it's on the ground, 2 it's in container
 };
 
 class ObjectCollection

@@ -1,11 +1,11 @@
 #include "StackContainer.h"
 
 //constant values to check on for detecting character presence
-#define STACK_COORD_X 52 //au pif, à voir plus tard
-#define STACK_COORD_Y 52//idem
-#define STACK_GROUND_OFFSET 18 //idem
-#define STACK_W 16
-#define STACK_H 32
+#define STACK_COORD_X 10 * LOGIC_TILE_W
+#define STACK_COORD_Y 10 * LOGIC_TILE_H
+#define STACK_GROUND_OFFSET 2 * LOGIC_TILE_H
+#define STACK_W 24
+#define STACK_H 40
 #define STACK_SPACE_LOCATION 2 //the lab
 
 StackContainer::StackContainer()
@@ -73,7 +73,7 @@ bool StackContainer::characterIsFacingContainer(uint8_t charX, uint8_t charY, ui
     {
         return true;
     }
-    else 
+    else
     {
         return false;
     }
@@ -81,7 +81,7 @@ bool StackContainer::characterIsFacingContainer(uint8_t charX, uint8_t charY, ui
 
 uint8_t StackContainer::getNextEmptySlotX()
 {
-    uint8_t x = STACK_COORD_X;
+    uint8_t x = STACK_COORD_X + LOGIC_TILE_W;
     return x;
 }
 
@@ -92,7 +92,7 @@ uint8_t StackContainer::getNextEmptySlotY()
         if (this->objectsSequence[i] == '0')//first empty slot avaiblable
         {
             uint8_t y =
-            STACK_COORD_Y + STACK_H - STACK_GROUND_OFFSET - OBJECT_H - (i * OBJECT_H);
+            STACK_COORD_Y + STACK_H - STACK_GROUND_OFFSET - (i * OBJECT_H);
             return y;
         }
     }

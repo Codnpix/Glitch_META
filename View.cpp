@@ -165,18 +165,18 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
     {
         seq[i] = backpack->getObject(i).id;
     }
-    gb.display.printf("Object: %c,%c,%c,%c \n", seq[0], seq[1], seq[2], seq[3]);//tmp
-    gb.display.printf("BONUS: %d / %d \n", bonusCount, NB_TOTAL_BONUS);
+    gb.display.printf("%c,%c,%c,%c \n", seq[0], seq[1], seq[2], seq[3]);//tmp
+    gb.display.printf("%d/%d \n", bonusCount, NB_TOTAL_BONUS);//tmp
 }
 
 void View::_debug_drawObjCol(ObjectCollection * objCol)
 {
   gb.display.setColor(RED);
-  gb.display.printf("obj: %c,%c,%c,%c,%c,%c \n",
-  objCol->getObject(0).id,
-  objCol->getObject(1).id,
-  objCol->getObject(2).id,
-  objCol->getObject(3).id,
-  objCol->getObject(4).id,
-  objCol->getObject(5).id);
+  gb.display.printf("obj: %d,%d,%d,%d,%d,%d \n",
+  objCol->getObject(0).state,
+  objCol->getObject(1).state,
+  objCol->getObject(2).state,
+  objCol->getObject(3).state,
+  objCol->getObject(4).state,
+  objCol->getObject(5).state);
 }

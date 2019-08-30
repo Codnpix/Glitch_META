@@ -123,9 +123,18 @@ void GameController::pickObject(Object obj)
 void GameController::dropObject(uint8_t objId, bool toContainer)
 {
     uint8_t x, y;
-    x = (uint8_t)this->character->getX();
-    y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
+    if (toContainer)
+    {
+        x = this->stkCtnr->getNextEmptySlotX();
+        y = this->stkCtnr->getNextEmptySlotY();
+    }
+    else
+    {
+        x = (uint8_t)this->character->getX();
+        y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
+    }
     this->objCol->dropObject(x, y, objId, this->currentSpace, toContainer);
+    this->stkCtnr->addObject(objId);
 }
 
 void GameController::handleAction()
