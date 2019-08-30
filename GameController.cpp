@@ -23,6 +23,7 @@ GameController::GameController()
   this->cinematic = new Cinematic();
   this->backpack = new Backpack();
   this->objCol = new ObjectCollection();
+  this->stkCtnr = new StackContainer();
 }
 
 void GameController::initGame()
@@ -101,7 +102,7 @@ void GameController::handleChangeSpace()
 
 void GameController::pickObject(Object obj)
 {
-    if (isDigit(obj.id) && obj.state == 0 
+    if (isDigit(obj.id) && obj.state == 0
     && obj.spaceIndex == this->currentSpace)
     //For some reason we have to check again if the object is available in that space, otherwise it gets buggy...
     {
@@ -116,8 +117,16 @@ void GameController::pickObject(Object obj)
         this->bonusCount++;
         this->objCol->setState(obj, PICKED);
         }
-        
+
     }
+}
+
+void GameController::dropObject(uint8_t objId)
+{
+    uint8_t x, y;
+    x = (uint8_t)this->character->getX();
+    y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
+    this->objCol->dropObject(x, y, objId, this->currentSpace);
 }
 
 void GameController::getInputs()
@@ -140,6 +149,12 @@ void GameController::getInputs()
       if (obj.id != '0' && obj.id != 0) //we got a real object available
       {
           this->pickObject(obj);
+      }
+      else if (!this->backpack->isEmpty())
+      {
+          //drop last object from backpack
+          uint8_t droppedObjId = this->backpack->dropLastObject();
+          this->dropObject(droppedObjId);
       }
   }
   if(gb.buttons.pressed(BUTTON_UP))

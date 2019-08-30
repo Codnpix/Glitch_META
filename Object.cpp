@@ -38,7 +38,7 @@ Object ObjectCollection::getObject(uint8_t index)
     return this->objects[index];
 }
 
-Object ObjectCollection::checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex) 
+Object ObjectCollection::checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex)
 {
     for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
     {
@@ -72,6 +72,21 @@ void ObjectCollection::setState(Object obj, bool state)
         if (this->objects[i].id == obj.id)
         {
             this->objects[i].state = state;
+        }
+    }
+}
+
+void ObjectCollection::dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex)
+{
+    for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
+    {
+        if (this->objects[i].id == id)
+        {
+            this->objects[i].state = 0;//available on ground
+            this->objects[i].x = x;
+            this->objects[i].y = y;
+            this->objects[i].spaceIndex = spaceIndex;
+            break;
         }
     }
 }

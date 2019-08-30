@@ -5,17 +5,19 @@
 #include "View.h"//includes character.h=>(with space.h, constants.h), Cinematic.h
 #include "Backpack.h"
 #include "Object.h"
+#include "StackContainer.h"
 
 class GameController
 {
   private:
 
-    Character* character;
-    Space* space;
-    View* view;
+    Character * character;
+    Space * space;
+    View * view;
     Cinematic* cinematic;
     Backpack * backpack;
     ObjectCollection * objCol;
+    StackContainer * stkCtnr;
 
     uint8_t currentSpace;
     bool cinematicMode;
@@ -38,6 +40,7 @@ class GameController
     void handleCinematic();
     void handleChangeSpace();
     void pickObject(Object obj);
+    void dropObject(uint8_t objId);
 
   public:
     GameController();
