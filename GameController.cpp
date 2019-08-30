@@ -117,16 +117,33 @@ void GameController::pickObject(Object obj)
         this->bonusCount++;
         this->objCol->setState(obj, PICKED);
         }
-
     }
 }
 
-void GameController::dropObject(uint8_t objId)
+void GameController::dropObject(uint8_t objId, bool toContainer)
 {
     uint8_t x, y;
     x = (uint8_t)this->character->getX();
     y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
-    this->objCol->dropObject(x, y, objId, this->currentSpace);
+    this->objCol->dropObject(x, y, objId, this->currentSpace, toContainer);
+}
+
+void GameController::handleAction()
+{
+    Object obj = this->objCol->checkCharacterObjectOverlap(this->character->getX(), this->character->getY(), this->currentSpace);
+    if (obj.id != '0' && obj.id != 0) //we got a real object available
+    {
+        this->pickObject(obj);
+        return;
+    }
+    if (!this->backpack->isEmpty())
+    {
+        //first check if we are facing the quantic stack container
+        bool facingCtnr =
+        this->stkCtnr->characterIsFacingContainer(this->character->getX(), this->character->getY(), this->currentSpace);
+        uint8_t droppedObjId = this->backpack->dropLastObject();
+        this->dropObject(droppedObjId, false);
+    }
 }
 
 void GameController::getInputs()
@@ -145,17 +162,7 @@ void GameController::getInputs()
   }
   if(gb.buttons.pressed(BUTTON_B))
   {
-      Object obj = this->objCol->checkCharacterObjectOverlap(this->character->getX(), this->character->getY(), this->currentSpace);
-      if (obj.id != '0' && obj.id != 0) //we got a real object available
-      {
-          this->pickObject(obj);
-      }
-      else if (!this->backpack->isEmpty())
-      {
-          //drop last object from backpack
-          uint8_t droppedObjId = this->backpack->dropLastObject();
-          this->dropObject(droppedObjId);
-      }
+      this->handleAction();
   }
   if(gb.buttons.pressed(BUTTON_UP))
   {

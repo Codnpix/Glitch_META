@@ -10,7 +10,6 @@
 class GameController
 {
   private:
-
     Character * character;
     Space * space;
     View * view;
@@ -39,9 +38,10 @@ class GameController
 
     void handleCinematic();
     void handleChangeSpace();
+    void handleAction();
     void pickObject(Object obj);
-    void dropObject(uint8_t objId);
-
+    void dropObject(uint8_t objId, bool toContainer);
+    
   public:
     GameController();
     void initGame();

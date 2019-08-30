@@ -43,7 +43,7 @@ uint8_t Backpack::dropLastObject()
         {
             lastObjectId = this->objects[i].id;//save the object id to return
             this->objects[i].id = '0';//drop object
-            this->objectsCount --;
+            this->objectsCount--;
             return lastObjectId;
         }
     }

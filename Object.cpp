@@ -72,17 +72,18 @@ void ObjectCollection::setState(Object obj, bool state)
         if (this->objects[i].id == obj.id)
         {
             this->objects[i].state = state;
+            break;
         }
     }
 }
 
-void ObjectCollection::dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex)
+void ObjectCollection::dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex, bool toContainer)
 {
     for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
     {
         if (this->objects[i].id == id)
         {
-            this->objects[i].state = 0;//available on ground
+            this->objects[i].state = toContainer ? 2 : 0;//available on ground
             this->objects[i].x = x;
             this->objects[i].y = y;
             this->objects[i].spaceIndex = spaceIndex;
