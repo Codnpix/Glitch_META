@@ -1,10 +1,5 @@
 #include "Space.h"
 
-/*Space::Space()
-{
-  this->objCol = new ObjectCollection();
-}*/
-
 void Space::init(uint8_t index, uint8_t spawnDoorIndex)
 {
   this->setIndex(index);

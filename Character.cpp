@@ -239,8 +239,8 @@ void Character::checkCollisions(Space* space)
 bool Character::checkGrab()
 {
   if (this->collidesLeft
-  && this->nTiles[0].type == ' '
-  && this->nTiles[4].type == ' '//platform is at least one step above ground
+  && this->nTiles[0].type != 's'
+  && this->nTiles[4].type != 's'//platform is at least one step above ground
   && this->direction == 'l'
   && this->reqXMarker == 'l') 
   {
@@ -251,8 +251,8 @@ bool Character::checkGrab()
   }
   else if 
   (this->collidesRight
-  && this->nTiles[1].type == ' '
-  && this->nTiles[5].type == ' '
+  && this->nTiles[1].type != 's'
+  && this->nTiles[5].type != 's'
   && this->direction == 'r'
   && this->reqXMarker == 'r') 
   {

@@ -3,23 +3,20 @@
 ObjectCollection::ObjectCollection()
 {
     this->initAllObjects();
-    //this->setCurrentSpaceIndex(0);
 }
 
 void ObjectCollection::initAllObjects()
 {
-    uint8_t setObjIndex = 0;
+    uint8_t objIndex = 0;
     for (uint8_t space = 0; space < NB_OF_SPACES; space++)
     {
         for (uint8_t row = 0; row < LOGIC_ROWS; row++)
         {
             for (uint8_t col = 0; col < LOGIC_COLS; col++)
             {
-                if (logicMaps[space][row][col] == '1'
-                || logicMaps[space][row][col] == '2'
-                || logicMaps[space][row][col] == '3'
-                || logicMaps[space][row][col] == '4'
-                || logicMaps[space][row][col] == 'a')
+                if (logicMaps[space][row][col] != 's'
+                && logicMaps[space][row][col] != 'd'
+                && logicMaps[space][row][col] != ' ')
                 {
                     Object obj;
                     obj.x = col * LOGIC_TILE_W;
@@ -27,9 +24,9 @@ void ObjectCollection::initAllObjects()
                     obj.id = logicMaps[space][row][col];
                     obj.spaceIndex = space;
                     obj.state = 0;
-                    this->objects[setObjIndex] = obj;
-                    if (setObjIndex >= TOTAL_OBJECTS) return;
-                    setObjIndex++;
+                    this->objects[objIndex] = obj;
+                    if (objIndex >= TOTAL_OBJECTS) break;
+                    objIndex++;
                 }
             }
         }
@@ -39,4 +36,42 @@ void ObjectCollection::initAllObjects()
 Object ObjectCollection::getObject(uint8_t index)
 {
     return this->objects[index];
+}
+
+Object ObjectCollection::checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex) 
+{
+    for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
+    {
+        uint8_t charLeft = x;
+        uint8_t charRight = x + CHARACTER_W;
+        uint8_t charTop = y;
+        uint8_t charBottom = y + CHARACTER_H;
+
+        uint8_t objLeft = this->objects[i].x;
+        uint8_t objRight = objLeft + OBJECT_W;
+        uint8_t objTop = this->objects[i].y;
+        uint8_t objBottom = objTop + OBJECT_H;
+
+        bool objectAvailable = this->objects[i].state == 0 && this->objects[i].spaceIndex == currentSpaceIndex;
+
+        if (charLeft <= objRight
+        && charRight >= objLeft
+        && charTop <= objBottom
+        && charBottom >= objTop
+        && objectAvailable)
+        {
+            return this->objects[i];
+        }
+    }
+}
+
+void ObjectCollection::setState(Object obj, bool state)
+{
+    for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
+    {
+        if (this->objects[i].id == obj.id)
+        {
+            this->objects[i].state = state;
+        }
+    }
 }

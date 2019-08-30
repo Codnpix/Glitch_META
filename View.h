@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "Cinematic.h"
 #include "Object.h"
+#include "Backpack.h"
 
 class View
 {
@@ -25,6 +26,8 @@ class View
   public:
     Image spriteSheet;
     void draw(Space* space, Character* character, ObjectCollection* objCol);
+    void drawObjectsOverview(Backpack * backpack, uint8_t bonusCount);
+    void _debug_drawObjCol(ObjectCollection * objCol);
     void setCameraPosX(int16_t x);
     void setCameraPosY(int16_t y);
     void setSpaceIndex(uint8_t index);

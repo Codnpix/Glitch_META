@@ -27,9 +27,10 @@ static const uint8_t GRAVITY = 3;
 
 static const uint8_t FADE_LENGTH = 15;
 
-//static const uint8_t MAX_SPACE_OBJECTS_NB = 3;
 static const uint8_t NB_STACK_FRAGMENTS = 4;
-static const uint8_t NB_TOTAL_BONUS = 6;//? à voir...
+static const uint8_t NB_TOTAL_BONUS = 2;//? à voir...
 static const uint8_t TOTAL_OBJECTS = NB_STACK_FRAGMENTS + NB_TOTAL_BONUS;
+static const uint8_t OBJECT_W = 8;
+static const uint8_t OBJECT_H = 8;
 
 #endif

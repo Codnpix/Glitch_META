@@ -2,13 +2,18 @@
 
 //cinematics
 #define CHANGE_SPACE 11
-#define GLITCH 12
+#define WIN 12
+#define LOSE 13 //bad luck !!
 
 //cinematic sequences steps
 //change space
 #define FADE_OUT 0
 #define LOAD_SPACE 1
 #define FADE_IN 2
+
+//object states
+#define PICKED 1
+#define DROPED 0
 
 GameController::GameController()
 {
@@ -25,6 +30,7 @@ void GameController::initGame()
   //uint8_t defaultSpawnDoorIndex = 0;
   this->cinematicMode = false;
   this->loadSpace(0, 0);
+  this->bonusCount = 0;
 }
 
 void GameController::initCharacter()
@@ -58,11 +64,14 @@ void GameController::handleCinematic()
   switch(this->cinematicSeq)
   {
     case CHANGE_SPACE:
-      this->handleChangeSpace();
-      break;
-    case GLITCH:
-      //Glitch sequence
-      break;
+        this->handleChangeSpace();
+        break;
+    case WIN:
+        //win sequence
+        break;
+    case LOSE:
+        //lose sequence
+        break;
   }
 }
 
@@ -73,7 +82,7 @@ void GameController::handleChangeSpace()
       case FADE_OUT:
         if (!this->cinematic->playFadeOut())
         {
-          this->cinematicIndex++;
+            this->cinematicIndex++;
         }
         break;
       case LOAD_SPACE:
@@ -90,11 +99,29 @@ void GameController::handleChangeSpace()
     }
 }
 
+void GameController::pickObject(Object obj)
+{
+    if (isDigit(obj.id) && obj.state == 0 
+    && obj.spaceIndex == this->currentSpace)
+    //For some reason we have to check again if the object is available in that space, otherwise it gets buggy...
+    {
+        //this is a quantic stack fragment, add it to the backpack
+        this->backpack->addObject(obj);
+        this->objCol->setState(obj, PICKED);
+    }
+    else //it's an apple, add bonus to bonus count
+    {
+        if (obj.state == 0 && obj.spaceIndex == this->currentSpace)
+        {
+        this->bonusCount++;
+        this->objCol->setState(obj, PICKED);
+        }
+        
+    }
+}
+
 void GameController::getInputs()
 {
-
-//to come : game state conditions
-
   if(gb.buttons.repeat(BUTTON_RIGHT, 1))
   {
     this->character->reqWalkRight();
@@ -106,6 +133,14 @@ void GameController::getInputs()
   if(gb.buttons.pressed(BUTTON_A))
   {
     this->character->reqJump();
+  }
+  if(gb.buttons.pressed(BUTTON_B))
+  {
+      Object obj = this->objCol->checkCharacterObjectOverlap(this->character->getX(), this->character->getY(), this->currentSpace);
+      if (obj.id != '0' && obj.id != 0) //we got a real object available
+      {
+          this->pickObject(obj);
+      }
   }
   if(gb.buttons.pressed(BUTTON_UP))
   {
@@ -132,6 +167,8 @@ void GameController::draw()
   spaceIndex = this->space->getIndex();
   this->view->setSpaceIndex(spaceIndex);
   this->view->draw(this->space, this->character, this->objCol);
+  this->view->drawObjectsOverview(this->backpack, this->bonusCount);
+  //this->view->_debug_drawObjCol(this->objCol);
   if(this->cinematicMode) this->handleCinematic();
 }
 
@@ -143,7 +180,6 @@ uint8_t GameController::getCurrentSpace()
 void GameController::setSpace(uint8_t spaceIndex)
 {
   this->currentSpace = spaceIndex;
-  //this->objCol->setCurrentSpaceIndex(spaceIndex);
 }
 
 void GameController::enterDoor()

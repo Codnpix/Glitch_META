@@ -24,6 +24,7 @@ class GameController
     bool nextFrame;
     uint8_t nextSpaceIndex;
     uint8_t nextDoorIndex;
+    uint8_t bonusCount;
 
     void initSpace(uint8_t doorIndex);
     void initCharacter();
@@ -36,6 +37,7 @@ class GameController
 
     void handleCinematic();
     void handleChangeSpace();
+    void pickObject(Object obj);
 
   public:
     GameController();

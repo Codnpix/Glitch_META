@@ -139,9 +139,35 @@ void View::drawObjects(ObjectCollection * objCol)
   gb.display.setColor(RED);
   for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
   {
-    if(objCol->getObject(i).spaceIndex == this->spaceIndex && objCol->getObject(i).state == 0)
+    if(objCol->getObject(i).spaceIndex == this->spaceIndex 
+    && objCol->getObject(i).state == 0
+    && objCol->getObject(i).id != '0')
     {
         gb.display.fillRect(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, 8,8);//TMP
     }
   }
+}
+
+void View::_debug_drawObjCol(ObjectCollection * objCol) 
+{
+  gb.display.setColor(RED);
+  gb.display.printf("obj: %d,%d,%d,%d,%d,%d", 
+  objCol->getObject(0).state,
+  objCol->getObject(1).state,
+  objCol->getObject(2).state,
+  objCol->getObject(3).state,
+  objCol->getObject(4).state,
+  objCol->getObject(5).state);
+}
+
+void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
+{
+    gb.display.setColor(YELLOW);
+    uint8_t seq[TOTAL_OBJECTS];
+    for (uint8_t i = 0; i < TOTAL_OBJECTS; i++)
+    {
+        seq[i] = backpack->getObject(i).id;
+    }
+    gb.display.printf("Object: %c,%c,%c,%c \n", seq[0], seq[1], seq[2], seq[3]);//tmp
+    gb.display.printf("BONUS: %d / %d \n", bonusCount, NB_TOTAL_BONUS);
 }
