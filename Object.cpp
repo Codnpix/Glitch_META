@@ -77,7 +77,7 @@ void ObjectCollection::setState(Object obj, bool state)
         if (this->objects[i].id == obj.id)
         {
             this->objects[i].state = state;
-            break;
+            return;
         }
     }
 }
@@ -92,7 +92,7 @@ void ObjectCollection::dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spac
             this->objects[i].x = x;
             this->objects[i].y = y;
             this->objects[i].spaceIndex = spaceIndex;
-            break;
+            return;
         }
     }
 }

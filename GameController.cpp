@@ -132,7 +132,7 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
         y = this->stkCtnr->getNextEmptySlotY();
         this->stkCtnr->addObject(objId);
         bool endGame = this->stkCtnr->stackIsFull();
-        if (endGame) 
+        if (endGame)
         {
           this->handleEndGame();
         }
@@ -151,6 +151,7 @@ void GameController::handleAction()
     if (obj.id != '0') //we got a real object available
     {
         this->pickObject(obj);
+        this->character->reqTake();
         return;
     }
     if (!this->backpack->isEmpty())
@@ -160,6 +161,7 @@ void GameController::handleAction()
         this->stkCtnr->characterIsFacingContainer(this->character->getX(), this->character->getY(), this->currentSpace);
         uint8_t droppedObjId = this->backpack->dropLastObject();
         this->dropObject(droppedObjId, facingCtnr);
+        this->character->reqTake();
     }
 }
 
@@ -198,8 +200,13 @@ void GameController::getInputs()
 
 void GameController::updateGame()
 {
-  this->getInputs();
-  this->character->update(this->space);
+  if (this->gameWon) this->handleWin();
+  else if(this->gameLost) this->handleLose();
+  else
+  {
+      this->getInputs();
+      this->character->update(this->space);
+  }
 }
 
 void GameController::draw()
@@ -232,7 +239,7 @@ void GameController::enterDoor()
   {
     if (this->isCharacterFacingDoor(this->space->getDoor(i)))
     {
-      //this->character->reqEnterDoor(); //play animation character facing door
+      this->character->reqEnterDoor(); //play animation character facing door
       door = this->space->getDoor(i);
       this->changeSpace(door.destinationSpace, door.destinationDoor);
       break;
@@ -263,23 +270,60 @@ void GameController::handleEndGame()
     if (validSequence)
     {
         this->gameWon = true;
-        this->handleWin();
+        this->chrono = 0;//init tempo before display final screen
     }
     else
     {
         this->gameLost = true;
-        this->handleLose();
+        this->chrono = 0;
     }
 }
 
 void GameController::handleWin()
 {
-    this->cinematicMode = true;
-    this->cinematicSeq = WIN;
+    if(this->chrono >= 35)//to adjust with endgame sound fx
+    {
+        this->cinematicMode = true;
+        this->cinematicSeq = WIN;
+        if (gb.buttons.pressed(BUTTON_A))
+        {
+          //
+        }
+    }
+    else this->chrono++;
 }
 
 void GameController::handleLose()
 {
-    this->cinematicMode = true;
-    this->cinematicSeq = LOSE;
+    if(this->chrono >= 35)//to adjust with endgame sound fx
+    {
+        this->cinematicMode = true;
+        this->cinematicSeq = LOSE;
+        if (gb.buttons.pressed(BUTTON_A))
+        {
+            this->resetGame();
+        }
+    }
+    else this->chrono++;
+}
+
+void GameController::resetGame()
+{
+    delete this->character;
+    delete this->space;
+    delete this->view;
+    delete this->cinematic;
+    delete this->backpack;
+    delete this->objCol;
+    delete this->stkCtnr;
+
+    this->character = new Character();
+    this->space = new Space();
+    this->view = new View();
+    this->cinematic = new Cinematic();
+    this->backpack = new Backpack();
+    this->objCol = new ObjectCollection();
+    this->stkCtnr = new StackContainer();
+
+    this->initGame();
 }

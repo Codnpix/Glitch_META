@@ -10,6 +10,7 @@ class Backpack
     uint8_t objectsCount;
   public:
     Backpack();
+    ~Backpack() {};
     void addObject(Object obj);
     uint8_t getObjectCount();
     Object getObject(uint8_t i);

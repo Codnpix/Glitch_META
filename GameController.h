@@ -28,6 +28,7 @@ class GameController
     uint8_t bonusCount;
     bool gameWon;
     bool gameLost;
+    uint16_t chrono;
 
     void initSpace(uint8_t doorIndex);
     void initCharacter();
@@ -46,6 +47,7 @@ class GameController
     void handleEndGame();
     void handleWin();
     void handleLose();
+    void resetGame();
 
   public:
     GameController();

@@ -24,6 +24,7 @@ class View
     void setSpriteSheet(Character* character);
 
   public:
+    ~View() {};
     Image spriteSheet;
     void draw(Space* space, Character* character, ObjectCollection* objCol);
     void drawObjectsOverview(Backpack * backpack, uint8_t bonusCount);

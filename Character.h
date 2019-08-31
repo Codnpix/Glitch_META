@@ -33,6 +33,7 @@ class Character
     char direction;
     uint8_t jumpFrame;
     uint8_t climbFrame;
+    uint8_t skipFrame;
     bool nextFrame;
     uint8_t yGround;//y coordinate of the current ground
     float G_resistance;
@@ -57,11 +58,13 @@ class Character
     void setNTiles(Space * space);
 
   public:
+    ~Character() {};
     void reqWalkRight();
     void reqWalkLeft();
     void reqJump();
     void reqStand();
     void reqEnterDoor();
+    void reqTake();
 
     void update(Space* space);
 

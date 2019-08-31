@@ -21,6 +21,7 @@ class ObjectCollection
     uint8_t currentSpaceIndex;
   public:
     ObjectCollection();
+    ~ObjectCollection() {};
     Object getObject(uint8_t index);
     Object checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex);
     void setState(Object obj, bool state);

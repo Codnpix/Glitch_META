@@ -28,7 +28,7 @@ void StackContainer::addObject(char objId)
         if (this->objectsSequence[i] == '0')
         {
             this->objectsSequence[i] = objId;
-            break;
+            return;
         }
     }
 }

@@ -9,7 +9,7 @@
 
 #define NONE 3
 
-void Character::init(uint8_t spawnX, uint8_t spawnY) 
+void Character::init(uint8_t spawnX, uint8_t spawnY)
 {
   this->reqXMarker = 'n';
   this->setPosition(spawnX, spawnY);
@@ -18,24 +18,24 @@ void Character::init(uint8_t spawnX, uint8_t spawnY)
   this->animationState = "STAND";
 }
 
-void Character::reqWalkRight() 
+void Character::reqWalkRight()
 {
   this->reqXMarker = 'r';
   this->direction = 'r';
 }
 
-void Character::reqWalkLeft() 
+void Character::reqWalkLeft()
 {
   this->reqXMarker = 'l';
   this->direction = 'l';
 }
 
-void Character::reqStand() 
+void Character::reqStand()
 {
   this->reqXMarker = 'n';
 }
 
-void Character::reqJump() 
+void Character::reqJump()
 {
   if ((this->moveStateY == JUMPING && this->checkGrab()) || this->reqYMarker == 'c')
   {
@@ -49,25 +49,32 @@ void Character::reqJump()
 
 void Character::reqEnterDoor()
 {
-  //this will be just an animation state change, character will show his back, facing the door
+  this->skipFrame = 0;
+  this->animationState = "ENTER";
 }
 
-void Character::applyMove() 
+void Character::reqTake()
+{
+    this->skipFrame = 0;
+    this->animationState = "TAKE";
+}
+
+void Character::applyMove()
 {
   this->x += this->vx;
   this->y += this->vy;
-  if (this->isOnGround && this->moveStateY == NONE) 
+  if (this->isOnGround && this->moveStateY == NONE)
   {
-    this->y = yGround - CHARACTER_H;//correction, set the character right on the floor e.g. if he stops one pixel too low
+    this->y = yGround - CHARACTER_H;//for correction, set the character right on the floor e.g. if he stops one pixel too low
   }
 }
 
-void Character::updateAnimationState() 
+void Character::updateAnimationState()
 {
   if (this->vx != 0 && this->isOnGround)
   {
     this->animationState = "WALK";
-  } 
+  }
   else if (this->vx == 0 && this->isOnGround)
   {
     this->animationState = "STAND";
@@ -75,18 +82,18 @@ void Character::updateAnimationState()
   else if (this->moveStateY == JUMPING)
   {
     this->animationState = "JUMP";
-  } 
-  else if (this->moveStateY == CLIMBING) 
+  }
+  else if (this->moveStateY == CLIMBING)
   {
     this->animationState = "CLIMB";
-  } 
+  }
   else if ((this->moveStateY == JUMPING || this->moveStateY == NONE) && this->vy > 0)
   {
     this->animationState = "FALL";
   }
 }
 
-void Character::update(Space* space) 
+void Character::update(Space * space)
 {
   //collisions
   this->setNTiles(space);//update collision testing space around sprite
@@ -101,36 +108,43 @@ void Character::update(Space* space)
     this->G_acceleration += 0.10;
   }
   this->applyMove();//apply speed to position
+  
   //animation
+  if ((this->animationState == "ENTER" && this->skipFrame <= 20)
+  || (this->animationState == "TAKE" && this->skipFrame <= 2))
+  {
+    this->skipFrame++;
+    return;
+  }
   this->updateAnimationState();
 }
 
-void Character::handleXReqs() 
+void Character::handleXReqs()
 {
-  if (this->reqXMarker == 'r') 
+  if (this->reqXMarker == 'r')
   {
     if (!this->collidesRight) this->vx = 1;
     else this->vx = 0;
-  } 
-  else if (this->reqXMarker == 'l') 
+  }
+  else if (this->reqXMarker == 'l')
   {
     if (!this->collidesLeft) this->vx = -1;
     else this->vx = 0;
-  } 
+  }
   else if (this->reqXMarker == 'n') this->vx = 0;
 }
 
-void Character::handleGround() 
+void Character::handleGround()
 {
   if (this->isOnGround)
   {
     this->G_acceleration = 0;
-    
-    if(this->reqYMarker == 'n') 
+
+    if(this->reqYMarker == 'n')
     {
       this->G_resistance = - GRAVITY;
     }
-    if(this->vy > 0) 
+    if(this->vy > 0)
     {
       this->moveStateY = NONE;
       this->reqYMarker = 'n';
@@ -140,16 +154,16 @@ void Character::handleGround()
   }
 }
 
-void Character::handleYReqs(char req) 
+void Character::handleYReqs(char req)
 {
   //jumping
-  if (req == 'j') 
+  if (req == 'j')
   {
     //this->isJumping = true;
     this->moveStateY = JUMPING;
     this->playJump();
-  } 
-  else if(req == 'n' && !this->isOnGround) 
+  }
+  else if(req == 'n' && !this->isOnGround)
   {
     this->G_resistance = 0 + G_acceleration;
     this->moveStateY = NONE;
@@ -171,20 +185,20 @@ void Character::setNTiles(Space* space)
   uint8_t tileW, tileH;
   tileH = LOGIC_TILE_H;
   tileW = LOGIC_TILE_W;
-  
+
   //Tile nTiles[2 * 3];//the 6 tiles around the sprite
-  
+
   uint8_t i = 0;
-  
-  for (uint8_t row = rowNum; row < rowNum + 3; row++) 
+
+  for (uint8_t row = rowNum; row < rowNum + 3; row++)
   {
-    for (uint8_t col = colNum; col < colNum + 2; col++) 
+    for (uint8_t col = colNum; col < colNum + 2; col++)
     {
       tileX = LOGIC_TILE_W * col;
       tileY = LOGIC_TILE_H * row;
-      
+
       char tileType = space->getLogic(row, col);
-      
+
       Tile tile;
       tile.left = tileX;
       tile.right = tileX + tileW;
@@ -197,40 +211,40 @@ void Character::setNTiles(Space* space)
   }
 }
 
-void Character::checkCollisions(Space* space) 
+void Character::checkCollisions(Space* space)
 {
   //right or left collision test
  if ((this->collides(this->nTiles[1]) && this->nTiles[1].type == 's')
-  || (this->collides(this->nTiles[3]) && this->nTiles[3].type == 's')) 
+  || (this->collides(this->nTiles[3]) && this->nTiles[3].type == 's'))
   {
     this->collidesRight = true;
-  } 
+  }
   else if ((this->collides(this->nTiles[1]) && this->nTiles[1].type != 's')
-  && (this->collides(this->nTiles[3]) && this->nTiles[3].type != 's')) 
+  && (this->collides(this->nTiles[3]) && this->nTiles[3].type != 's'))
   {
     this->collidesRight = false;
   }
-  
+
   if ((this->collides(this->nTiles[0]) && this->nTiles[0].type == 's')
-  || (this->collides(this->nTiles[2]) && this->nTiles[2].type == 's')) 
+  || (this->collides(this->nTiles[2]) && this->nTiles[2].type == 's'))
   {
     this->collidesLeft = true;
-  } 
+  }
   else if ((this->collides(this->nTiles[0]) && this->nTiles[0].type != 's')
-  && (this->collides(this->nTiles[2]) && this->nTiles[2].type != 's')) 
+  && (this->collides(this->nTiles[2]) && this->nTiles[2].type != 's'))
   {
     this->collidesLeft = false;
   }
 
   //ground collision test
-  if ((this->collides(this->nTiles[4]) && this->nTiles[4].type == 's' && (this->x <= this->nTiles[4].right - 2)) 
-  || (this->collides(this->nTiles[5]) && this->nTiles[5].type == 's' && (this->x+CHARACTER_W >= this->nTiles[5].left + 2))) 
+  if ((this->collides(this->nTiles[4]) && this->nTiles[4].type == 's' && (this->x <= this->nTiles[4].right - 2))
+  || (this->collides(this->nTiles[5]) && this->nTiles[5].type == 's' && (this->x+CHARACTER_W >= this->nTiles[5].left + 2)))
   {//right+2 and left-2 is because we have to bite the ground on 2px min to be onGround
     this->isOnGround = true;
     this->yGround = this->nTiles[4].top;
   }
   else this->isOnGround = false;
-  
+
   //unlock collisions for not getting stuck if character wants to get away from collision
   if (this->collidesLeft && this->vx > 0) this->collidesLeft = false;
   if (this->collidesRight && this->vx < 0) this->collidesRight = false;
@@ -242,19 +256,19 @@ bool Character::checkGrab()
   && this->nTiles[0].type != 's'
   && this->nTiles[4].type != 's'//platform is at least one step above ground
   && this->direction == 'l'
-  && this->reqXMarker == 'l') 
+  && this->reqXMarker == 'l')
   {
     //this->canGrabLeft = true;
     this->grabState = CAN_GRAB_LEFT;
     this->yToClimb = this->nTiles[2].top;
     return true;
   }
-  else if 
+  else if
   (this->collidesRight
   && this->nTiles[1].type != 's'
   && this->nTiles[5].type != 's'
   && this->direction == 'r'
-  && this->reqXMarker == 'r') 
+  && this->reqXMarker == 'r')
   {
     this->grabState = CAN_GRAB_RIGHT;
     this->yToClimb = this->nTiles[3].top;
@@ -263,8 +277,8 @@ bool Character::checkGrab()
   else return false;
 }
 
-bool Character::collides(Tile tile) 
-{  
+bool Character::collides(Tile tile)
+{
   uint8_t charLeft, charRight, charTop, charBottom;
   charLeft = (uint8_t)this->x;
   charRight = (uint8_t)(this->x + CHARACTER_W);
@@ -274,13 +288,13 @@ bool Character::collides(Tile tile)
   if (charLeft <= tile.right
       && charRight >= tile.left
       && charTop <= tile.bottom
-      && charBottom >= tile.top) 
+      && charBottom >= tile.top)
       {
         return true;
       } else return false;
 }
 
-void Character::playJump() 
+void Character::playJump()
 {
   if (this->reqYMarker == 'n') this->jumpInitialized = false;
   if (!this->jumpInitialized)
@@ -290,16 +304,16 @@ void Character::playJump()
   }
   this->nextFrame = false;
   this->playPatternJump(this->jumpFrame);
-  if(!this->nextFrame) 
+  if(!this->nextFrame)
   {
     this->jumpFrame++;
     this->nextFrame = true;
   }
 }
 
-void Character::playPatternJump(uint8_t frame) 
+void Character::playPatternJump(uint8_t frame)
 {
-  if (frame < JUMP_PATTERN_LENGTH) 
+  if (frame < JUMP_PATTERN_LENGTH)
   {
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
     this->jumpFrame = frame;
@@ -312,9 +326,9 @@ void Character::playPatternJump(uint8_t frame)
   }
 }
 
-void Character::playClimb() 
+void Character::playClimb()
 {
-  if(this->reqXMarker == 'n') 
+  if(this->reqXMarker == 'n')
   {
     this->G_resistance = 0;
     this->reqYMarker = 'n';
@@ -325,15 +339,15 @@ void Character::playClimb()
   this->playPatternClimb();
 }
 
-void Character::playPatternClimb() 
+void Character::playPatternClimb()
 {
-  if (!this->climbInitialized) 
+  if (!this->climbInitialized)
   {
     this->y = this->yToClimb;
     this->climbInitialized = true;
     this->climbFrame = 0;
   }
-  if (this->climbInitialized) 
+  if (this->climbInitialized)
   {
     this->moveStateY = CLIMBING;
     this->G_resistance = CLIMB_SPEED;
@@ -341,44 +355,44 @@ void Character::playPatternClimb()
     if(this->y <= this->yToClimb - CHARACTER_H)
     {
       this->moveStateY = NONE;
-      this->reqYMarker = 'n';  
+      this->reqYMarker = 'n';
       this->climbFrame = 0;
     }
   }
 }
 
-float Character::getX() 
+float Character::getX()
 {
   return this->x;
 }
 
-float Character::getY() 
+float Character::getY()
 {
   return this->y;
 }
 
-void Character::setPosition(float x, float y) 
+void Character::setPosition(float x, float y)
 {
   this->x = x;
   this->y = y;
 }
 
-float Character::getVx() 
+float Character::getVx()
 {
   return this->vx;
 }
 
-float Character::getVy() 
+float Character::getVy()
 {
   return this->vy;
 }
 
-char Character::getDirection() 
+char Character::getDirection()
 {
   return this->direction;
 }
 
-char* Character::getAnimationState()
+char * Character::getAnimationState()
 {
   return this->animationState;
 }

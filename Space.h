@@ -19,6 +19,7 @@ class Space
     void setDoors();
 
   public:
+    ~Space() {};
     void init(uint8_t index, uint8_t spawnDoorIndex);
     uint8_t getIndex();
     char getLogic(uint8_t row, uint8_t col);

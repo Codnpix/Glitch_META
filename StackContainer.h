@@ -11,6 +11,7 @@ class StackContainer
         void resetSequence();
     public:
         StackContainer();
+        ~StackContainer() {};
         bool stackIsFull();
         void addObject(char objId);
         bool validateSequence();

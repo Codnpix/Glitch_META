@@ -65,7 +65,7 @@ void View::setCameraPosY(int16_t y) {
   this->cameraPosY = y;
 }
 
-void View::setSpriteSheet(Character* character)
+void View::setSpriteSheet(Character * character)
 {
   if (character->getAnimationState() == "WALK" )
   {
@@ -80,6 +80,12 @@ void View::setSpriteSheet(Character* character)
   } else if (character->getAnimationState() == "STAND")
   {
     this->spriteSheet = charSpriteBase;
+  } else if (character->getAnimationState() == "ENTER")
+  {
+      this->spriteSheet = charSpriteEnter;
+  } else if (character->getAnimationState() == "TAKE")
+  {
+      this->spriteSheet = charSpriteTake;
   }
 }
 
@@ -94,40 +100,40 @@ void View::handleCharacterAnimation(Character* character)
       this->charAnimFrame = ++this->charAnimFrame % CHARACTER_WALK_FRAMES_NB;
       this->charWalkClock = 0;
     }
-  }
-  else if(character->getAnimationState() == "STAND")
+  } else if(character->getAnimationState() == "STAND")
   {
     this->charAnimFrame = 0;
-  }
-  else if (character->getAnimationState() == "JUMP")
+  } else if (character->getAnimationState() == "JUMP")
   {
     if (character->getAnimationFrame() < CHARACTER_JUMP_FRAMES_NB)
     {
       this->charAnimFrame = character->getAnimationFrame();
-    }
-    else
+    } else
     {
       this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
     }
-  }
-  else if (character->getAnimationState() == "CLIMB")
+  } else if (character->getAnimationState() == "CLIMB")
   {
     if (character->getAnimationFrame() < CHARACTER_CLIMB_FRAMES_NB)
     {
       this->charAnimFrame = character->getAnimationFrame();
-    }
-    else
+    } else
     {
       this->charAnimFrame = CHARACTER_CLIMB_FRAMES_NB;
     }
-  }
-  else if (character->getAnimationState() == "FALL")
+  } else if (character->getAnimationState() == "FALL")
   {
     this->charAnimFrame = CHARACTER_JUMP_FRAMES_NB;
+  } else if (character->getAnimationState() == "ENTER")
+  {
+      this->charAnimFrame = 0;
+  } else if (character->getAnimationState() == "TAKE")
+  {
+      this->charAnimFrame = 0;
   }
 }
 
-void View::drawCharacter(float X, float Y, Character* character, int8_t charW, uint8_t charH)
+void View::drawCharacter(float X, float Y, Character * character, int8_t charW, uint8_t charH)
 {
   gb.display.setPalette(CHAR_SPRITE_PALETTE);
   this->spriteSheet.setFrame(this->charAnimFrame);
@@ -148,8 +154,7 @@ void View::drawObjects(ObjectCollection * objCol)
             //pick the corresponding image
             gb.display.setPalette(STACK_FRAG_PALETTE);
             gb.display.drawImage(objCol->getObject(i).x + this->cameraPosX, objCol->getObject(i).y + this->cameraPosY, stack_fragments[index]);
-        }
-        else //it's an apple
+        } else //it's an apple
         {
             //pick the apple image
             gb.display.setPalette(APPLE_PALETTE);
@@ -162,6 +167,11 @@ void View::drawObjects(ObjectCollection * objCol)
 
 void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
 {
+    //draw background stripe
+    gb.display.setColor(BLACK);
+    gb.display.fillRect(0,0,SCREEN_W, 6);
+
+    //draw stack fragments collection
     gb.display.setPalette(STACK_FRAG_PALETTE);
     for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
     {
@@ -171,7 +181,8 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
             gb.display.drawImage(i * 6 ,0, stack_frag_small[index - 1]);
         }
     }
-        
+
+    //draw bonus state
     gb.display.setPalette(APPLE_PALETTE);
     gb.display.drawImage(SCREEN_W - 14 - 7, 0, apple_small_img);
     gb.display.setCursor(SCREEN_W - 14, 0);
