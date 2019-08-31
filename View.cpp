@@ -179,6 +179,10 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
         if (index > 0)
         {
             gb.display.drawImage(i * 6 ,0, stack_frag_small[index - 1]);
+        } else 
+        {
+          gb.display.setColor(DARKGRAY);
+          gb.display.drawRect(i * 6, 0, 5, 4);
         }
     }
 

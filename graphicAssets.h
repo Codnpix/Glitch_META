@@ -1,5 +1,6 @@
 #ifndef GLITCH_GRAPHICS_ASSETS_H_
 #define GLITCH_GRAPHICS_ASSETS_H_
+#pragma once
 
 #include <Gamebuino-Meta.h>
 #include "constants.h"

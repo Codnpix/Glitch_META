@@ -1,5 +1,6 @@
 #ifndef GLITCH_CONSTANTS_H_
 #define GLITCH_CONSTANTS_H_
+#pragma once 
 
 static const uint8_t SCREEN_W = 80;
 static const uint8_t SCREEN_H = 64;
