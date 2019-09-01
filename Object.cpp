@@ -4,6 +4,10 @@ ObjectCollection::ObjectCollection()
 {
     this->initAllObjects();
 }
+void ObjectCollection::reset()
+{
+  this->initAllObjects();
+}
 
 void ObjectCollection::initAllObjects()
 {

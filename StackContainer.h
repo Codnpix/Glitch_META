@@ -18,5 +18,6 @@ class StackContainer
         bool characterIsFacingContainer(uint8_t charX, uint8_t charY, uint8_t currentSpaceIndex);
         uint8_t getNextEmptySlotX();
         uint8_t getNextEmptySlotY();
+        void reset();
 };
 #endif

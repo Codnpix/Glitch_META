@@ -21,6 +21,11 @@ void StackContainer::resetSequence()
     }
 }
 
+void StackContainer::reset()
+{
+  this->resetSequence();
+}
+
 void StackContainer::addObject(char objId)
 {
     for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)

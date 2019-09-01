@@ -31,8 +31,15 @@ void GameController::initGame()
   this->gameWon = false;
   this->gameLost = false;
   this->cinematicMode = false;
-  this->loadSpace(0, 0);//spaceindex, doorIndex
   this->bonusCount = 0;
+
+  //unnecessary ? :
+  this->chrono = 0;
+  this->nextSpaceIndex = 0;
+  this->nextDoorIndex = 0;
+  this->nextFrame = false;
+
+  this->loadSpace(0, 0);//spaceindex, doorIndex
 }
 
 void GameController::initCharacter()
@@ -287,7 +294,7 @@ void GameController::handleWin()
         this->cinematicSeq = WIN;
         if (gb.buttons.pressed(BUTTON_A))
         {
-          //
+          this->resetGame();
         }
     }
     else this->chrono++;
@@ -309,21 +316,7 @@ void GameController::handleLose()
 
 void GameController::resetGame()
 {
-    delete this->character;
-    delete this->space;
-    delete this->view;
-    delete this->cinematic;
-    delete this->backpack;
-    delete this->objCol;
-    delete this->stkCtnr;
-
-    this->character = new Character();
-    this->space = new Space();
-    this->view = new View();
-    this->cinematic = new Cinematic();
-    this->backpack = new Backpack();
-    this->objCol = new ObjectCollection();
-    this->stkCtnr = new StackContainer();
-
+    this->objCol->reset();
+    this->stkCtnr->reset();
     this->initGame();
 }

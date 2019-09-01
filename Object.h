@@ -26,5 +26,6 @@ class ObjectCollection
     Object checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex);
     void setState(Object obj, bool state);
     void dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex, bool toContainer);
+    void reset();
 };
 #endif
