@@ -102,3 +102,13 @@ uint8_t StackContainer::getNextEmptySlotY()
         }
     }
 }
+
+uint8_t StackContainer::getStackHeight()
+{
+    uint8_t height = 0;
+    for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
+    {
+        if (this->objectsSequence[i] != '0') height++;
+    }
+    return height;
+}

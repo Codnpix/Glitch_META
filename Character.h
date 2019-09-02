@@ -5,10 +5,12 @@
 #include "constants.h"
 #include "mvtPatterns.h"
 #include "Space.h"
+#include "Sfx.h"
 
 class Character
 {
   private:
+    Sfx * sfx;
     float x;
     float y;
     float vx;
@@ -57,7 +59,10 @@ class Character
     Tile nTiles[2 * 3];
     void setNTiles(Space * space);
 
+    void playFx(uint8_t fxId);
+    
   public:
+    Character();
     ~Character() {};
     void reqWalkRight();
     void reqWalkLeft();
@@ -66,7 +71,7 @@ class Character
     void reqEnterDoor();
     void reqTake();
 
-    void update(Space* space);
+    void update(Space * space);
 
     float getX();
     float getY();

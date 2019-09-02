@@ -9,6 +9,15 @@
 
 #define NONE 3
 
+//fx ids
+#define JUMP_FX 1
+#define CLIMB_FX 2
+
+Character::Character()
+{
+  this->sfx = new Sfx();
+}
+
 void Character::init(uint8_t spawnX, uint8_t spawnY)
 {
   this->reqXMarker = 'n';
@@ -108,7 +117,7 @@ void Character::update(Space * space)
     this->G_acceleration += 0.10;
   }
   this->applyMove();//apply speed to position
-  
+
   //animation
   if ((this->animationState == "ENTER" && this->skipFrame <= 20)
   || (this->animationState == "TAKE" && this->skipFrame <= 2))
@@ -315,6 +324,7 @@ void Character::playPatternJump(uint8_t frame)
 {
   if (frame < JUMP_PATTERN_LENGTH)
   {
+    if (frame == 0) this->playFx(JUMP_FX);
     this->G_resistance = JUMP_VY_PATTERN[frame] - GRAVITY;
     this->jumpFrame = frame;
     this->moveStateY = JUMPING;
@@ -346,6 +356,7 @@ void Character::playPatternClimb()
     this->y = this->yToClimb;
     this->climbInitialized = true;
     this->climbFrame = 0;
+    this->playFx(CLIMB_FX);
   }
   if (this->climbInitialized)
   {
@@ -359,6 +370,19 @@ void Character::playPatternClimb()
       this->climbFrame = 0;
     }
   }
+}
+
+void Character::playFx(uint8_t fxId)
+{
+    switch(fxId)
+    {
+      case JUMP_FX:
+          this->sfx->jump();
+          break;
+      case CLIMB_FX:
+          this->sfx->climb();
+          break;
+    }
 }
 
 float Character::getX()

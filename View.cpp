@@ -13,23 +13,6 @@ void View::draw(Space* space, Character* character, ObjectCollection * objCol)
   gb.display.setPalette(DECOR_PALETTES[this->spaceIndex]);
   gb.display.drawImage(this->cameraPosX, this->cameraPosY, decorMaps[this->spaceIndex]);
 
-  /*
-  //debug : draw logic tiles...
-  for (uint8_t row = 0; row < LOGIC_ROWS; row ++)
-  {
-    for (uint8_t col = 0; col < LOGIC_COLS; col++)
-    {
-      char tile = space->getLogic(row, col);
-      if (tile == 's')
-      {
-        int16_t tileX, tileY;
-        tileX = this->cameraPosX + LOGIC_TILE_W * col;
-        tileY = this->cameraPosY + LOGIC_TILE_H * row;
-      }
-    }
-  }
-  */
-
   //character
   int8_t charWdir;
   uint8_t wDif = (CHARACTER_GRAPHIC_WIDTH - CHARACTER_W) / 2 ;
@@ -188,10 +171,10 @@ void View::drawObjectsOverview(Backpack * backpack, uint8_t bonusCount)
 
     //draw bonus state
     gb.display.setPalette(APPLE_PALETTE);
-    gb.display.drawImage(SCREEN_W - 14 - 7, 0, apple_small_img);
-    gb.display.setCursor(SCREEN_W - 14, 0);
+    gb.display.drawImage(SCREEN_W - 21 - 7, 0, apple_small_img);
+    gb.display.setCursor(SCREEN_W - 21, 0);
     gb.display.setColor(YELLOW);
-    gb.display.printf("%d/%d \n", bonusCount, NB_TOTAL_BONUS);//tmp
+    gb.display.printf("%d/%d \n", bonusCount, NB_TOTAL_BONUS);
 }
 
 void View::_debug_drawObjCol(ObjectCollection * objCol)

@@ -2,11 +2,11 @@
 
 Backpack::Backpack()
 {
-  this->objectsCount = 0;
-  for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
-  {
-    this->objects[i].id = '0';
-  }
+    this->objectsCount = 0;
+    for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
+    {
+        this->objects[i].id = '0';
+    }
 }
 
 void Backpack::addObject(Object obj)

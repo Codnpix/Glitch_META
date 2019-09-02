@@ -19,5 +19,6 @@ class StackContainer
         uint8_t getNextEmptySlotX();
         uint8_t getNextEmptySlotY();
         void reset();
+        uint8_t getStackHeight();
 };
 #endif

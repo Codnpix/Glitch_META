@@ -15,6 +15,14 @@
 #define PICKED 1
 #define DROPED 0
 
+//sfx ids
+#define APPLE_FX 1
+#define TAKE_FRAG_FX 2
+#define DROP_FRAG_FX 3
+#define DROP_FRAG_CTNR_FX 4
+#define WIN_FX 6
+#define LOSE_FX 7
+
 GameController::GameController()
 {
   this->character = new Character();
@@ -24,6 +32,7 @@ GameController::GameController()
   this->backpack = new Backpack();
   this->objCol = new ObjectCollection();
   this->stkCtnr = new StackContainer();
+  this->sfx = new Sfx();
 }
 
 void GameController::initGame()
@@ -119,13 +128,15 @@ void GameController::pickObject(Object obj)
         //this is a quantic stack fragment, add it to the backpack
         this->backpack->addObject(obj);
         this->objCol->setState(obj, PICKED);
+        this->playFx(TAKE_FRAG_FX);
     }
     else //it's an apple, add bonus to bonus count
     {
         if (obj.state == 0 && obj.spaceIndex == this->currentSpace)
         {
-        this->bonusCount++;
-        this->objCol->setState(obj, PICKED);
+            this->bonusCount++;
+            this->objCol->setState(obj, PICKED);
+            this->playFx(APPLE_FX);
         }
     }
 }
@@ -138,6 +149,7 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
         x = this->stkCtnr->getNextEmptySlotX();
         y = this->stkCtnr->getNextEmptySlotY();
         this->stkCtnr->addObject(objId);
+        this->playFx(DROP_FRAG_CTNR_FX);
         bool endGame = this->stkCtnr->stackIsFull();
         if (endGame)
         {
@@ -148,6 +160,7 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
     {
         x = (uint8_t)this->character->getX();
         y = (uint8_t)(this->character->getY() + CHARACTER_H - OBJECT_H);
+        this->playFx(DROP_FRAG_FX);
     }
     this->objCol->dropObject(x, y, objId, this->currentSpace, toContainer);
 }
@@ -170,6 +183,31 @@ void GameController::handleAction()
         this->dropObject(droppedObjId, facingCtnr);
         this->character->reqTake();
     }
+}
+void GameController::playFx(uint8_t fxId)
+{
+    switch(fxId)
+    {
+        case APPLE_FX:
+          this->sfx->apple();
+          break;
+        case TAKE_FRAG_FX:
+          this->sfx->takeFrag();
+          break;
+        case DROP_FRAG_FX:
+          this->sfx->dropFrag();
+          break;
+        case DROP_FRAG_CTNR_FX:
+          this->sfx->dropFragCtnr(this->stkCtnr->getStackHeight());
+          break;
+        case WIN_FX:
+          this->sfx->win();
+          break;
+        case LOSE_FX:
+          this->sfx->lose();
+          break;
+    }
+    
 }
 
 void GameController::getInputs()
@@ -288,8 +326,10 @@ void GameController::handleEndGame()
 
 void GameController::handleWin()
 {
-    if(this->chrono >= 35)//to adjust with endgame sound fx
+    if(this->chrono >= 50)//to adjust with endgame sound fx
     {
+        if(this->chrono == 50) this->playFx(WIN_FX);
+        this->chrono = 51;
         this->cinematicMode = true;
         this->cinematicSeq = WIN;
         if (gb.buttons.pressed(BUTTON_A))
@@ -302,13 +342,18 @@ void GameController::handleWin()
 
 void GameController::handleLose()
 {
-    if(this->chrono >= 35)//to adjust with endgame sound fx
+    if(this->chrono >= 50)//to adjust with endgame sound fx
     {
+        if(this->chrono == 50) this->playFx(LOSE_FX);
+        this->chrono = 51;
         this->cinematicMode = true;
         this->cinematicSeq = LOSE;
         if (gb.buttons.pressed(BUTTON_A))
         {
             this->resetGame();
+        }
+        if (gb.buttons.pressed(BUTTON_B)){
+          this->playFx(LOSE_FX);
         }
     }
     else this->chrono++;

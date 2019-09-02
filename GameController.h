@@ -6,6 +6,7 @@
 #include "Backpack.h"
 #include "Object.h"
 #include "StackContainer.h"
+#include "Sfx.h"
 
 class GameController
 {
@@ -17,6 +18,7 @@ class GameController
     Backpack * backpack;
     ObjectCollection * objCol;
     StackContainer * stkCtnr;
+    Sfx * sfx;
 
     uint8_t currentSpace;
     bool cinematicMode;
@@ -48,6 +50,7 @@ class GameController
     void handleWin();
     void handleLose();
     void resetGame();
+    void playFx(uint8_t fxId);
 
   public:
     GameController();
