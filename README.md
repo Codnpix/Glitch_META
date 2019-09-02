@@ -1,20 +1,26 @@
-#GLITCH#
+# GLITCH #
 **A video game for Gamebuino META (https://gamebuino.com/fr)**
+
 **Tags:** #platform #adventure #contemplative #pixelart #arduino #cplusplus #gamebuino
+
 **Author:** Pierre Jarriges
+
 **Release V1:** 2/09/2019
 
-##Story##
+## Story ##
 *A mad scientist caused a breach in the spacio-temporal continuum by working on his teleporter.*
+
 *The teleporter operates with a stack of 4 cells each filled with a chemical compound with precise quantum properties.*
+
 
 *During the accident, the pile burst and the 4 pieces were scattered to the 4 corners of the space-time!*
 
 *It's up to you to find them and put them back in their proper place ad in the right order, in the container next to the teleporter.*
 
+
 *... And if you find some apples as a bonus it can not hurt!*
 
-##Controls##
+## Controls ##
 - **Walk:** right and left arrows
 - **Walk through a door:** up arrow
 - **Jump:** (A)
@@ -26,13 +32,17 @@
 **Have fun !**
 
 FR
-##Histoire##
+
+## Histoire ##
 *Un savant fou a provoqué une brèche dans le continum spacio-temporel en travaillant sur son téléporteur.*
+
 *Le téléporteur fonctionne avec une pile composée de 4 cellules chacune remplie d'un composé chimique aux propriétés quantiques bien précises.*
+
 
 *Lors de l'accident, la pile a éclaté et les 4 morceaux ont été éparpillés aux 4 coins de l'espace-temps !* 
 
 *À toi de les retrouver puis de les remettre à leur place et dans le bon ordre, dans le conteneur à côté du téléporteur.*
+
 
 *...Et si tu trouves des pommes en bonus ça ne peut pas faire de mal !*
 
