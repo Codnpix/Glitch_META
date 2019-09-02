@@ -1,6 +1,8 @@
 # GLITCH #
 **A video game for Gamebuino META (https://gamebuino.com/fr)**
 
+<img src="https://s3.eu-west-3.amazonaws.com/gamebuino/upload/images/posts/ced7050bd409287e5faa5f60df5c30cc.BMP" width=160 height=128/>
+
 **Tags:** #platform #adventure #contemplative #pixelart #arduino #cplusplus #gamebuino
 
 **Author:** Pierre Jarriges
@@ -56,3 +58,8 @@ FR
 - **Déposer une cellule dans le conteneur:** (B)
 
 **Amusez-vous bien !**
+
+<img src="https://s3.eu-west-3.amazonaws.com/gamebuino/upload/images/posts/32ca0d027a13755524c366c6f3277295.BMP" width=160 height=128/>
+<img src="https://s3.eu-west-3.amazonaws.com/gamebuino/upload/images/posts/0c075a4cd41f6c88f39de0a40154705b.BMP" width=160 height=128/>
+<img src="https://s3.eu-west-3.amazonaws.com/gamebuino/upload/images/posts/852de23b26b56c5e6197c8ebb24eedd2.BMP" width=160 height=128/>
+
