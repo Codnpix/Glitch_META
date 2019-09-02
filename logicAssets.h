@@ -12,6 +12,9 @@ typedef struct Tile
     char type;
 };
 //the "d" type tiles won't be used, Doors are handled with a specific struct in Door.h. They're just here as landmarks.
+// a b c e f ... o, p , q are for apples
+//s for everything solid and used for collision detection
+//1 2 3 4 are the 4 quantic stack fragments.
 static const char logicMaps[NB_OF_SPACES][LOGIC_ROWS][LOGIC_COLS] =
 {
   {
@@ -133,7 +136,7 @@ static const char logicMaps[NB_OF_SPACES][LOGIC_ROWS][LOGIC_COLS] =
     {'s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','s',' ',' ',' ',' ','s'},
     {'s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','s'},
     {'s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ',' ',' ','s',' ',' ',' ',' ',' ','s'},
-    {'s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','s'},
+    {'s','s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','s'},
     {'s',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ',' ','s',' ',' ',' ',' ',' ',' ','s'},
     {'s',' ',' ',' ','n',' ',' ',' ',' ',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','m','s'},
     {'s',' ',' ',' ','s','s','s','s','s',' ',' ',' ',' ',' ','d','d','d',' ',' ',' ',' ','s','s',' ','d','d',' ','s','s','s'},
