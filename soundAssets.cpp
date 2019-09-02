@@ -116,3 +116,10 @@ const Gamebuino_Meta::Sound_FX win_fx[] =
 	{Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,165,-2,0,40,5},
 	{Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,154,-2,0,30,19},
 };
+
+const Gamebuino_Meta::Sound_FX door_fx[] = {
+  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,25,-1,0,189,4},
+  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,40,-1,0,169,4},
+  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,40,-1,0,159,4},
+  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,40,-1,0,134,27},
+};

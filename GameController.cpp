@@ -22,6 +22,7 @@
 #define DROP_FRAG_CTNR_FX 4
 #define WIN_FX 6
 #define LOSE_FX 7
+#define DOOR_FX 8
 
 GameController::GameController()
 {
@@ -206,6 +207,9 @@ void GameController::playFx(uint8_t fxId)
         case LOSE_FX:
           this->sfx->lose();
           break;
+        case DOOR_FX:
+          this->sfx->door();
+          break;
     }
     
 }
@@ -287,6 +291,7 @@ void GameController::enterDoor()
       this->character->reqEnterDoor(); //play animation character facing door
       door = this->space->getDoor(i);
       this->changeSpace(door.destinationSpace, door.destinationDoor);
+      this->playFx(DOOR_FX);
       break;
       }
   }

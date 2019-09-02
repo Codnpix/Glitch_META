@@ -47,3 +47,7 @@ void Sfx::win()
 {
     gb.sound.fx(win_fx);
 }
+void Sfx::door()
+{
+    gb.sound.fx(door_fx); 
+}

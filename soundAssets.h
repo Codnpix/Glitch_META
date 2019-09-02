@@ -24,4 +24,6 @@ extern const Gamebuino_Meta::Sound_FX drop_frag4_ctnr_fx[];
 extern const Gamebuino_Meta::Sound_FX lose_fx[];
 
 extern const Gamebuino_Meta::Sound_FX win_fx[];
+
+extern const Gamebuino_Meta::Sound_FX door_fx[];
 #endif

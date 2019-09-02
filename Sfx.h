@@ -14,5 +14,6 @@ class Sfx
         void dropFragCtnr(uint8_t index);
         void lose();
         void win();
+        void door();
 };
 #endif
