@@ -15,7 +15,7 @@
 
 *During the accident, the pile burst and the 4 pieces were scattered to the 4 corners of the space-time!*
 
-*It's up to you to find them and put them back in their proper place ad in the right order, in the container next to the teleporter.*
+*It's up to you to find them and put them back in their proper place and in the right order, in the container next to the teleporter.*
 
 
 *... And if you find some apples as a bonus it can not hurt!*
