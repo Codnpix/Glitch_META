@@ -6,18 +6,18 @@
 
 class Cinematic
 {
-  private:
-    uint8_t fadeFrame;
-    bool fadeNextFrame;
-    uint8_t chrono;
-  public:
-    Cinematic();
-    ~Cinematic() {};
-    bool playFadeIn();
-    bool playFadeOut();
-    void playClear();
-    void playWin();
-    void playLose();
-    void displayPressA();
+    private:
+        uint8_t fadeFrame;
+        bool fadeNextFrame;
+        uint8_t chrono;
+    public:
+        Cinematic();
+        ~Cinematic() {};
+        bool playFadeIn();
+        bool playFadeOut();
+        void playClear();
+        void playWin();
+        void playLose();
+        void displayPressA();
 };
 #endif

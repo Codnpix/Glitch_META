@@ -1,26 +1,26 @@
 #include <Gamebuino-Meta.h>
 #include "GameController.h"
 
-GameController* gameController;
+GameController * gameController;
 
 void setup()
 {
-  gb.begin();
+    gb.begin();
 
-  gameController = new GameController();
-  gameController->initGame();
+    gameController = new GameController();
+    gameController->initGame();
 }
 
 void loop()
 {
-  gb.waitForUpdate();
-  
-  gameController->updateGame();
-  gameController->draw();
+    gb.waitForUpdate();
 
-  /*
-  gb.display.setColor(RED);
-  gb.display.printf("CPU : %d \n", gb.getCpuLoad());
-  gb.display.printf("RAM : %d \n", gb.getFreeRam());
-  */
+    gameController->updateGame();
+    gameController->draw();
+
+    /*
+    gb.display.setColor(RED);
+    gb.display.printf("CPU : %d \n", gb.getCpuLoad());
+    gb.display.printf("RAM : %d \n", gb.getFreeRam());
+    */
 }

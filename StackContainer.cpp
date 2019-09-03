@@ -23,7 +23,7 @@ void StackContainer::resetSequence()
 
 void StackContainer::reset()
 {
-  this->resetSequence();
+    this->resetSequence();
 }
 
 void StackContainer::addObject(char objId)

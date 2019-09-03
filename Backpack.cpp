@@ -11,8 +11,8 @@ Backpack::Backpack()
 
 void Backpack::addObject(Object obj)
 {
-  this->objects[this->objectsCount] = obj;
-  this->objectsCount ++;
+    this->objects[this->objectsCount] = obj;
+    this->objectsCount ++;
 }
 
 uint8_t Backpack::getObjectCount()

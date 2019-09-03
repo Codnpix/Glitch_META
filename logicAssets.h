@@ -3,7 +3,7 @@
 
 #include "constants.h"
 
-typedef struct Tile
+struct Tile
 {
     uint8_t left;
     uint8_t top;

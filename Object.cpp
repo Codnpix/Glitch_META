@@ -6,7 +6,7 @@ ObjectCollection::ObjectCollection()
 }
 void ObjectCollection::reset()
 {
-  this->initAllObjects();
+    this->initAllObjects();
 }
 
 void ObjectCollection::initAllObjects()

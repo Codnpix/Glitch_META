@@ -7,25 +7,25 @@
 
 class Space
 {
-  private:
-    uint8_t index;
-    char logicMap[16][30];
-    Door doors[4];
-    uint8_t spawnX;
-    uint8_t spawnY;
-
-    void setIndex(uint8_t index);
-    void setLogic();
-    void setDoors();
-
-  public:
-    ~Space() {};
-    void init(uint8_t index, uint8_t spawnDoorIndex);
-    uint8_t getIndex();
-    char getLogic(uint8_t row, uint8_t col);
-    Door getDoor(uint8_t index);
-    uint8_t getSpawnX();
-    uint8_t getSpawnY();
-    void setSpawn(uint8_t doorIndex);
+    private:
+        uint8_t index;
+        char logicMap[16][30];
+        Door doors[4];
+        uint8_t spawnX;
+        uint8_t spawnY;
+        
+        void setIndex(uint8_t index);
+        void setLogic();
+        void setDoors();
+    
+    public:
+        ~Space() {};
+        void init(uint8_t index, uint8_t spawnDoorIndex);
+        uint8_t getIndex();
+        char getLogic(uint8_t row, uint8_t col);
+        Door getDoor(uint8_t index);
+        uint8_t getSpawnX();
+        uint8_t getSpawnY();
+        void setSpawn(uint8_t doorIndex);
 };
 #endif

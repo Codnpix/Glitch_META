@@ -3,7 +3,7 @@
 
 #include "constants.h"
 
-typedef struct Door 
+struct Door 
 {
     uint8_t x;
     uint8_t w;

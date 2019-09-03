@@ -9,9 +9,9 @@ const Gamebuino_Meta::Sound_FX jump_fx[] =
 
 const Gamebuino_Meta::Sound_FX climb_fx[] =
 {
-	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,-30,112,4},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,31,2,-127,179,11},
-  {Gamebuino_Meta::Sound_FX_Wave::NOISE,0,0,2,0,128,3},
+    {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,-30,112,4},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,31,2,-127,179,11},
+    {Gamebuino_Meta::Sound_FX_Wave::NOISE,0,0,2,0,128,3},
 };
 
 const Gamebuino_Meta::Sound_FX apple_fx[] =
@@ -44,7 +44,7 @@ const Gamebuino_Meta::Sound_FX drop_frag_fx[] =
 
 const Gamebuino_Meta::Sound_FX drop_frag1_ctnr_fx[] =
 {
-	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,70,112,11},
+	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,70,112,11},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,378,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,185,0,0,357,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,175,0,0,378,3},
@@ -56,7 +56,7 @@ const Gamebuino_Meta::Sound_FX drop_frag1_ctnr_fx[] =
 
 const Gamebuino_Meta::Sound_FX drop_frag2_ctnr_fx[] =
 {
-	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
+    {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,283,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,253,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,145,0,0,283,3},
@@ -68,7 +68,7 @@ const Gamebuino_Meta::Sound_FX drop_frag2_ctnr_fx[] =
 
 const Gamebuino_Meta::Sound_FX drop_frag3_ctnr_fx[] =
 {
-	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
+    {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,225,0,0,169,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,174,0,0,150,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,169,3},

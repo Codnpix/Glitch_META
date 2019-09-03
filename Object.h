@@ -5,7 +5,7 @@
 #include "constants.h"
 #include "logicAssets.h"
 
-typedef struct Object {
+struct Object {
   uint8_t x;
   uint8_t y;
   uint8_t spaceIndex;
@@ -15,17 +15,17 @@ typedef struct Object {
 
 class ObjectCollection
 {
-  private:
-    Object objects[TOTAL_OBJECTS];
-    void initAllObjects();
-    uint8_t currentSpaceIndex;
-  public:
-    ObjectCollection();
-    ~ObjectCollection() {};
-    Object getObject(uint8_t index);
-    Object checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex);
-    void setState(Object obj, bool state);
-    void dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex, bool toContainer);
-    void reset();
+    private:
+        Object objects[TOTAL_OBJECTS];
+        void initAllObjects();
+        uint8_t currentSpaceIndex;
+    public:
+        ObjectCollection();
+        ~ObjectCollection() {};
+        Object getObject(uint8_t index);
+        Object checkCharacterObjectOverlap(uint8_t x, uint8_t y, uint8_t currentSpaceIndex);
+        void setState(Object obj, bool state);
+        void dropObject(uint8_t x, uint8_t y, uint8_t id, uint8_t spaceIndex, bool toContainer);
+        void reset();
 };
 #endif
