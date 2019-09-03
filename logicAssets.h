@@ -162,5 +162,4 @@ static const char logicMaps[NB_OF_SPACES][LOGIC_ROWS][LOGIC_COLS] =
     {'s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s','s'}
   }
 };
-
 #endif

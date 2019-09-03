@@ -25,6 +25,8 @@ void Character::init(uint8_t spawnX, uint8_t spawnY)
   this->moveStateY = NONE;
   this->direction = 'r';
   this->animationState = "STAND";
+  this->collidesRight = false;
+  this->collidesLeft = false;
 }
 
 void Character::reqWalkRight()
@@ -119,12 +121,14 @@ void Character::update(Space * space)
   this->applyMove();//apply speed to position
 
   //animation
+  
   if ((this->animationState == "ENTER" && this->skipFrame <= 20)
-  || (this->animationState == "TAKE" && this->skipFrame <= 2))
+  || (this->animationState == "TAKE" && this->skipFrame <= 3))
   {
     this->skipFrame++;
     return;
   }
+  
   this->updateAnimationState();
 }
 

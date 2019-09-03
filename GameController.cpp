@@ -149,8 +149,8 @@ void GameController::dropObject(uint8_t objId, bool toContainer)
     {
         x = this->stkCtnr->getNextEmptySlotX();
         y = this->stkCtnr->getNextEmptySlotY();
-        this->stkCtnr->addObject(objId);
         this->playFx(DROP_FRAG_CTNR_FX);
+        this->stkCtnr->addObject(objId);
         bool endGame = this->stkCtnr->stackIsFull();
         if (endGame)
         {
@@ -211,7 +211,7 @@ void GameController::playFx(uint8_t fxId)
           this->sfx->door();
           break;
     }
-    
+
 }
 
 void GameController::getInputs()
@@ -356,9 +356,6 @@ void GameController::handleLose()
         if (gb.buttons.pressed(BUTTON_A))
         {
             this->resetGame();
-        }
-        if (gb.buttons.pressed(BUTTON_B)){
-          this->playFx(LOSE_FX);
         }
     }
     else this->chrono++;

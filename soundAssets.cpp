@@ -44,47 +44,47 @@ const Gamebuino_Meta::Sound_FX drop_frag_fx[] =
 
 const Gamebuino_Meta::Sound_FX drop_frag1_ctnr_fx[] =
 {
-	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,70,112,11},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,378,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,185,0,0,357,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,175,0,0,378,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,357,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,83,0,0,378,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,55,0,0,357,3},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,30,0,0,378,0},
+	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,3,70,112,11},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,378,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,185,0,0,357,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,175,0,0,378,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,357,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,83,0,0,378,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,55,0,0,357,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,30,0,0,378,0},
 };
 
 const Gamebuino_Meta::Sound_FX drop_frag2_ctnr_fx[] =
 {
-	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,283,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,253,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,145,0,0,283,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,105,0,0,253,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,85,0,0,283,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,55,0,0,253,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,24,0,0,283,2},
+	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,255,0,0,283,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,253,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,145,0,0,283,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,105,0,0,253,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,85,0,0,283,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,55,0,0,253,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,24,0,0,283,0},
 };
 
 const Gamebuino_Meta::Sound_FX drop_frag3_ctnr_fx[] =
 {
-	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,225,0,0,169,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,174,0,0,150,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,169,2},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,144,0,0,150,1},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,95,0,0,169,1},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,65,0,0,150,1},
-  {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,65,0,0,169,1},
+	  {Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,70,112,11},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,225,0,0,169,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,174,0,0,150,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,169,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,144,0,0,150,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,95,0,0,169,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,65,0,0,150,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,65,0,0,169,0},
 };
 
 const Gamebuino_Meta::Sound_FX drop_frag4_ctnr_fx[] =
 {
   	{Gamebuino_Meta::Sound_FX_Wave::NOISE,1,0,2,73,64,10},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,126,3},
-    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,113,2},
-    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,126,1},
-    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,115,0,0,113,1},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,195,0,0,113,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,155,0,0,126,3},
+    {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,115,0,0,113,3},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,75,0,0,126,1},
   	//{Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,64,0,0,113,1},//end of original last container slot sfx
     //{Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,75,0,0,126,0},
@@ -108,7 +108,7 @@ const Gamebuino_Meta::Sound_FX win_fx[] =
 	{Gamebuino_Meta::Sound_FX_Wave::SQUARE,0,154,-2,0,30,19},
 };
 
-const Gamebuino_Meta::Sound_FX door_fx[] = 
+const Gamebuino_Meta::Sound_FX door_fx[] =
 {
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,25,-1,0,189,4},
     {Gamebuino_Meta::Sound_FX_Wave::SQUARE,1,40,-1,0,169,4},

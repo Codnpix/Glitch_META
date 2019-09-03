@@ -33,7 +33,7 @@ void StackContainer::addObject(char objId)
         if (this->objectsSequence[i] == '0')
         {
             this->objectsSequence[i] = objId;
-            return;
+            break;
         }
     }
 }
@@ -105,10 +105,10 @@ uint8_t StackContainer::getNextEmptySlotY()
 
 uint8_t StackContainer::getStackHeight()
 {
-    uint8_t height = 0;
+    uint8_t stkheight = 0;
     for (uint8_t i = 0; i < NB_STACK_FRAGMENTS; i++)
     {
-        if (this->objectsSequence[i] != '0') height++;
+        if (this->objectsSequence[i] != '0') stkheight++;
     }
-    return height;
+    return stkheight;
 }

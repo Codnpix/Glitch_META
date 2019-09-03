@@ -24,16 +24,16 @@ void Sfx::dropFragCtnr(uint8_t index)
 {
     switch(index)
     {
-        case 1:
+        case 0:
             gb.sound.fx(drop_frag1_ctnr_fx);
             break;
-        case 2:
+        case 1:
             gb.sound.fx(drop_frag2_ctnr_fx);
             break;
-        case 3:
+        case 2:
             gb.sound.fx(drop_frag3_ctnr_fx);
             break;
-        case 4:
+        case 3:
             gb.sound.fx(drop_frag4_ctnr_fx);
             break;
     }

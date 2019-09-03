@@ -8,9 +8,7 @@ void setup()
   gb.begin();
 
   gameController = new GameController();
-
   gameController->initGame();
-  gameController->draw();
 }
 
 void loop()
